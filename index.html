@@ -620,6 +620,95 @@ button.fgcard{cursor:pointer}
 .synccode{font-family:var(--display);font-weight:700;letter-spacing:.08em;font-size:15px;margin-top:6px;color:var(--gold);overflow-wrap:anywhere}
 body.noanim *,body.noanim *::before,body.noanim *::after{animation:none!important;transition:none!important}
 
+
+/* STORY PATH + PLAYER */
+.arcl{display:grid;gap:12px}
+.arcc{position:relative;display:grid;grid-template-columns:118px minmax(0,1fr) 28px;gap:16px;align-items:center;width:100%;text-align:left;padding:16px;border:1px solid var(--line);background:radial-gradient(circle at 12% 50%,rgba(58,169,240,.2),transparent 50%),linear-gradient(135deg,#0b1834,#04070f 75%);color:var(--text);font:inherit;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.arcc:hover{box-shadow:0 0 22px rgba(58,169,240,.28)}
+.arcc.lock{cursor:default;border-color:var(--line-dim);background:#060b17;opacity:.75}
+.arcc.lock .arcc-art svg{filter:grayscale(1) brightness(.5)}
+.arcc-art svg{width:118px;height:118px;display:block}
+.arcc-t{font-family:var(--display);font-weight:700;font-size:30px;letter-spacing:.05em;line-height:1.1;margin:2px 0 4px;text-shadow:0 0 16px rgba(98,210,255,.45)}
+.arcc-d{margin:0 0 10px;color:var(--muted);font-size:13.5px;max-width:52ch}
+.arcc-pr{display:flex;align-items:center;gap:10px;margin-bottom:10px}.arcc-pr .bar{flex:1;margin:0}.arcc-pr b{font-family:var(--display);font-size:13px;font-variant-numeric:tabular-nums}
+.arcc-go{color:var(--glow);display:grid;place-items:center}
+.stchip{display:inline-block;font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border:1px solid var(--line)}
+.stchip.on{color:var(--glow);background:rgba(20,60,120,.4)}.stchip.ok{color:var(--ok);border-color:rgba(109,255,179,.45)}
+.stback{display:inline-flex;align-items:center;gap:6px;justify-self:start;background:none;border:0;color:var(--glow);font-family:var(--display);font-size:13px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;padding:4px 0;margin-bottom:12px}
+.arch{display:grid;grid-template-columns:150px minmax(0,1fr);gap:18px;align-items:center;padding:18px;border:1px solid var(--line);background:radial-gradient(circle at 15% 50%,rgba(58,169,240,.22),transparent 55%),linear-gradient(135deg,#0b1834,#04070f 75%);margin-bottom:16px}
+.arch-art svg{width:150px;height:150px;display:block}
+.arch-t{font-family:var(--display);font-weight:700;font-size:40px;letter-spacing:.05em;line-height:1.05;margin:2px 0 6px;text-shadow:0 0 18px rgba(98,210,255,.55)}
+.arch-st{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--display);font-size:12px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:6px}.arch-st b{color:var(--text);font-variant-numeric:tabular-nums}
+.epl{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.epc{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px 14px;border:1px solid var(--line-dim);background:rgba(4,12,30,.55)}
+.epn{font-family:var(--display);font-weight:700;font-size:24px;letter-spacing:.04em;color:var(--faint);text-align:center;font-variant-numeric:tabular-nums}
+.epi b{display:block;font-family:var(--display);font-size:16px;letter-spacing:.03em;overflow-wrap:anywhere}
+.eps{display:flex;align-items:center;gap:6px;font-family:var(--display);font-size:12px;letter-spacing:.06em;color:var(--muted)}
+.eps svg{width:14px;height:14px}.eps.ok{color:var(--ok)}.eps.bad{color:#ff8ea0}
+.epi .bar{margin-top:6px}
+.eplk{color:var(--faint);display:grid;place-items:center;width:40px}
+.epc.done .epn{color:var(--ok)}
+.epc.avail{border-color:var(--line);background:rgba(20,50,100,.38);box-shadow:0 0 18px rgba(58,169,240,.22)}.epc.avail .epn{color:var(--glow);text-shadow:0 0 10px rgba(98,210,255,.6)}
+.epc.need{border-color:rgba(255,74,103,.35)}
+.epc.lock{opacity:.6}.epc.lock .epi b{color:var(--muted)}
+body.sp-open{overflow:hidden}
+.sp{position:fixed;inset:0;z-index:90;background:#02040a;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;gap:8px;padding:calc(env(safe-area-inset-top,0px) + 10px) 12px calc(env(safe-area-inset-bottom,0px) + 12px);user-select:none;-webkit-user-select:none;cursor:pointer}
+.sp>*{max-width:960px;width:100%;margin:0 auto}
+.sp-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.sp-k{font-family:var(--display);font-size:11px;letter-spacing:.28em;color:var(--glow)}
+.sp-t{font-family:var(--display);font-size:21px;font-weight:700;letter-spacing:.04em;line-height:1.2}
+.sp-btns{display:flex;gap:6px}.sp-x{padding:5px 8px;display:grid;place-items:center}
+.sp-prog{height:2px;background:rgba(98,210,255,.12)}.sp-prog i{display:block;height:100%;width:0;background:var(--glow);box-shadow:0 0 8px var(--glow);transition:width .3s}
+.sp-stage{position:relative;min-height:0;border:1px solid rgba(58,169,240,.22);background:#000;overflow:hidden}
+.sp-img{position:absolute;inset:0;display:grid;place-items:center}
+.sp-img.in{animation:spfade .5s ease-out}
+@keyframes spfade{from{opacity:0}to{opacity:1}}
+.sp-img img{position:relative;z-index:1;max-width:100%;max-height:100%;object-fit:contain;display:block}
+.sp-vig{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to top,rgba(2,4,10,.85),transparent 22%),radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,.45))}
+.sp-ph{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:8px;background:radial-gradient(circle at 50% 45%,rgba(40,90,200,.28),transparent 60%),#03060f;color:var(--faint);font-family:var(--display);letter-spacing:.2em;font-size:12px;text-transform:uppercase}
+.sp-phg svg{width:120px;height:120px;opacity:.7;display:block}
+.sp-cnt{position:absolute;right:10px;bottom:8px;z-index:3;font-family:var(--display);font-size:10.5px;letter-spacing:.2em;color:#a9bddb;background:rgba(2,6,16,.7);border:1px solid rgba(98,210,255,.2);padding:2px 8px}
+.sp-box{--sc:#62d2ff;position:relative;display:grid;grid-template-columns:190px 1px minmax(0,1fr);gap:18px;align-items:stretch;min-height:128px;padding:16px 20px 14px;border:1px solid rgba(98,210,255,.22);border-top:2px solid var(--sc);background:linear-gradient(180deg,rgba(12,24,48,.97),rgba(4,9,20,.97));box-shadow:0 -10px 30px rgba(0,0,0,.5)}
+.sp-box::before,.sp-box::after{content:"";position:absolute;width:12px;height:12px;border:2px solid var(--sc);pointer-events:none;opacity:.8}
+.sp-box::before{bottom:-3px;left:-3px;border-right:0;border-top:0}.sp-box::after{bottom:-3px;right:-3px;border-left:0;border-top:0}
+.sp-spk{display:flex;align-items:center;gap:12px;min-width:0}
+.sp-bd{flex:none;width:46px;height:46px;display:grid;place-items:center}.sp-bd svg{width:100%;height:100%;overflow:visible}
+.sp-bd.none{width:0}
+.sp-bd.sysb{border:2px solid var(--glow);border-radius:50%;width:38px;height:38px;font-family:var(--display);font-weight:700;font-size:20px;color:var(--glow);box-shadow:0 0 12px rgba(98,210,255,.6)}
+.sp-nm{display:grid;gap:2px;min-width:0}
+.sp-nm b{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:.1em;text-transform:uppercase;color:var(--sc);line-height:1.15;overflow-wrap:anywhere}
+.sp-nm span{font-family:var(--display);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.3}
+.sp-nm i{font-style:normal;font-family:var(--display);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#a9bddb;border:1px solid rgba(169,189,219,.35);padding:0 5px;justify-self:start;margin-top:2px}
+.sp-div{background:linear-gradient(180deg,transparent,var(--sc),transparent);opacity:.55}
+.sp-body{position:relative;display:grid;align-content:center;min-width:0}
+.sp-txt{margin:0;font-size:17px;line-height:1.6;min-height:3.2em;white-space:pre-wrap;text-wrap:pretty}
+.sp-hint{position:absolute;right:-6px;bottom:-6px;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid var(--sc);opacity:0}
+.sp-hint.on{animation:sphint 1.1s ease-in-out infinite}
+@keyframes sphint{0%,100%{opacity:.2;transform:translateY(0)}50%{opacity:1;transform:translateY(3px)}}
+.sp-box.sys{background:linear-gradient(180deg,rgba(10,30,62,.97),rgba(4,12,28,.97));box-shadow:0 0 24px rgba(58,169,240,.28),inset 0 0 24px rgba(58,169,240,.1)}
+.sp-box.sys .sp-txt{color:#c8ecff;font-family:var(--display);letter-spacing:.03em}
+.sp-box.nar{grid-template-columns:1fr;text-align:center;border-top-color:rgba(169,189,219,.4);--sc:#6f86a8}
+.sp-box.nar .sp-spk,.sp-box.nar .sp-div{display:none}
+.sp-box.nar .sp-txt{font-style:italic;color:#c3d0e2;max-width:60ch;margin:0 auto}
+.sp-box.th .sp-txt{font-style:italic;color:#b9c8dc}
+.sp-end{text-align:center;display:grid;gap:8px;justify-items:center;padding:18px;border:1px solid var(--line);border-top:2px solid var(--ok);background:rgba(6,14,32,.96);cursor:default}
+.sp-endt{font-family:var(--display);font-weight:700;font-size:24px;letter-spacing:.14em;color:var(--ok);text-shadow:0 0 14px rgba(109,255,179,.5)}
+.sp-end .rew{display:grid;gap:2px;width:min(320px,100%);font-family:var(--display);text-align:left}
+.sp-end .rew div{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--line-dim);padding:5px 0}
+.sp-end .rew div span{display:flex;align-items:center;gap:6px}
+.sp-end .rew b{color:var(--gold)}
+.sp-end p{margin:0}
+@media (max-width:640px){
+  .arcc{grid-template-columns:78px minmax(0,1fr) 20px;gap:12px;padding:12px}.arcc-art svg{width:78px;height:78px}.arcc-t{font-size:24px}
+  .arch{grid-template-columns:1fr;justify-items:center;text-align:center}.arch-art svg{width:110px;height:110px}.arch-t{font-size:32px}.arch-st{justify-content:center}.arch>div:last-child{width:100%}
+  .epc{grid-template-columns:40px minmax(0,1fr) auto;gap:10px;padding:10px}.epn{font-size:20px}
+  .sp-t{font-size:18px}
+  .sp-box{grid-template-columns:1fr;gap:8px;padding:12px 14px 12px;min-height:140px}
+  .sp-div{height:1px;background:linear-gradient(90deg,var(--sc),transparent)}
+  .sp-bd{width:36px;height:36px}.sp-bd.sysb{width:30px;height:30px;font-size:16px}
+  .sp-nm{grid-template-columns:auto auto;align-items:baseline;column-gap:8px}.sp-nm b{font-size:14px}
+  .sp-txt{font-size:15.5px}
+}
 /* STORY */
 .arcs{display:grid;gap:14px}
 .arc{position:relative;overflow:hidden;display:grid;grid-template-columns:150px minmax(0,1fr);gap:18px;align-items:center;padding:18px;border:1px solid var(--line);background:radial-gradient(circle at 18% 50%,rgba(58,169,240,.22),transparent 55%),linear-gradient(135deg,#0b1834,#04070f 70%);box-shadow:inset 0 0 40px rgba(58,169,240,.08)}
@@ -855,19 +944,8 @@ body.scrolling .spin,body.scrolling .pulse,body.scrolling .breathe{animation-pla
     <div class="wrap">
       <section class="win">
         <div class="win-head"><div class="win-title">Hikâye</div></div>
-        <p class="q-sub">Avcının hikâyesi arc arc ilerler</p>
-        <div class="arcs">
-          <article class="arc">
-            <div class="arc-art" aria-hidden="true"><svg viewBox="0 0 160 160"><defs><radialGradient id="arcG" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#e8f7ff"/><stop offset=".35" stop-color="#62d2ff"/><stop offset=".7" stop-color="#2a4aff" stop-opacity=".6"/><stop offset="1" stop-color="#1a0a5a" stop-opacity="0"/></radialGradient></defs><ellipse cx="80" cy="82" rx="74" ry="74" fill="url(#arcG)" opacity=".35"/><ellipse cx="80" cy="82" rx="44" ry="60" fill="#050a1c" stroke="#62d2ff" stroke-width="3"/><ellipse cx="80" cy="82" rx="36" ry="51" fill="none" stroke="#8a6aff" stroke-width="2" opacity=".8"/><ellipse cx="80" cy="82" rx="26" ry="39" fill="url(#arcG)" opacity=".9"/><path d="M80 36 Q92 60 84 82 Q76 104 80 128" fill="none" stroke="#fff" stroke-width="1.4" opacity=".6"/><g fill="#9fe6ff"><circle cx="30" cy="40" r="1.6"/><circle cx="132" cy="32" r="1.2"/><circle cx="140" cy="118" r="1.8"/><circle cx="22" cy="124" r="1.2"/></g><path d="M58 150 L80 140 L102 150" fill="none" stroke="#62d2ff" stroke-width="1.4" opacity=".5"/></svg></div>
-            <div class="arc-txt">
-              <div class="arc-t">ARC 1</div>
-              <p class="arc-d">Hikâyenin ilk arc'ı. Bölümler yakında eklenecek.</p>
-              <div class="arc-prog"><span>İlerleme</span><b>0 bölüm</b></div>
-              <div class="bar thin"><i style="width:0%"></i></div>
-              <button class="btn primary" type="button" disabled style="margin-top:14px">Yakında</button>
-            </div>
-          </article>
-        </div>
+        <p class="q-sub">Hikâye modu</p>
+        <div class="arcs" id="storyBody"></div>
       </section>
     </div>
   </main>
@@ -984,6 +1062,7 @@ body.scrolling .spin,body.scrolling .pulse,body.scrolling .breathe{animation-pla
 </nav>
 
 <div class="toasts" id="toasts" aria-live="polite"></div>
+<div class="sp" id="storyPlayer" hidden></div>
 <div class="overlay" id="overlay" hidden><div class="win modal" id="modal" role="dialog" aria-modal="true"></div></div>
 
 <script>
@@ -1264,6 +1343,7 @@ const JOBS={
 };
 const JOB_ADV=60;
 const TITLES=[
+  {id:"arc1",n:"Mühür Kırıcı",d:"Hikâye: Arc 1'i tamamla.",xp:4,t:s=>!!(s.story&&s.story.done&&s.story.done.a1e8)},
   {id:"uyanis",n:"Uyanmış",d:"İlk günlük görevi tamamla.",xp:2,t:s=>s.cnt.days>=1},
   {id:"azim",n:"Azimli",d:"3 günlük seriye ulaş.",gold:3,t:s=>s.best>=3},
   {id:"kurt",n:"Kurt Avcısı",d:"7 günlük seriye ulaş.",xp:5,t:s=>s.best>=7},
@@ -1405,7 +1485,7 @@ const $=id=>document.getElementById(id);
 function defaultApp(){return {gender:"m",build:"bal",skin:1,eye:0,hair:0,style:0,height:175,weight:70}}
 function defaults(){
   return {
-    v:4,mig:8,pf:{av:"warrior",fr:"F"},guild:null,gReq:null,energy:5,dRuns:{},battle:null,dWon:{},name:"Avcı",level:0,xp:0,totalXp:0,gold:0,totalGold:0,
+    v:4,mig:8,pf:{av:"warrior",fr:"F"},story:{v:2,done:{},rw:{}},guild:null,gReq:null,energy:5,dRuns:{},battle:null,dWon:{},name:"Avcı",level:0,xp:0,totalXp:0,gold:0,totalGold:0,
     base:{STR:0,VIT:0,AGI:0,INT:0,PER:0},
     app:defaultApp(),
     quests:[
@@ -1504,6 +1584,9 @@ function normalize(s){
   o.pf=Object.assign({av:"warrior",fr:"F"},s.pf&&typeof s.pf==="object"?s.pf:{});
   if(!["warrior","tank","mage","assassin","healer","archer","ranger","veteran","silver","queen"].includes(o.pf.av)) o.pf.av="warrior";
   if(!TIERS.includes(o.pf.fr)) o.pf.fr="F";
+  {const st=s.story&&typeof s.story==="object"?s.story:{},dn=st.done&&typeof st.done==="object"?st.done:{};
+   if(st.v===2) o.story={v:2,done:Object.assign({},dn),rw:Object.assign({},st.rw||{})};
+   else{const rw={};Object.keys(dn).forEach(k=>rw[k]=1);o.story={v:2,done:{},rw};}}
   o.v=4;
   return o;
 }
@@ -2913,6 +2996,130 @@ function renderProfileSet(){
   el.innerHTML=AVATARS.map(a=>`<button type="button" class="avbtn" data-av="${a.id}" aria-pressed="${S.pf.av===a.id}" aria-label="${esc(a.n)}"><span class="av">${avatarSvg(a.id)}</span></button>`).join("");
   $("frPick").innerHTML=TIERS.map(t=>{const ok=frUnlocked(t);return `<button type="button" class="frbtn" data-fr="${t}" aria-pressed="${S.pf.fr===t}"${ok?"":" disabled"}>${pfHtml(S.pf.av,t,78,"still")}<b style="color:${ok?RCOL[t]:"var(--muted)"}">${t} · ${esc(FRAME_N[t])}</b>${ok?(S.pf.fr===t?`<span>Takılı</span>`:`<span>Tak</span>`):`<span class="lk">${t} rütbede açılır</span>`}</button>`}).join("");
 }
+/* ================= STORY MODE ================= */
+const STORY_CHARS={
+  jos:{n:"Joseph",r:"F",role:"Lowest Guild · Avcı",c:"#e4efff"},
+  aria:{n:"Aria Winters",r:"D",role:"Lowest Guild · Lider",c:"#ff9f7e"},
+  nell:{n:"Nell Harper",r:"E",role:"Lowest Guild · Şifacı",c:"#a6f2c0"},
+  yuna:{n:"Yuna Kagami",r:"E",role:"Lowest Guild · İzci",c:"#c9a6ff"},
+  talia:{n:"Talia Brooks",r:"E",role:"Lowest Guild · Büyücü",c:"#5fe3d2"},
+  rex:{n:"Rex Donovan",r:"E",role:"Lowest Guild · Tank",c:"#ffd36a"},
+  finn:{n:"Finn Mercer",r:"F",role:"Lowest Guild · Hırsız",c:"#a8e07a"},
+  kael:{n:"Kael Varn",r:"B",role:"Iron Fang · Savaşçı",c:"#ff5a70"},
+  fang:{n:"Iron Fang Avcısı",r:"C",role:"Iron Fang",c:"#ff8a8a"},
+  draven:{n:"Draven",r:"A",role:"Drakmor Elçisi",c:"#b99aff"},
+  otto:{n:"Otto Brandt",r:null,role:"Avcı Birliği · Kayıt Memuru",c:"#d8c58e"},
+  bekci:{n:"Dipsizin Bekçisi",r:"?",role:"???",c:"#eef4ff"},
+  kalabalik:{n:"Kalabalık",r:null,role:"",c:"#8aa0bd"},
+  sys:{n:"SİSTEM",r:null,role:"",c:"#62d2ff"},
+  nar:{n:"",r:null,role:"",c:""}
+};
+const STORY_IMG="story/";          // görseller: story/a1/a1e1-01.webp
+const STORY_AUDIO={};               // seslendirmesi eklenen bölümler: {a1e1:true}
+const STORY=[{id:"a1",n:"ARC 1",t:"Uyanış",d:"Ölçüm kristali ona sıfır dedi. Dipsiz bir çukur başka bir şey söyleyecek.",eps:[{"id":"a1e1","t":"En Alttaki İsim","pw":0,"p":[{"l":[["nar","Erosia. Dünyanın en zayıf ülkesinin başkenti."],["nar","On yıl önce gökyüzünde ilk kapı açıldı. O günden beri insanları tek bir şey tanımlıyor: rütbeleri."]]},{"l":[["otto","Mana ölçümü... sıfır virgül üç."],["otto","Rütbe F. Birlik kayıtlarındaki en düşük değer."],["kalabalik","(Kahkahalar)"]]},{"l":[["jos","(Her sabah on kilometre koşu. Her akşam üç yüz şınav. Ve kristal bana sıfır diyor.)"],["fang","Şuna bakın. Vücudu dağ gibi ama manası yok. Taşıyıcı bile olamaz bu."]]},{"l":[["nar","O hafta Joseph on dört loncaya başvurdu."],["otto","Iron Fang: red. Silver Crown: red. Northwind: \"Lütfen bir daha gelmeyin.\""],["jos","Sonuncusu biraz kişisel olmuş."]]},{"l":[["aria","On dört ret. Bu bir rekor olmalı."],["jos","Alay etmeye geldiysen sıra var."],["aria","Hayır. Seni işe almaya geldim."]]},{"l":[["aria","Aria Winters. Lowest Guild'in lideriyim."],["jos","Lowest Guild... Sıralamada en sonda olan lonca mı?"],["aria","En sonda değil. Tabanda. Arada fark var."],["jos","Ne farkı?"],["aria","Tabandan aşağı düşemezsin."]]},{"l":[["jos","Neden ben? Ölçümü gördün. Sıfır."],["aria","Kristal manayı ölçer. İnadı ölçmez. Seni her sabah limanda koşarken görüyorum."]]},{"l":[["nar","Lowest Guild'in merkezi, limanda yarı çökmüş eski bir depoydu."],["finn","Yeni üye mi? Harika. Artık lonca sıralamasında en kötü ikinci kişi ben değilim."],["yuna","Finn, sen zaten en kötü üçüncüsün."],["finn","İlk ikisi kim?"],["yuna","Kovadaki su ve sen."]]},{"l":[["rex","Ben Rex. Kalkan benim işim. Arkamda durursan kimse sana dokunamaz."],["nell","B-ben Nell. Şifacıyım. Kırık kemik, yanık, zehir... Bir de kötü günler için kurabiye."]]},{"l":[["talia","Talia. Büyücü. Sıfır virgül üç mana, ha? İlginç. Ölçüm hatası genelde sıfırın altına bu kadar yaklaşmaz."],["jos","Bu iyi bir şey mi?"],["talia","Henüz bilmiyorum. İlginç şeylerin iyi mi kötü mü olduğu hep sonradan anlaşılır."]]},{"l":[["aria","Herkes burada. Şimdi kötü haber."],["aria","Birlik, otuz gün içinde en az beş kapı temizlemeyen loncaların lisansını iptal edecek."],["rex","Biz bu yıl kaç kapı temizledik?"],["talia","İki. Birinde kapı kendiliğinden kapandı, sayılır mı tartışmalı."]]},{"l":[["aria","O yüzden yarın Hollowdeep'e giriyoruz. E rütbe bir kapı. Kimsenin istemediği bir kapı."],["finn","Neden kimse istemiyor?"],["aria","Çünkü içinde neredeyse hiçbir şey yok. Temizlemesi kolay, ödülü az."]]},{"l":[["aria","Korkuyor musun?"],["jos","Hayır. Sadece bu sefer bir işe yaramak istiyorum."],["aria","Joseph, burada kimse bir işe yaramak için durmuyor. Birbirimiz için buradayız."],["nar","Joseph o gece ilk kez bir yere ait olduğunu hissetti."]]}]},{"id":"a1e2","t":"Dipsiz","pw":150,"p":[{"l":[["nar","Hollowdeep. Şehrin dışındaki eski taş ocağında açılmış soluk gri bir kapı."],["aria","Formasyon! Rex önde, Yuna keşifte, Talia ile Nell ortada. Finn..."],["finn","Arkada, biliyorum. Hep arkada."],["aria","Joseph, sen benimlesin."]]},{"l":[["yuna","Tuhaf. İlk üç salon bomboş. Ne canavar var ne tuzak."],["talia","Boş kapı diye bir şey yoktur. Sadece henüz uyanmamış kapı vardır."],["nell","Bunu söylemesen olmaz mıydı?"]]},{"l":[["nar","İlk canavarlar dördüncü salonda çıktı. Taş örümcekler. Küçük, yavaş, zayıf."],["rex","Kolay!"],["finn","Bunu dedin ya, artık kesin kolay olmayacak."],["jos","Nell, arkama geç!"],["nell","Sen... bir levyeyle mi dövüşüyorsun?"],["jos","Kılıç almaya param yetmedi."]]},{"l":[["yuna","Aria. Buna bakman lazım."],["nar","Salonun ortasında zemini delip geçen bir çukur vardı. Işık içine düşüyor ve kayboluyordu."],["talia","Bu çukur hiçbir kayıtta yok. Kapının derinliği yirmi metre diye ölçülmüştü."],["finn","Bir taş atayım. Ne kadar derin, anlarız."]]},{"l":[["nar","Taş düştü. Hepsi bekledi."],["nar","Ses hiç gelmedi."],["rex","Tamam. Ben artık eve gitmek istiyorum."]]},{"l":[["aria","Herkes kenardan uzaklaşsın! Yavaşça!"],["nell","Aria... zemin çatlıyor!"]]},{"l":[["jos","Finn! Nell! Atlayın!"],["nar","Joseph ikisini de itti. Zemin, onun ayaklarının altından koptu."],["aria","JOSEPH!"]]},{"l":[["nar","Düştü."],["nar","Sonra düşmeye devam etti."],["jos","(Beş saniye. On saniye. Yarım dakika. Neden hâlâ yere çarpmadım?)"]]},{"l":[["jos","(Işık yok. Ses yok. Rüzgâr bile yok. Belki de zaten öldüm.)"],["jos","(Ama Aria'nın sesi... hâlâ kulağımda.)"]]},{"l":[["nar","Sonunda bir zemin vardı. Çarpmadı. Sadece... durdu."],["jos","Kemiklerim sağlam. Bu imkânsız."]]},{"l":[["nar","Karanlığın ortasında insan boyunda siyah bir taş duruyordu. Üzerindeki yazılar nefes alır gibi parlıyordu."],["jos","Birisi bunu buraya koymuş."],["jos","(Dokunma, Joseph. Bu, her korku hikâyesinin ilk kuralı.)"],["jos","...Başka çıkış da yok zaten."]]},{"l":[["sys","[Dipsizin dibine ulaşan bir canlı tespit edildi.]"],["sys","[Kayıt başlatılıyor... Oyuncu: Joseph.]"],["sys","[Başlangıç noktasına geri gönderiliyorsun.]"]]},{"l":[["nar","Bir ışık. Bir sarsıntı. Ve Joseph kapının girişinde, ilk salonda duruyordu."],["jos","Girişe mi... döndüm?"]]},{"l":[["sys","[ACİL GÖREV: Takımına ulaş. Süre: 20 dakika.]"],["sys","[Uyarı: Kapı uyandı.]"],["jos","Kapı uyandı mı? Onlar hâlâ içeride!"]]}]},{"id":"a1e3","t":"Geri Dönüş","pw":300,"p":[{"l":[["nar","Kapı artık boş değildi. Duvarlardan, tavandan, zeminden taş örümcekler dökülüyordu."],["jos","Levye. Hâlâ elimde. Harika."]]},{"l":[["sys","[Yetenek açıldı: Zayıf Nokta Görüşü.]"],["jos","(Her birinin üstünde parlayan bir nokta var. Eklemlerinde. Hepsi aynı yerde.)"]]},{"l":[["nar","Levye indi. Örümcek cam gibi dağıldı."],["jos","Tek vuruş mu? Dün aynı şeye beş kere vurmuştum!"],["sys","[STR artışı. Dipsizin kalıntısı bedenine işliyor.]"]]},{"l":[["jos","(Hafifim. Daha önce hiç bu kadar hızlı koşmamıştım.)"],["nar","Dördüncü salon. Beşinci salon. Her adımda vücudu biraz daha tanımadığı birine dönüşüyordu."]]},{"l":[["nar","Aynı anda, kapının derinliklerinde."],["rex","Kalkan dayanmıyor! Bu şey E rütbe falan değil!"],["talia","Kapı uyanınca rütbesi değişti! Bu en az C!"]]},{"l":[["aria","Joseph'in düştüğü yere geri dönmeliyiz."],["yuna","Aria, o çukurun dibi yok. O..."],["aria","Söyleme. Henüz değil."]]},{"l":[["nell","Beni itti. Hiç düşünmeden. Ben o yüzden buradayım."],["finn","İkimizi de itti."]]},{"l":[["talia","Mana bitti!"],["rex","Kalkan da bitti!"],["finn","Ben de bittim ama bunu soran yok!"]]},{"l":[["jos","Yere yatın!"]]},{"l":[["nell","Jo... Joseph?"],["finn","Hayalet mi bu? Hayaletse önce ben kaçıyorum."],["jos","Sonra açıklarım. Önce şunu halledelim."]]},{"l":[["jos","Rex, sol ön bacaklar! Yuna, üçüncü halkadaki çatlak! Talia, son büyünü kafasına sakla!"],["aria","Nereden..."],["jos","Aria. Bana güven."],["aria","...Güveniyorum. Herkes Joseph'i dinlesin!"]]},{"l":[["nar","Rex bacakları ezdi. Yuna'nın oku çatlağa saplandı. Talia'nın son büyüsü kafayı sersemletti."],["nar","Aria ile Joseph aynı anda atıldı."]]},{"l":[["sys","[Acil görev tamamlandı. Yeni sistem açıldı: Günlük Görevler.]"]]},{"l":[["aria","Bir daha kimseyi itip kendini atma. Bu bir emir."],["jos","Lider emriyse..."],["aria","Lider emri. Ve bir arkadaş ricası."]]},{"l":[["talia","Dibi olmayan bir çukura düştün ve kapının girişinden geri geldin. Bu fiziksel olarak imkânsız."],["jos","Biliyorum."],["talia","Güzel. İmkânsız şeyleri severim."]]}]},{"id":"a1e4","t":"Sıfır Mana","pw":500,"p":[{"l":[["otto","Kapı rütbesi değiştiğinde içeride olan herkes yeniden ölçülür. Kural bu."],["finn","Bu sefer sıfır virgül dört çıkarsa kutlama yapalım mı?"]]},{"l":[["nar","Kristal yine sönük, gri bir ışık yaydı."],["otto","Sıfır virgül üç. F."],["kalabalik","(Kahkahalar)"]]},{"l":[["sys","[Ölçüm engellendi. Oyuncu verileri dış sistemlerle paylaşılmaz.]"],["jos","(Sistem beni saklıyor. Neden?)"]]},{"l":[["kael","C rütbeye dönen bir kapıdan Lowest Guild sağ çıkmış, öyle mi? Hikâye güzel. Kanıt nerede?"],["aria","Kapı çekirdeği Birlik'te. Kanıt o."],["kael","Çekirdeği kim kırdı peki? Sıfır manalı çocuk mu?"]]},{"l":[["kael","Sen. O kasları boşuna taşıyorsun. Bir dahaki sefere düştüğün çukurda kal."],["jos","Tavsiye için teşekkürler."],["kael","Otuz gün, Winters. Beş kapı. Sonra o çürük depo benim loncamın olacak."]]},{"l":[["yuna","Depoyu mu? Neden bizim çürük depomuzu istesin ki?"],["talia","Çünkü o depo, limanın kapı haritasındaki en yoğun noktanın tam üstünde. Iron Fang bir şey biliyor."]]},{"l":[["sys","[Günlük Görev: 100 şınav, 100 mekik, 10 km koşu.]"],["jos","Bunları zaten her gün yapıyordum."],["sys","[Artık sayılıyor.]"]]},{"l":[["yuna","Her sabah koşuyorsun. Neden?"],["jos","Başka yapabileceğim bir şey yoktu. Mana yok, yetenek yok. Sadece vücudum vardı."],["yuna","Ya şimdi?"],["jos","Şimdi bir şeyler değişiyor."]]},{"l":[["sys","[STR +2. AGI +1. VIT +1.]"],["jos","(Yavaş ama gerçek. Kristal göremiyor ama ben hissediyorum.)"]]},{"l":[["nar","İki hafta içinde Lowest Guild üç kapı temizledi. Son bir yılda temizlediğinden fazla."],["nell","Kimse yaralanmadı. Hiç kimse. Bu daha önce hiç olmamıştı."],["finn","Ben bir kere düştüm."],["nell","Merdivenden düştün, Finn. Kapıda değil."]]},{"l":[["aria","Joseph. Çukurda ne gördün?"],["jos","Karanlık. Sonra bir taş. Sonra girişteydim."],["aria","Bana her şeyi anlatmıyorsun."],["jos","Çünkü kendim de anlamıyorum."]]},{"l":[["aria","Lowest Guild'i ağabeyim Lucas kurdu. Beş yıl önce bir kapıya girdi ve bir daha çıkmadı."],["aria","Herkes öldüğünü söyledi. Ben hâlâ bu depodayım, çünkü..."],["jos","Çünkü birinin geri gelebileceğine inanıyorsun."],["aria","Sen geri geldin."]]},{"l":[["sys","[Uyarı: İkinci taşın sinyali algılandı.]"]]}]},{"id":"a1e5","t":"Iron Fang","pw":700,"p":[{"l":[["otto","Önümüzdeki iki haftanın bütün kapı izinleri Iron Fang'e verildi. Tamamı."],["aria","Bu yasal mı?"],["otto","Yasal. Adil olduğunu söylemedim."]]},{"l":[["otto","Ama Morvain sınırında, Mistvale'de bir kapı var. Ortak baskın. Iron Fang da orada. Çekirdeği kim alırsa izin onun."],["jos","Neden bize yardım ediyorsun?"],["otto","Yirmi yıldır bu masadayım. Tabandan gelenleri izlemeyi seviyorum."]]},{"l":[["nar","Mistvale. Sisi hiç kalkmayan bir çukur."],["finn","Sis. Tabii ki sis. Neden hep sis?"],["kael","Yedi kişi mi? Bizim ikinci takımımız bile on iki kişi."],["aria","Kişi sayısı kapı temizlemiyor, Kael."]]},{"l":[["kael","Kural basit. Çekirdeğe ilk dokunan kazanır. Arkamızdan gelin, artıklarımızı toplarsınız."]]},{"l":[["yuna","Bir şey yanlış. Iron Fang on dakika önce girdi. Hiç ses yok."],["talia","Bu sis doğal değil. Mana emiyor. Yavaş nefes alın."]]},{"l":[["nell","Bunlar Iron Fang'in adamları. Nefes alıyorlar ama çok zayıf."],["rex","Kael nerede?"]]},{"l":[["nar","Sisin içinde gözler açıldı. Onlarca. Yüzlerce."],["kael","Kaçın! Bu şey... B rütbe falan değil!"]]},{"l":[["finn","Bize kötülük yapan adamı mı kurtaracağız?"],["aria","Evet."],["finn","Tamam. Sadece emin olmak istedim."],["rex","Kalkanım hazır."],["aria","Rex ve Nell, yaralıları çıkarın. Yuna ve Talia, bana destek verin. Joseph..."],["jos","Çekirdeği bulacağım."]]},{"l":[["sys","[Algı yükseldi. Sis çekirdeği görünür.]"],["jos","Yuna! Sol üst, üç ağacın arasında! Parlayan bir kalp var!"],["yuna","Göremiyorum!"],["jos","Görmene gerek yok. Bana güven ve oraya ateş et!"]]},{"l":[["nar","Ok sisin içinde kayboldu. Bir an sessizlik oldu. Sonra sis çığlık atarak dağıldı."]]},{"l":[["kael","Neden? Size bunca şey yaptım."],["aria","Çünkü avcıyız, Kael. Sen bunu unutmuşsun."]]},{"l":[["kael","Gözlerin mavi parlıyor. Bunu daha önce bir kez görmüştüm. Drakmor'da, dipsizden döndüğünü söyleyen bir adamda."],["jos","Dipsiz mi? Onu biliyor musun?"],["kael","Bilmemem gereken şeyleri biliyorum. O adam bir hafta sonra ortadan kayboldu."]]},{"l":[["nar","Mistvale çekirdeğine ilk dokunan Aria Winters oldu."],["otto","Lowest Guild. Dördüncü kapı. Tebrikler. Hayır, gerçekten. Tebrikler."]]}]},{"id":"a1e6","t":"İkinci Taş","pw":950,"p":[{"l":[["nar","Eldmark sınırı. Yoksul bir beyliğin tek serveti: bakır madenleri."],["aria","Beşinci kapı. Bunu da temizlersek lisans kurtulur."],["finn","Depo da! Kovalarımı seviyorum ben."]]},{"l":[["talia","Bakır mavi parlamaz. Bu damarlar kapıdan önce de buradaymış."],["jos","(Göğsümde bir şey çekiyor. Dipsizdeki gibi.)"]]},{"l":[["rex","Duvarlar hareket ediyor!"],["nell","Duvarlar hareket etmemeli! Duvarların tek işi hareket etmemek!"],["yuna","Sağdakiler benim!"]]},{"l":[["jos","Talia, tavandaki büyük kristal! Hepsi ona bağlı!"],["talia","Tek atışlık manam kaldı. Emin misin?"],["jos","Eminim."],["nar","Kristal parçalandı. Böcekler oldukları yerde taşa döndü."]]},{"l":[["yuna","Joseph... Bu taş."],["jos","Aynısı. Dipsizdeki taşın aynısı."]]},{"l":[["sys","[İkinci taş bulundu. 2/7.]"],["sys","[Hafıza parçası açılıyor.]"],["nar","Joseph'in gözlerinin önünden görüntüler geçti. Yedi taş. Yedi kapı. Ve karanlıkta mavi gözlü bir adam."]]},{"l":[["aria","Joseph! Ne gördün?"],["jos","Bir adam. Saçları senin saçınla aynı renkteydi. Gözleri benimkiler gibi parlıyordu."]]},{"l":[["aria","...Lucas."],["aria","Beş yıldır ilk kez bir iz."]]},{"l":[["talia","\"Yedi taş, yedi kapı, tek bir dip.\" Eski bir halk masalı. Kapılardan önce yazılmış."],["talia","Masala göre taşlar bir şeyi mühürlüyor. Mühürler kırılınca dip yukarı çıkar."],["finn","\"Dip yukarı çıkar\" hiç iyi bir cümle değil."]]},{"l":[["sys","[Uyarı: Taşların sinyali yer değiştiriyor. Yön: Erosia.]"],["talia","Erosia'ya mı? Yani bize mi?"],["rex","Buradan çıkalım. Hemen."]]},{"l":[["otto","Beş kapı. Lowest Guild'in lisansı yenilendi."],["finn","Kutlama! Kurabiye! Nell, kurabiyeler!"],["nell","Kurabiyeleri sen yedin, Finn. Geçen hafta."]]},{"l":[["aria","Ağabeyim hayatta mı?"],["jos","Bilmiyorum. Ama taşlar bir yere gidiyor. O da orada olabilir."],["aria","O zaman taşları takip ederiz. Hep birlikte."],["jos","Söz."]]},{"l":[["kael","Winters. Iron Fang'in depoyu neden istediğini öğrendim. Altında bir şey var."],["kael","Drakmor'dan emir geldi. Üç gün içinde o kapıyı açacaklar. Onlar. Ben değil."],["aria","Bunu bize neden söylüyorsun?"],["kael","Mistvale'de hayatımı kurtardınız. Borcumu ödüyorum."]]}]},{"id":"a1e7","t":"Şehrin Altında","pw":1200,"p":[{"l":[["nar","Deponun bodrumu. Beş yıldır kimsenin açmadığı bir kapak."],["aria","Lucas bu kapağı hep kilitli tutardı. Nedenini hiç söylemedi."]]},{"l":[["yuna","Tüneller şehrin tamamının altına uzanıyor."],["talia","Bu yapılar kapılardan en az bin yıl önce yapılmış."],["finn","Bin yıllık tünel, bin yıllık örümcek demek. Bunu herkes bilir."],["rex","Finn, sus."]]},{"l":[["jos","Yedi taş. Aynı semboller."]]},{"l":[["draven","Lowest Guild. Böyle bir yerde karşılaşmak ne güzel."],["kael","Draven, bunlar sadece..."],["draven","Sessiz ol, Varn. Drakmor sana bu işi anlaman için değil, taşıman için verdi."]]},{"l":[["nar","Tünelin sonunda bir katedral büyüklüğünde bir kapı duruyordu. Her nabzında şehir hafifçe titriyordu."],["draven","Dipsizin kapısı. İmparator bunu yıllardır arıyor."]]},{"l":[["aria","Durdur onu! O kapı açılırsa şehir..."],["draven","Şehir mi? Eros zaten haritada bir leke."],["kael","Bunu yapmayacağımızı söylemiştin!"]]},{"l":[["nar","Mühür kırıldı. Kapının ardında sayısız göz açıldı."],["rex","Sayamıyorum. Neden sayamıyorum?!"],["talia","Geri çekilin! Köprüye!"]]},{"l":[["kael","Beni... bıraktı."],["nell","Kael yaralı! Rex, onu taşı!"]]},{"l":[["rex","Köprüyü ben tutarım. Siz yaralıları çıkarın."],["nell","Rex, tek başına olmaz!"],["rex","Hep arkada durdum, Nell. Bu sefer önde durayım."]]},{"l":[["jos","İlk gün \"arkamda durursan kimse sana dokunamaz\" demiştin."],["rex","Dedim."],["jos","Bugün arkanda değilim. Yanındayım."],["aria","Ben de."]]},{"l":[["nar","Karanlıktan bir pençe uzandı. Aria, Joseph'in önüne atıldı."],["jos","ARIA!"]]},{"l":[["aria","İyiyim... Sadece bir çizik."],["nell","Çizik falan değil! Kıpırdama!"],["jos","(Hepsini görüyorum. Her birinin zayıf noktasını. Tek tek.)"]]},{"l":[["sys","[Öfke eşiği aşıldı. Geçici güç artışı.]"],["nar","O gece Erosia'nın altında F rütbe bir avcı, köprüden tek bir canavar bile geçirmedi."]]},{"l":[["sys","[Uyarı: Dipsizin Bekçisi uyanıyor.]"],["talia","Bu bir boss değil. Bu bir duvar."],["finn","Kaçmak için güzel bir an."],["yuna","Nereye? Arkamız da kapandı."]]}]},{"id":"a1e8","t":"Dipsizin Bekçisi","pw":1500,"p":[{"l":[["nar","Karanlıktan yükselen şey bir canavar değildi. Bir bekçiydi."],["bekci","Kim... dibe dokundu?"]]},{"l":[["bekci","Sen. Üstünde dipsizin kokusu var. Dipten dönen sensin."],["jos","Bir taşa dokundum. Hepsi bu."],["bekci","Taş seni seçti. Beş yıl önce de birini seçmişti."]]},{"l":[["aria","Lucas! Ağabeyim nerede?!"],["bekci","Aşağıda. Sonraki kapının ardında. O da senin gibi yukarı çıkmaya çalışıyor."]]},{"l":[["sys","[...]"],["jos","(Sistem ilk kez sustu.)"]]},{"l":[["aria","Lowest Guild! Formasyon!"],["finn","Hangi formasyon? Bizim formasyonumuz var mıydı?"],["yuna","\"Joseph ne derse o\" formasyonu!"]]},{"l":[["nar","Bekçinin darbesi indi. Rex'in kalkanı ikiye ayrıldı."],["rex","Kalkanım... Önemli değil. Kollarım hâlâ yerinde."]]},{"l":[["nell","Herkes bana yakın dursun! Yarım dakika dayanabilirim!"],["talia","Yarım dakika yeter. Joseph?"]]},{"l":[["sys","[Taş senkronizasyonu: 2/7. Yetersiz.]"],["jos","Yedi mühür görüyorum. İkisi zayıf. Bulduğumuz iki taşın mühürleri."],["jos","O ikisini kırarsak geri çekilir. Yenemeyiz ama durdurabiliriz."]]},{"l":[["kael","Durdurmak mı? O zaman bir kılıç daha lazım."],["finn","Kael mi? Hasta mısın sen?"],["kael","Borcumu ödüyorum dedim, çocuk."]]},{"l":[["jos","Yuna, Talia, sol omuz! Kael, Rex, sağ kol! Aria..."],["aria","Seninleyim."],["nar","Bir kılıç. Bir levye. Aynı anda iki mühür."]]},{"l":[["bekci","Dipten dönen çocuk. Yedi taşı bul. Yoksa dip sizi bulacak."],["bekci","Ve kardeşine söyle: kapı her zaman aşağıdan açılır."],["nar","Dev kapı gürültüyle kapandı. Mühür yeniden parladı. Şimdilik."]]},{"l":[["otto","Birlik, Erosia'yı kurtaran loncaya resmî teşekkürlerini iletiyor."],["otto","Ayrıca Lowest Guild'in sıralaması güncellendi. Tabandan... bir üst basamağa."],["finn","Bir basamak mı? Şehri kurtardık!"],["otto","Kurallar kurallardır."]]},{"l":[["kael","Iron Fang'den ayrıldım. Drakmor'un köpeği olmaktan sıkıldım."],["aria","Lowest Guild'de yer var. Maaş az, iş çok, çatı akıtıyor."],["kael","...Düşüneceğim."]]},{"l":[["aria","Joseph. Ağabeyim hayatta."],["jos","Onu bulacağız. Yedi taşın hepsini."],["aria","Söz mü?"],["jos","Söz."]]},{"l":[["sys","[ARC 1 tamamlandı. Rütbe güncellemesi bekleniyor.]"],["sys","[Yeni hedef: İkinci Kapı. Konum: Drakmor.]"]]},{"l":[["nar","Çok uzakta, Drakmor Kalesi'nde biri, avucundaki mavi ışığın sönüşünü izliyordu."]]}]}]},
+             {id:"a2",n:"ARC 2",t:null,d:"Arc 1'i tamamlayınca açılır.",eps:[]}];
+const STORY_RW=i=>({xp:40+i*15,gold:25+i*10});
+let stView=null;
+function stDone(id){return !!(S.story&&S.story.done&&S.story.done[id])}
+function stArcState(a){const n=a.eps.filter(e=>stDone(e.id)).length;const cur=a.eps.find(e=>!stDone(e.id))||null;return {n,cur}}
+function stArcOpen(a,i){if(!a.eps.length) return false;if(i===0) return true;const p=STORY[i-1];return p.eps.length&&p.eps.every(e=>stDone(e.id))}
+const STORY_CAP=`<svg viewBox="0 0 160 160"><defs><radialGradient id="arcG" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#e8f7ff"/><stop offset=".35" stop-color="#62d2ff"/><stop offset=".7" stop-color="#2a4aff" stop-opacity=".6"/><stop offset="1" stop-color="#1a0a5a" stop-opacity="0"/></radialGradient></defs><ellipse cx="80" cy="82" rx="74" ry="74" fill="url(#arcG)" opacity=".35"/><ellipse cx="80" cy="82" rx="44" ry="60" fill="#050a1c" stroke="#62d2ff" stroke-width="3"/><ellipse cx="80" cy="82" rx="36" ry="51" fill="none" stroke="#8a6aff" stroke-width="2" opacity=".8"/><ellipse cx="80" cy="82" rx="26" ry="39" fill="url(#arcG)" opacity=".9"/><path d="M80 36 Q92 60 84 82 Q76 104 80 128" fill="none" stroke="#fff" stroke-width="1.4" opacity=".6"/><g fill="#9fe6ff"><circle cx="30" cy="40" r="1.6"/><circle cx="132" cy="32" r="1.2"/><circle cx="140" cy="118" r="1.8"/><circle cx="22" cy="124" r="1.2"/></g></svg>`;
+const ST_LOCK=`<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>`;
+const ST_CHEV=`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>`;
+function stBadge(r){
+  if(r==="?") return `<svg viewBox="0 0 100 100"><polygon points="50,5 89,27.5 89,72.5 50,95 11,72.5 11,27.5" fill="#0c1426" stroke="#eef4ff" stroke-width="4"/><text x="50" y="66" text-anchor="middle" font-family="Chakra Petch, sans-serif" font-weight="700" font-size="44" fill="#eef4ff">?</text></svg>`;
+  return r?emblem(r,{anim:false,mini:true}):"";
+}
+function renderStory(){
+  const el=$("storyBody");if(!el) return;
+  const pw=power();
+  if(stView){const a=STORY.find(x=>x.id===stView);if(a&&a.eps.length){el.innerHTML=stArcPage(a,pw);return}stView=null}
+  el.innerHTML=`<div class="arcl">${STORY.map((a,i)=>{
+    const open=stArcOpen(a,i);
+    if(!open) return `<div class="arcc lock"><div class="arcc-art" aria-hidden="true">${STORY_CAP}</div><div class="arcc-tx"><div class="arc-no">${esc(a.n)}</div><div class="arcc-t">???</div><p class="arcc-d">${esc(a.d)}</p></div><span class="arcc-go">${ST_LOCK}</span></div>`;
+    const {n,cur}=stArcState(a),all=a.eps.length;
+    const chip=!cur?`<span class="stchip ok">Tamamlandı</span>`:n?`<span class="stchip on">Devam et · Bölüm ${a.eps.indexOf(cur)+1}</span>`:`<span class="stchip on">Başla</span>`;
+    return `<button type="button" class="arcc" data-arc="${a.id}"><div class="arcc-art" aria-hidden="true">${STORY_CAP}</div><div class="arcc-tx"><div class="arc-no">${esc(a.n)}</div><div class="arcc-t">${esc(a.t)}</div><p class="arcc-d">${esc(a.d)}</p><div class="arcc-pr"><div class="bar thin"><i style="width:${n/all*100}%"></i></div><b>${n}/${all}</b></div>${chip}</div><span class="arcc-go">${ST_CHEV}</span></button>`;
+  }).join("")}</div>`;
+}
+function stArcPage(a,pw){
+  const {n,cur}=stArcState(a),all=a.eps.length,ci=cur?a.eps.indexOf(cur):all;
+  const rows=a.eps.map((e,i)=>{
+    const num=String(i+1).padStart(2,"0");
+    if(stDone(e.id)) return `<li class="epc done"><span class="epn">${num}</span><div class="epi"><b>${esc(e.t)}</b><span class="eps ok">${CHECK} Tamamlandı</span></div><button type="button" class="btn sm" data-story="${e.id}">Tekrar izle</button></li>`;
+    if(i===ci){const ok=pw>=e.pw;
+      if(ok) return `<li class="epc avail"><span class="epn">${num}</span><div class="epi"><b>${esc(e.t)}</b><span class="eps">Oynanabilir${e.pw?` · Gerekli güç ${fmt(e.pw)}`:""}</span></div><button type="button" class="btn primary" data-story="${e.id}">Oyna</button></li>`;
+      return `<li class="epc need"><span class="epn">${num}</span><div class="epi"><b>${esc(e.t)}</b><span class="eps bad">Gerekli güç ${fmt(e.pw)} · Sende ${fmt(pw)}</span><div class="bar thin"><i style="width:${Math.min(100,pw/Math.max(1,e.pw)*100)}%"></i></div></div><span class="eplk">${ST_LOCK}</span></li>`}
+    return `<li class="epc lock"><span class="epn">${num}</span><div class="epi"><b>Kilitli bölüm</b><span class="eps">Gerekli güç ${fmt(e.pw)}${pw>=e.pw?" · Önceki bölümü bitir":""}</span></div><span class="eplk">${ST_LOCK}</span></li>`;
+  }).join("");
+  return `<button type="button" class="stback" data-stback="1"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Tüm arc'lar</button>
+<header class="arch"><div class="arch-art" aria-hidden="true">${STORY_CAP}</div><div><div class="arc-no">${esc(a.n)}</div><h3 class="arch-t">${esc(a.t)}</h3><p class="arcc-d">${esc(a.d)}</p><div class="arch-st"><span>İlerleme <b>${n}/${all}</b></span><span>Gücün <b>${fmt(pw)}</b></span></div><div class="bar thin"><i style="width:${n/all*100}%"></i></div></div></header>
+<ol class="epl">${rows}</ol>`;
+}
+let SP=null;
+function stFind(id){for(const a of STORY){const i=a.eps.findIndex(e=>e.id===id);if(i>=0) return {a,e:a.eps[i],i}}return null}
+function storyOpen(id){
+  const f=stFind(id);if(!f) return;
+  const {a,e,i}=f;if(!stDone(e.id)&&power()<e.pw) return;
+  const lines=[];e.p.forEach((p,pi)=>p.l.forEach(l=>lines.push({pi,s:l[0],t:l[1]})));
+  SP={a,e,i,lines,k:-1,typing:false,full:"",shown:0,raf:0,audio:null,ended:false};
+  const el=$("storyPlayer");
+  el.innerHTML=`<div class="sp-top"><div class="sp-tl"><div class="sp-k">${esc(a.n)} · BÖLÜM ${String(i+1).padStart(2,"0")}</div><div class="sp-t">${esc(e.t)}</div></div><div class="sp-btns"><button type="button" class="btn sm" data-spskip="1">Atla</button><button type="button" class="btn sm sp-x" data-spexit="1" aria-label="Bölümden çık"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></div>
+<div class="sp-prog"><i id="spProg"></i></div>
+<div class="sp-stage"><div class="sp-img" id="spImg"></div><div class="sp-vig"></div><div class="sp-cnt" id="spCnt"></div></div>
+<div class="sp-box" id="spBox"><div class="sp-spk" id="spSpk"></div><div class="sp-div"></div><div class="sp-body"><p class="sp-txt" id="spTxt"></p><span class="sp-hint" id="spHint"></span></div></div>`;
+  el.hidden=false;document.body.classList.add("sp-open");
+  storyNext();
+}
+function spImgHtml(e,pi){
+  const n=String(pi+1).padStart(2,"0"),src=`${STORY_IMG}${e.id.slice(0,2)}/${e.id}-${n}.webp`;
+  return `<img src="${src}" alt="" onerror="this.remove()"><div class="sp-ph"><div class="sp-phg">${STORY_CAP}</div><span>Sahne ${pi+1}</span></div>`;
+}
+function storyNext(){
+  if(!SP||SP.ended) return;
+  if(SP.typing){cancelAnimationFrame(SP.raf);SP.typing=false;$("spTxt").textContent=SP.full;$("spHint").classList.add("on");return}
+  SP.k++;
+  if(SP.k>=SP.lines.length){storyEnd();return}
+  const L=SP.lines[SP.k],prev=SP.k>0?SP.lines[SP.k-1].pi:-1,np=SP.e.p.length;
+  if(L.pi!==prev){const im=$("spImg");im.innerHTML=spImgHtml(SP.e,L.pi);im.classList.remove("in");void im.offsetWidth;im.classList.add("in");
+    if(L.pi+1<np){const pre=new Image();pre.src=`${STORY_IMG}${SP.e.id.slice(0,2)}/${SP.e.id}-${String(L.pi+2).padStart(2,"0")}.webp`}}
+  const c=STORY_CHARS[L.s]||{n:L.s,r:null,role:"",c:"#dcefff"},par=/^\(.*\)$/.test(L.t),th=par&&L.s==="jos";
+  const box=$("spBox");box.className="sp-box"+(L.s==="sys"?" sys":L.s==="nar"?" nar":"")+(par?" th":"");box.style.setProperty("--sc",c.c||"#62d2ff");
+  $("spSpk").innerHTML=L.s==="nar"?"":L.s==="sys"?`<span class="sp-bd sysb">!</span><div class="sp-nm"><b>SİSTEM</b></div>`
+    :`${c.r!==null?`<span class="sp-bd">${stBadge(c.r)}</span>`:`<span class="sp-bd none"></span>`}<div class="sp-nm"><b>${esc(c.n)}</b>${c.role?`<span>${esc(c.role)}</span>`:""}${th?`<i>iç ses</i>`:""}</div>`;
+  SP.full=par?L.t.slice(1,-1):L.t;SP.shown=0;SP.typing=true;$("spTxt").textContent="";$("spHint").classList.remove("on");
+  $("spCnt").textContent=`SAHNE ${String(L.pi+1).padStart(2,"0")} / ${String(np).padStart(2,"0")}`;
+  $("spProg").style.width=((SP.k+1)/SP.lines.length*100)+"%";
+  if(SP.audio){try{SP.audio.pause()}catch(err){}SP.audio=null}
+  if(STORY_AUDIO[SP.e.id]&&!muted){try{SP.audio=new Audio(`${STORY_IMG}audio/${SP.e.id}-${String(SP.k+1).padStart(2,"0")}.mp3`);SP.audio.play().catch(()=>{})}catch(err){}}
+  const t0=performance.now(),spd=L.s==="sys"?16:24;
+  const step=now=>{if(!SP||!SP.typing) return;const n=Math.min(SP.full.length,Math.floor((now-t0)/spd));if(n!==SP.shown){SP.shown=n;$("spTxt").textContent=SP.full.slice(0,n)}
+    if(n>=SP.full.length){SP.typing=false;$("spHint").classList.add("on");return}SP.raf=requestAnimationFrame(step)};
+  SP.raf=requestAnimationFrame(step);
+}
+function storyEnd(){
+  if(!SP) return;cancelAnimationFrame(SP.raf);SP.ended=true;SP.typing=false;
+  if(SP.audio){try{SP.audio.pause()}catch(err){}SP.audio=null}
+  const {e,i,a}=SP,rw=STORY_RW(i);let rew="";
+  if(!S.story||typeof S.story!=="object") S.story={v:2,done:{},rw:{}};
+  if(!S.story.rw) S.story.rw={};
+  if(!stDone(e.id)){
+    S.story.done[e.id]=Date.now();
+    if(!S.story.rw[e.id]){S.story.rw[e.id]=1;addXp(rw.xp);addGold(rw.gold);
+      rew=`<div class="rew"><div><span>Deneyim</span><b>+${fmt(rw.xp)} XP</b></div><div><span>${coinSvg(16)}Gold</span><b>+${fmt(rw.gold)}</b></div></div>`}
+    commit();
+  }
+  $("spProg").style.width="100%";
+  const nxt=a.eps[i+1],last=!nxt;
+  $("spBox").outerHTML=`<div class="sp-end"><div class="sp-k">${esc(a.n)} · BÖLÜM ${String(i+1).padStart(2,"0")}</div><div class="sp-endt">${last?"ARC TAMAMLANDI":"BÖLÜM TAMAMLANDI"}</div>${rew}${nxt&&!stDone(nxt.id)?`<p class="small muted">Sıradaki bölüm için gereken güç: <b>${fmt(nxt.pw)}</b></p>`:""}<button type="button" class="btn primary" data-spclose="1">Kapat</button></div>`;
+}
+function storyClose(){
+  if(SP){cancelAnimationFrame(SP.raf);if(SP.audio){try{SP.audio.pause()}catch(err){}}}
+  SP=null;const el=$("storyPlayer");el.hidden=true;el.innerHTML="";document.body.classList.remove("sp-open");
+  if(curTab==="story") renderStory();
+}
+
+$("storyPlayer").addEventListener("click",e=>{if(e.target.closest("button")) return;storyNext()});
 function portraitSvg(app,gear,opts){return charSvg(app,gear,Object.assign({},opts||{},{mode:"portrait"}))}
 function npcGear(m){
   const i=TIERS.indexOf(m.r);
@@ -3426,6 +3633,7 @@ function renderTab(t){
   else if(t==="char") renderChar();
   else if(t==="map") renderMap();
   else if(t==="set") renderSettings();
+  else if(t==="story") renderStory();
 }
 function renderQuests(){
   let html="";
@@ -3740,6 +3948,12 @@ document.addEventListener("click",e=>{
   const d=el.dataset;
   if(d.nav){setTab(GLAST[d.nav]||d.nav);return}
   if(d.tab){setTab(d.tab);return}
+  if(d.story){storyOpen(d.story);return}
+  if(d.arc){stView=d.arc;renderStory();window.scrollTo(0,0);return}
+  if(d.stback){stView=null;renderStory();window.scrollTo(0,0);return}
+  if(d.spexit){storyClose();return}
+  if(d.spskip){storyEnd();return}
+  if(d.spclose){storyClose();return}
   if(d.av){if(S.pf.av!==d.av){S.pf.av=d.av;renderProfileSet();commit()}return}
   if(d.fr){if(frUnlocked(d.fr)&&S.pf.fr!==d.fr){S.pf.fr=d.fr;renderProfileSet();commit()}return}
   if(d.dgo){enterDungeon(d.dgo);return}
@@ -3852,7 +4066,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&showing&&$("modal")
 /* ================= BACKUP & SYNC ================= */
 const IS_PWA=true;
 const FB_CONFIG={"apiKey": "AIzaSyBsNalG4Fl7crcsluhf2hqDXlWawD6DJ2I", "authDomain": "hunter-sistemi.firebaseapp.com", "projectId": "hunter-sistemi", "storageBucket": "hunter-sistemi.firebasestorage.app", "messagingSenderId": "550981824995", "appId": "1:550981824995:web:bd6d609b92a2b74b8f70d6"};
-const APP_VER="17";
+const APP_VER="19";
 const LS_SYNC="hunter-sistemi-sync";
 function b64e(t){return btoa(unescape(encodeURIComponent(t)))}
 function b64d(t){return decodeURIComponent(escape(atob(t)))}
