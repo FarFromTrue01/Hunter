@@ -41,12 +41,15 @@ html,body{background:var(--bg)}
 body{
   color:var(--text);font-family:var(--body);font-size:15px;line-height:1.5;
   padding:18px 16px calc(var(--nav-h) + 36px + env(safe-area-inset-bottom,0px));min-height:100%;
+  background:transparent;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;transform:translateZ(0);
   background:
     radial-gradient(1000px 520px at 75% -10%,rgba(40,120,255,.17),transparent 60%),
     radial-gradient(700px 420px at -10% 110%,rgba(30,200,255,.07),transparent 60%),
     linear-gradient(rgba(58,169,240,.04) 1px,transparent 1px) 0 0/100% 34px,
     var(--bg);
-  background-attachment:fixed;
 }
 button{font:inherit;color:inherit}
 .wrap{max-width:900px;margin:0 auto;display:grid;gap:18px}
@@ -320,7 +323,7 @@ button.mcard:focus-visible{outline:2px solid var(--glow);outline-offset:2px}
 .mlead{font-family:var(--display);font-size:11px;letter-spacing:.16em;color:var(--gold);display:flex;align-items:center;gap:5px}
 
 /* NAV */
-.nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(3,8,20,.95);border-top:1px solid var(--line-dim);box-shadow:0 -6px 30px rgba(0,0,0,.6);padding:0 4px env(safe-area-inset-bottom,0px);backdrop-filter:blur(10px)}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(3,8,20,.95);border-top:1px solid var(--line-dim);box-shadow:0 -6px 30px rgba(0,0,0,.6);padding:0 4px env(safe-area-inset-bottom,0px)}
 .nav-in{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));height:var(--nav-h)}
 .navbtn{background:none;border:0;cursor:pointer;display:grid;justify-items:center;align-content:center;gap:4px;color:var(--faint);font-family:var(--display);font-size:11.5px;letter-spacing:.04em;position:relative;transition:color .15s;min-width:0;padding:0 2px}
 .navbtn span.l{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
@@ -337,7 +340,7 @@ button.mcard:focus-visible{outline:2px solid var(--glow);outline-offset:2px}
 .toast b{color:var(--gold)}
 .toast .st{color:var(--ok)}
 @keyframes tin{from{opacity:0;transform:translateY(-10px) scaleY(.6)}to{opacity:1;transform:none}}
-.overlay{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:16px;background:rgba(1,3,10,.78);backdrop-filter:blur(3px);overflow-y:auto}
+.overlay{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:16px;background:rgba(1,3,10,.86);overflow-y:auto}
 .modal{width:min(480px,100%);text-align:center;animation:open .5s cubic-bezier(.2,.9,.2,1)}
 @keyframes open{0%{opacity:0;transform:scaleY(.02) scaleX(.5)}55%{opacity:1;transform:scaleY(.02) scaleX(1)}100%{transform:none}}
 .modal .big{font-family:var(--display);font-weight:700;font-size:34px;letter-spacing:.1em;line-height:1.1;margin:4px 0 12px;text-shadow:0 0 20px rgba(98,210,255,.9);text-wrap:balance}
@@ -616,6 +619,11 @@ button.fgcard{cursor:pointer}
 .syncdot.on{background:var(--ok);box-shadow:0 0 10px var(--ok)}
 .synccode{font-family:var(--display);font-weight:700;letter-spacing:.08em;font-size:15px;margin-top:6px;color:var(--gold);overflow-wrap:anywhere}
 body.noanim *,body.noanim *::before,body.noanim *::after{animation:none!important;transition:none!important}
+/* PERF: composited breathing + pause decorative loops while scrolling */
+.breathe{width:100%;height:100%;animation:breathe 3.2s ease-in-out infinite;will-change:transform}
+@keyframes breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-.2%)}}
+body.scrolling .spin,body.scrolling .pulse,body.scrolling .breathe{animation-play-state:paused}
+
 .seg.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
 @media (max-width:560px){#storeSeg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}}
 .seg.grid3 button{white-space:normal;line-height:1.2}
@@ -2535,17 +2543,19 @@ function charSvg(app,gear,o){
     ruler=`<line x1="${rxp}" y1="${f(G-210*1.8)}" x2="${rxp}" y2="${G}" stroke="#3a5478" stroke-width="1"/>${t}<line x1="${rxp}" y1="${f(top)}" x2="${f(cx-rx)}" y2="${f(top)}" stroke="#62d2ff" stroke-width=".8" stroke-dasharray="3 3" opacity=".6"/><path d="M${rxp} ${f(top)} l7 -4 l0 8 Z" fill="#62d2ff"/><text x="${rxp+10}" y="${f(top-5)}" font-family="Chakra Petch, sans-serif" font-size="10" font-weight="700" fill="#62d2ff">${hcm} cm · ${wkg} kg</text>`;
   }
   const vb=full?(o.noRuler?"-20 0 240 400":"-44 0 288 400"):`${f(cx-1.3*u)} ${f(top-.3*u)} ${f(2.6*u)} ${f(2.6*u)}`;
-  const breathe=full&&ANIM?`<animateTransform attributeName="transform" type="translate" values="0 0;0 -0.8;0 0" dur="3.2s" repeatCount="indefinite"/>`:"";
+  const breathe="";
   return `<svg viewBox="${vb}" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Karakter"><defs>${defs}</defs>${ruler}<g>${back.join("")}</g><g>${breathe}${body.join("")}${front.join("")}</g></svg>`;
 }
+const _charSvg=charSvg;
+charSvg=function(app,gear,o){const v=_charSvg(app,gear,o);return (o&&o.mode==="portrait")||!ANIM?v:'<div class="breathe">'+v+'</div>'};
 function portraitSvg(app,gear,opts){return charSvg(app,gear,Object.assign({},opts||{},{mode:"portrait"}))}
 function npcGear(m){
   const i=TIERS.indexOf(m.r);
   return {weapon:m.wid||null,chest:"chest_"+m.r,pants:"pants_"+m.r,cape:i>=3?"cape_"+m.r:null,ring:i>=4?"ring_"+m.r:null,amulet:i>=2?"amulet_"+m.r:null};
 }
 function renderViewers(){
-  const svg=charSvg(S.app,S.inv.equip,{rank:curRank()});
-  ["viewerChar","viewerSet"].forEach(k=>{const el=$(k);if(el&&!el.closest(".tab").hidden) el.innerHTML=svg});
+  const key=JSON.stringify([S.app,S.inv.equip,curRank(),ANIM]);let svg=null;
+  ["viewerChar","viewerSet"].forEach(k=>{const el=$(k);if(el&&!el.closest(".tab").hidden&&el._vk!==key){if(svg===null) svg=charSvg(S.app,S.inv.equip,{rank:curRank()});el.innerHTML=svg;el._vk=key}});
 }
 
 /* ================= TOAST / OVERLAY ================= */
@@ -3474,7 +3484,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&showing&&$("modal")
 /* ================= BACKUP & SYNC ================= */
 const IS_PWA=true;
 const FB_CONFIG={"apiKey": "AIzaSyBsNalG4Fl7crcsluhf2hqDXlWawD6DJ2I", "authDomain": "hunter-sistemi.firebaseapp.com", "projectId": "hunter-sistemi", "storageBucket": "hunter-sistemi.firebasestorage.app", "messagingSenderId": "550981824995", "appId": "1:550981824995:web:bd6d609b92a2b74b8f70d6"};
-const APP_VER="14";
+const APP_VER="15";
 const LS_SYNC="hunter-sistemi-sync";
 function b64e(t){return btoa(unescape(encodeURIComponent(t)))}
 function b64d(t){return decodeURIComponent(escape(atob(t)))}
@@ -3622,6 +3632,19 @@ setTab(curTab);
 showRefund();
 checkTitles();
 setInterval(()=>{tick();if(S.day!==todayKey()&&rollover()) commit()},1000);
+/* PERF: pause animations while scrolling so the phone only has to scroll */
+(function(){
+  let t=null,on=false;
+  const svgs=()=>document.querySelectorAll("svg:not(svg svg)");
+  const stop=()=>{on=false;document.body.classList.remove("scrolling");svgs().forEach(v=>{try{v.unpauseAnimations()}catch(e){}})};
+  const go=()=>{
+    if(!on){on=true;document.body.classList.add("scrolling");svgs().forEach(v=>{try{v.pauseAnimations()}catch(e){}})}
+    clearTimeout(t);t=setTimeout(stop,250);
+  };
+  document.addEventListener("scroll",go,{passive:true,capture:true});
+  document.addEventListener("touchmove",go,{passive:true});
+})();
+
 bResume();
 initDb();
 })();
