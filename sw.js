@@ -10,6 +10,6 @@ self.addEventListener("fetch",e=>{
     return;
   }
   const cacheable=u.origin===location.origin||u.hostname==="fonts.googleapis.com"||u.hostname==="fonts.gstatic.com"||(u.hostname==="www.gstatic.com"&&u.pathname.startsWith("/firebasejs/"));
-  if(!cacheable) return;
+  if(!cacheable||u.pathname.endsWith(".mp3")) return;
   e.respondWith(caches.match(r).then(m=>m||fetch(r).then(res=>{if(res.ok||res.type==="opaque"){const cp=res.clone();caches.open(C).then(c=>c.put(r,cp))}return res})));
 });
