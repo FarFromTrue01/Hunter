@@ -670,7 +670,7 @@ body.sp-open{overflow:hidden}
 .sp-ph{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:8px;background:radial-gradient(circle at 50% 45%,rgba(40,90,200,.28),transparent 60%),#03060f;color:var(--faint);font-family:var(--display);letter-spacing:.2em;font-size:12px;text-transform:uppercase}
 .sp-phg svg{width:120px;height:120px;opacity:.7;display:block}
 .sp-cnt{position:absolute;right:10px;bottom:8px;z-index:3;font-family:var(--display);font-size:10.5px;letter-spacing:.2em;color:#a9bddb;background:rgba(2,6,16,.7);border:1px solid rgba(98,210,255,.2);padding:2px 8px}
-.sp-box{--sc:#62d2ff;position:relative;display:grid;grid-template-columns:190px 1px minmax(0,1fr);gap:18px;align-items:stretch;min-height:128px;padding:16px 20px 14px;border:1px solid rgba(98,210,255,.22);border-top:2px solid var(--sc);background:linear-gradient(180deg,rgba(12,24,48,.97),rgba(4,9,20,.97));box-shadow:0 -10px 30px rgba(0,0,0,.5)}
+.sp-box{--sc:#62d2ff;position:relative;display:grid;grid-template-columns:230px 1px minmax(0,1fr);gap:18px;align-items:stretch;min-height:128px;padding:16px 20px 14px;border:1px solid rgba(98,210,255,.22);border-top:2px solid var(--sc);background:linear-gradient(180deg,rgba(12,24,48,.97),rgba(4,9,20,.97));box-shadow:0 -10px 30px rgba(0,0,0,.5)}
 .sp-box::before,.sp-box::after{content:"";position:absolute;width:12px;height:12px;border:2px solid var(--sc);pointer-events:none;opacity:.8}
 .sp-box::before{bottom:-3px;left:-3px;border-right:0;border-top:0}.sp-box::after{bottom:-3px;right:-3px;border-left:0;border-top:0}
 .sp-spk{display:flex;align-items:center;gap:12px;min-width:0}
@@ -681,6 +681,13 @@ body.sp-open{overflow:hidden}
 .sp-nm b{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:.1em;text-transform:uppercase;color:var(--sc);line-height:1.15;overflow-wrap:anywhere}
 .sp-nm span{font-family:var(--display);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.3}
 .sp-nm i{font-style:normal;font-family:var(--display);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#a9bddb;border:1px solid rgba(169,189,219,.35);padding:0 5px;justify-self:start;margin-top:2px}
+.sp-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.sp-tag{display:inline-flex;align-items:center;gap:5px;font-family:var(--display);font-weight:600;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;line-height:1;padding:4px 8px 4px 6px;white-space:nowrap}
+.sp-tag.gd{color:var(--tc);background:linear-gradient(90deg,color-mix(in srgb,var(--tc) 26%,transparent),color-mix(in srgb,var(--tc) 8%,transparent));border:1px solid color-mix(in srgb,var(--tc) 55%,transparent);clip-path:polygon(0 0,100% 0,calc(100% - 6px) 100%,0 100%);padding-right:12px}
+.sp-tag.gd svg{width:11px;height:11px;fill:currentColor;filter:drop-shadow(0 0 3px color-mix(in srgb,var(--tc) 70%,transparent))}
+.sp-tag.cl{color:#e6eef8;background:rgba(10,20,40,.7);border:1px solid color-mix(in srgb,var(--tc) 45%,transparent);border-left:3px solid var(--tc);padding-left:7px}
+.sp-tag.cl i{width:6px;height:6px;transform:rotate(45deg);background:var(--tc);box-shadow:0 0 6px var(--tc)}
+.sp-tag.th{color:#a9bddb;border:1px dashed rgba(169,189,219,.45);padding-left:8px}
 .sp-div{background:linear-gradient(180deg,transparent,var(--sc),transparent);opacity:.55}
 .sp-body{position:relative;display:grid;align-content:center;min-width:0}
 .sp-txt{margin:0;font-size:17px;line-height:1.6;min-height:3.2em;white-space:pre-wrap;text-wrap:pretty}
@@ -708,7 +715,7 @@ body.sp-open{overflow:hidden}
   .sp-box{grid-template-columns:1fr;gap:8px;padding:12px 14px 12px;min-height:140px}
   .sp-div{height:1px;background:linear-gradient(90deg,var(--sc),transparent)}
   .sp-bd{width:36px;height:36px}.sp-bd.sysb{width:30px;height:30px;font-size:16px}
-  .sp-nm{grid-template-columns:auto auto;align-items:baseline;column-gap:8px}.sp-nm b{font-size:14px}
+  .sp-nm{display:flex;flex-wrap:wrap;align-items:center;column-gap:8px}.sp-nm .sp-tags{margin-top:0}.sp-nm b{font-size:14px}
   .sp-txt{font-size:15.5px}
 }
 /* STORY */
@@ -3008,10 +3015,10 @@ const STORY_CHARS={
   rex:{n:"Rex Donovan",r:"E",role:"Lowest Guild · Tank",c:"#ffd36a"},
   finn:{n:"Finn Mercer",r:"F",role:"Lowest Guild · Hırsız",c:"#a8e07a"},
   kael:{n:"Kael Varn",r:"B",role:"Iron Fang · Savaşçı",c:"#ff5a70"},
-  fang:{n:"Iron Fang Avcısı",r:"C",role:"Iron Fang",c:"#ff8a8a"},
-  draven:{n:"Draven",r:"A",role:"Drakmor Elçisi",c:"#b99aff"},
+  fang:{n:"Iron Fang Avcısı",r:"C",role:"Iron Fang · Savaşçı",c:"#ff8a8a"},
+  draven:{n:"Draven",r:"A",role:"Drakmor · Elçi",c:"#b99aff"},
   otto:{n:"Otto Brandt",r:null,role:"Avcı Birliği · Kayıt Memuru",c:"#d8c58e"},
-  bekci:{n:"Dipsizin Bekçisi",r:"?",role:"???",c:"#eef4ff"},
+  bekci:{n:"Dipsizin Bekçisi",r:"?",role:"Bilinmeyen",c:"#eef4ff"},
   kalabalik:{n:"Kalabalık",r:null,role:"",c:"#8aa0bd"},
   sys:{n:"SİSTEM",r:null,role:"",c:"#62d2ff"},
   nar:{n:"",r:null,role:"",c:""}
@@ -3031,6 +3038,19 @@ const ST_CHEV=`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" strok
 function stBadge(r){
   if(r==="?") return `<svg viewBox="0 0 100 100"><polygon points="50,5 89,27.5 89,72.5 50,95 11,72.5 11,27.5" fill="#0c1426" stroke="#eef4ff" stroke-width="4"/><text x="50" y="66" text-anchor="middle" font-family="Chakra Petch, sans-serif" font-weight="700" font-size="44" fill="#eef4ff">?</text></svg>`;
   return r?emblem(r,{anim:false,mini:true}):"";
+}
+const ST_GUILD={"Lowest Guild":{c:"#62d2ff",g:"M8 1.5 13.5 4v4.2c0 3.2-2.4 5.5-5.5 6.3C4.9 13.7 2.5 11.4 2.5 8.2V4z"},
+  "Iron Fang":{c:"#ff4d64",g:"M3 2l2.6 5L3 14h2.2L8 8.6 10.8 14H13l-2.6-7L13 2h-2.2L8 6.4 5.2 2z"},
+  "Avcı Birliği":{c:"#ffc53d",g:"M8 1.5l1.9 4 4.4.5-3.3 3 .9 4.4L8 11.2 4.1 13.4l.9-4.4-3.3-3 4.4-.5z"},
+  "Drakmor":{c:"#b48cff",g:"M8 1.5 10 5.5 14.5 6 11 9l1 4.5L8 11l-4 2.5L5 9 1.5 6 6 5.5z"}};
+const ST_CLASS={"Avcı":"#cfe3ff","Lider":"#ffc53d","Şifacı":"#5cc8ff","İzci":"#4de3a4","Büyücü":"#8c8cff","Tank":"#ffb547","Hırsız":"#a8e07a","Savaşçı":"#ff5d73","Elçi":"#c9a6ff","Kayıt Memuru":"#a9bddb","Bilinmeyen":"#eef4ff"};
+function stTags(role,th){
+  let h="";
+  if(role){const parts=role.split(" · ");let cls=parts.length>1?parts[1]:parts[0],gd=parts.length>1?parts[0]:null;
+    if(gd){const G=ST_GUILD[gd]||{c:"#88a3c6",g:ST_GUILD["Lowest Guild"].g};h+=`<span class="sp-tag gd" style="--tc:${G.c}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="${G.g}"/></svg>${esc(gd)}</span>`}
+    if(cls){const cc=ST_CLASS[cls]||"#a9bddb";h+=`<span class="sp-tag cl" style="--tc:${cc}"><i></i>${esc(cls)}</span>`}}
+  if(th) h+=`<span class="sp-tag th">iç ses</span>`;
+  return h?`<div class="sp-tags" lang="tr">${h}</div>`:"";
 }
 function renderStory(){
   const el=$("storyBody");if(!el) return;
@@ -3088,7 +3108,7 @@ function storyNext(){
   const c=STORY_CHARS[L.s]||{n:L.s,r:null,role:"",c:"#dcefff"},par=/^\(.*\)$/.test(L.t),th=par&&L.s==="jos";
   const box=$("spBox");box.className="sp-box"+(L.s==="sys"?" sys":L.s==="nar"?" nar":"")+(par?" th":"");box.style.setProperty("--sc",c.c||"#62d2ff");
   $("spSpk").innerHTML=L.s==="nar"?"":L.s==="sys"?`<span class="sp-bd sysb">!</span><div class="sp-nm"><b>SİSTEM</b></div>`
-    :`${c.r!==null?`<span class="sp-bd">${stBadge(c.r)}</span>`:`<span class="sp-bd none"></span>`}<div class="sp-nm"><b>${esc(c.n)}</b>${c.role?`<span>${esc(c.role)}</span>`:""}${th?`<i>iç ses</i>`:""}</div>`;
+    :`${c.r!==null?`<span class="sp-bd">${stBadge(c.r)}</span>`:`<span class="sp-bd none"></span>`}<div class="sp-nm"><b>${esc(c.n)}</b>${stTags(c.role,th)}</div>`;
   SP.full=par?L.t.slice(1,-1):L.t;SP.shown=0;SP.typing=true;$("spTxt").textContent="";$("spHint").classList.remove("on");
   $("spCnt").textContent=`SAHNE ${String(L.pi+1).padStart(2,"0")} / ${String(np).padStart(2,"0")}`;
   $("spProg").style.width=((SP.k+1)/SP.lines.length*100)+"%";
@@ -4068,7 +4088,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&showing&&$("modal")
 /* ================= BACKUP & SYNC ================= */
 const IS_PWA=true;
 const FB_CONFIG={"apiKey": "AIzaSyBsNalG4Fl7crcsluhf2hqDXlWawD6DJ2I", "authDomain": "hunter-sistemi.firebaseapp.com", "projectId": "hunter-sistemi", "storageBucket": "hunter-sistemi.firebasestorage.app", "messagingSenderId": "550981824995", "appId": "1:550981824995:web:bd6d609b92a2b74b8f70d6"};
-const APP_VER="20";
+const APP_VER="21";
 const LS_SYNC="hunter-sistemi-sync";
 function b64e(t){return btoa(unescape(encodeURIComponent(t)))}
 function b64d(t){return decodeURIComponent(escape(atob(t)))}
