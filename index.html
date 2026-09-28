@@ -1163,6 +1163,29 @@ a.btn{text-decoration:none;display:inline-flex;align-items:center}
 .nful{margin:0;padding-left:18px;display:grid;gap:8px;font-size:13.5px;color:var(--text)}
 .nful li{line-height:1.5}
 @media (max-width:520px){.nfctl{margin-left:0;width:100%;justify-content:space-between}}
+
+/* v30 — stat dönüştürme */
+.cvwrap{grid-column:1/-1}
+.cvgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:640px){.cvgrid{grid-template-columns:1fr}}
+.cvchips{display:flex;flex-wrap:wrap;gap:6px}
+.cvchip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid var(--line-dim);background:rgba(0,0,0,.3);color:var(--muted);font-family:var(--display);font-size:13px;cursor:pointer;border-radius:2px}
+.cvchip b{color:var(--text);letter-spacing:.04em}
+.cvchip span{font-size:12px}
+.cvchip.on{border-color:var(--sc);background:color-mix(in srgb,var(--sc) 18%,transparent);box-shadow:0 0 10px color-mix(in srgb,var(--sc) 35%,transparent)}
+.cvchip.on span{color:var(--text)}
+.cvchip:disabled{opacity:.3;cursor:not-allowed}
+.cvamt{display:flex;align-items:center;gap:10px}
+.cvamt input[type=range]{flex:1;min-width:0;accent-color:var(--glow)}
+.cvamt input[type=number]{width:96px;background:rgba(0,0,0,.45);color:var(--text);border:1px solid var(--line-dim);padding:6px 8px;font-family:var(--display);font-size:15px}
+.cvprev{margin-top:12px;padding:10px 12px;border:1px solid var(--line-dim);background:rgba(0,0,0,.28)}
+.cv-flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.cv-side{flex:1 1 150px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:2px 8px;padding:8px 10px;border-left:3px solid var(--sc);background:rgba(255,255,255,.03)}
+.cv-side b{font-family:var(--display);letter-spacing:.05em}
+.cv-side em{grid-column:1/3;font-style:normal;font-size:12.5px;color:var(--muted)}
+.cv-side i{grid-row:1/3;grid-column:3;font-style:normal;font-family:var(--display);font-weight:700;font-size:18px}
+.cv-side i.neg{color:#ff8ea0}.cv-side i.pos{color:var(--ok)}
+.cv-arr{color:var(--glow);font-size:20px}
 </style>
 </head>
 <body>
@@ -1314,6 +1337,9 @@ a.btn{text-decoration:none;display:inline-flex;align-items:center}
             <div class="kvs" id="cCombat"></div>
           </div>
         </div>
+        <div class="divider"></div>
+        <p class="sec-label">Stat dönüştürme</p>
+        <div id="cConv"></div>
       </section>
       <section class="win">
         <div class="win-head"><div class="win-title">Yetenekler</div></div>
@@ -4587,7 +4613,7 @@ function renderChar(){
     return `<div class="inv-row" style="--rc:${RCOL[it.t]}"><div class="ico">${itemSvg(it)}</div><div><div class="iname" style="font-size:14px">${esc(it.n)}${enhTag(id)}${on?' <span class="own">· KUŞANILDI</span>':""}</div><div class="irar">${rbadge(it.t)} ${it.kn?esc(it.kn):SLOT[it.slot].n} ${vtagHtml(it)}</div><div class="ieff">${effHtml(it,enhMul(id))}</div></div><div class="row" style="gap:6px;justify-content:flex-end">${on?"":`<button class="btn sm primary" type="button" data-eq="${id}"${!rankOk(it.t)||(it.cls&&it.cls!==S.job)?" disabled":""}>${it.cls&&it.cls!==S.job?"Sınıfın değil":"Kuşan"}</button>`}<button class="btn sm goldb" type="button" data-enh="${id}"${enhLv(id)>=ENH_MAX?" disabled":""}>${enhLv(id)>=ENH_MAX?"+10":"Güçlendir"}</button><button class="btn sm" type="button" data-salv="${id}" title="${sv} ${esc(MATS[mk].n)}">Parçala ${matIcon(mk,12)}${sv}</button><button class="btn sm danger" type="button" data-sell="${id}">Sat ${fmt(price)}G</button></div></div>`}).join("")||`<div class="empty-note">Ekipman yok. Mağazadan satın alabilir ya da zindanlardan nadiren kazanabilirsin.</div>`;
   $("cTitles").innerHTML=TITLES.map(t=>{const has=S.titles.includes(t.id),on=S.title===t.id;
     return `<div class="tcard${on?" on":""}${has?"":" lock"}"><div class="tname">${ico("title",has?"#ffc53d":"#5a7497",15)} ${esc(t.n)}${has?"":' <span class="muted small">· kilitli</span>'}</div><div class="tdesc">${esc(t.d)}</div><div class="tbon">${t.xp?"+%"+t.xp+" XP ":""}${t.gold?"+%"+t.gold+" gold":""}</div>${has?(on?`<span class="own">KUŞANILDI</span>`:`<div><button class="btn sm" type="button" data-title="${t.id}">Kuşan</button></div>`):""}</div>`}).join("");
-  $("cCombat").innerHTML=combatKv();renderSkills();renderSmith();renderRecords();
+  $("cCombat").innerHTML=combatKv();renderConv();renderSkills();renderSmith();renderRecords();
 }
 function renderSettings(){
   const a=S.app;
@@ -5726,6 +5752,55 @@ async function nfClick(d,el){
 }
 document.addEventListener("change",e=>{const t=e.target;if(!t||!t.dataset||!t.dataset.nft) return;if(!/^\d\d:\d\d$/.test(t.value)) return;nfN().p[t.dataset.nft].t=t.value;commit();toast("Saat kaydedildi: "+t.value)});
 
+/* ================= STAT DÖNÜŞTÜRME (v30) ================= */
+var cvFrom=null,cvTo=null,cvAmt=0,cvArm=false;
+function cvMax(){return cvFrom?Math.floor((S.base[cvFrom]|0)/2)*2:0}
+function cvFix(){
+  if(!cvFrom||!SC[cvFrom]){let best="STR";STATS.forEach(x=>{if(S.base[x.k]>S.base[best]) best=x.k});cvFrom=best}
+  if(!cvTo||cvTo===cvFrom||!SC[cvTo]) cvTo=STATS.find(x=>x.k!==cvFrom).k;
+  const mx=cvMax();cvAmt=Math.max(0,Math.min(mx,Math.floor((cvAmt|0)/2)*2));
+  if(!cvAmt&&mx) cvAmt=Math.min(mx,10);
+}
+function cvPreview(){
+  const el=$("cvPrev");if(!el) return;
+  const a=cvAmt,g=a/2,f=SC[cvFrom],t=SC[cvTo],pw=power(),pw2=pw-a*5+g*5;
+  el.innerHTML=a>0?`<div class="cv-flow"><span class="cv-side" style="--sc:${f.c}">${ico(f.k,f.c,18)}<b>${f.k}</b><em>${fmt(S.base[f.k])} → ${fmt(S.base[f.k]-a)}</em><i class="neg">−${fmt(a)}</i></span><span class="cv-arr">➜</span><span class="cv-side" style="--sc:${t.c}">${ico(t.k,t.c,18)}<b>${t.k}</b><em>${fmt(S.base[t.k])} → ${fmt(S.base[t.k]+g)}</em><i class="pos">+${fmt(g)}</i></span></div>
+<div class="small muted" style="margin-top:6px">Toplam stat ${fmt(a-g)} azalır · Savaş gücü ${fmt(pw)} → <b style="color:#ff8ea0">${fmt(pw2)}</b> (−${fmt(pw-pw2)})${rankOf(pw2)!==rankOf(pw)?` · <b style="color:#ff8ea0">rütben ${rankOf(pw)} → ${rankOf(pw2)} düşer</b>`:""}</div>`
+    :`<div class="small muted">${S.base[f.k]<2?`${f.n} statın dönüştürmek için yetersiz (en az 2 gerekir).`:"Dönüştürülecek miktarı seç."}</div>`;
+  const go=$("cvGo");if(go){go.disabled=a<2;go.textContent=cvArm?"Emin misin? Tekrar bas":"Dönüştür";go.classList.toggle("danger",cvArm)}
+  const rg=$("cvRange");if(rg&&document.activeElement!==rg){rg.max=cvMax();rg.value=a}
+  const nm=$("cvNum");if(nm&&document.activeElement!==nm) nm.value=a;
+}
+function renderConv(){
+  const el=$("cConv");if(!el) return;cvFix();
+  const chips=(sel,attr)=>STATS.map(x=>`<button type="button" class="cvchip${sel===x.k?" on":""}" style="--sc:${x.c}" data-${attr}="${x.k}"${attr==="cvt"&&x.k===cvFrom?" disabled":""}>${ico(x.k,x.c,15)}<b>${x.k}</b><span>${fmt(S.base[x.k])}</span></button>`).join("");
+  const mx=cvMax(),log=(S.convLog||[]).slice(-3).reverse();
+  el.innerHTML=`<p class="help" style="margin:0 0 10px">Bir statı başka bir stata <b>2'ye 1</b> oranında çevir: verdiğin her 2 puan için diğer stat 1 puan kazanır. Yarısı kaybolur, bu yüzden toplam gücün düşer. Sadece kendi statların çevrilir, ekipman bonusları değişmez.</p>
+<div class="cvgrid"><div><p class="sec-label">Verilecek stat</p><div class="cvchips">${chips(cvFrom,"cvf")}</div></div>
+<div><p class="sec-label">Kazanılacak stat</p><div class="cvchips">${chips(cvTo,"cvt")}</div></div></div>
+<p class="sec-label" style="margin-top:12px">Miktar</p>
+<div class="cvamt"><input type="range" id="cvRange" min="0" max="${mx}" step="2" value="${cvAmt}"${mx?"":" disabled"}><input type="number" id="cvNum" min="0" max="${mx}" step="2" value="${cvAmt}"${mx?"":" disabled"}></div>
+<div class="row" style="margin-top:8px">${[10,50,100,500].filter(v=>v<=mx).map(v=>`<button type="button" class="btn sm" data-cva="${v}">${fmt(v)}</button>`).join("")}${mx?`<button type="button" class="btn sm" data-cva="${Math.floor(mx/4)*2||2}">Yarısı</button><button type="button" class="btn sm" data-cva="${mx}">Tümü</button>`:""}</div>
+<div class="cvprev" id="cvPrev"></div>
+<div class="row" style="margin-top:10px"><button type="button" class="btn primary" id="cvGo" data-cvgo="1">Dönüştür</button></div>
+${log.length?`<p class="small muted" style="margin:10px 0 0">Son dönüşümler: ${log.map(l=>`${l.f} −${fmt(l.a)} → ${l.t} +${fmt(l.a/2)}`).join(" · ")}</p>`:""}`;
+  cvPreview();
+}
+function doConvert(){
+  cvFix();const a=cvAmt,g=a/2,f=cvFrom,t=cvTo;
+  if(a<2||f===t||(S.base[f]|0)<a) return;
+  if(!cvArm){cvArm=true;cvPreview();setTimeout(()=>{if(cvArm){cvArm=false;cvPreview()}},4000);return}
+  cvArm=false;
+  S.base[f]-=a;S.base[t]+=g;
+  S.convLog=(S.convLog||[]).concat([{f,t,a,d:Date.now()}]).slice(-20);
+  S.cnt.conv=(S.cnt.conv|0)+a;
+  try{tone([523,392,330],0.35,"triangle")}catch(e){}
+  toast(`[Stat dönüştürüldü] ${f} −${fmt(a)} → ${t} +${fmt(g)}`);
+  cvAmt=Math.min(cvAmt,cvMax());
+  commit();
+}
+document.addEventListener("input",e=>{const t=e.target;if(!t||(t.id!=="cvRange"&&t.id!=="cvNum")) return;cvAmt=Math.max(0,Math.min(cvMax(),Math.floor((+t.value||0)/2)*2));cvArm=false;cvPreview()});
+
 /* ================= TABS & EVENTS ================= */
 const TABS=["home","quests","gates","arena","store","char","map","story","set"];
 const TGROUP={home:"home",quests:"quests",gates:"quests",arena:"quests",char:"char",store:"char",map:"map",story:"story",set:"set"};
@@ -5752,6 +5827,10 @@ document.addEventListener("click",e=>{
   const d=el.dataset;
   if(d.nav){setTab(GLAST[d.nav]||d.nav);return}
   if(d.nfa||d.nftog){nfClick(d,el);return}
+  if(d.cvf){cvFrom=d.cvf;if(cvTo===cvFrom) cvTo=null;cvArm=false;cvAmt=0;renderConv();return}
+  if(d.cvt){cvTo=d.cvt;cvArm=false;renderConv();return}
+  if(d.cva){cvAmt=+d.cva;cvArm=false;cvFix();cvPreview();return}
+  if(d.cvgo){doConvert();return}
   if(d.arsub){arSub=d.arsub;renderArena();return}
   if(d.arfight!==undefined){startArena(+d.arfight);return}
   if(d.arref){arenaRefresh();return}
@@ -5912,7 +5991,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&showing&&$("modal")
 /* ================= BACKUP & SYNC ================= */
 const IS_PWA=true;
 const FB_CONFIG={"apiKey": "AIzaSyBsNalG4Fl7crcsluhf2hqDXlWawD6DJ2I", "authDomain": "hunter-sistemi.firebaseapp.com", "projectId": "hunter-sistemi", "storageBucket": "hunter-sistemi.firebasestorage.app", "messagingSenderId": "550981824995", "appId": "1:550981824995:web:bd6d609b92a2b74b8f70d6"};
-const APP_VER="29";
+const APP_VER="30";
 const LS_SYNC="hunter-sistemi-sync";
 function b64e(t){return btoa(unescape(encodeURIComponent(t)))}
 function b64d(t){return decodeURIComponent(escape(atob(t)))}
