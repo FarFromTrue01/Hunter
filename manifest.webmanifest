@@ -28,5 +28,59 @@
    "type": "image/png",
    "purpose": "maskable"
   }
+ ],
+ "shortcuts": [
+  {
+   "name": "Görevler",
+   "short_name": "Görevler",
+   "description": "Bugünkü görevleri aç",
+   "url": "./?go=quests",
+   "icons": [
+    {
+     "src": "sc-quests.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Zindanlar",
+   "short_name": "Zindanlar",
+   "description": "Zindan kapılarını aç",
+   "url": "./?go=gates",
+   "icons": [
+    {
+     "src": "sc-gates.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Arena",
+   "short_name": "Arena",
+   "description": "Arenaya git",
+   "url": "./?go=arena",
+   "icons": [
+    {
+     "src": "sc-arena.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Karakter",
+   "short_name": "Karakter",
+   "description": "Karakter ve statlar",
+   "url": "./?go=char",
+   "icons": [
+    {
+     "src": "sc-char.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    }
+   ]
+  }
  ]
 }

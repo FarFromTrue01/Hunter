@@ -1133,6 +1133,36 @@ span.enh.big{position:absolute;right:-6px;top:-6px;font-size:15px}
 .pfcard .pr{font-family:var(--display);font-size:12px;letter-spacing:.16em;text-transform:uppercase}
 .pfcard .pchips{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
 .pfcard .fr{font-family:var(--display);font-size:11px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+
+/* v29 — bildirimler */
+.nflist{display:grid;gap:6px}
+.nfrow{display:flex;align-items:center;gap:12px;padding:9px 11px;border:1px solid var(--line-dim);background:rgba(0,0,0,.25);flex-wrap:wrap}
+.nfrow.off .nftx{opacity:.55}
+.nftx{flex:1 1 220px;min-width:0;display:flex;flex-direction:column;gap:2px}
+.nftx b{font-family:var(--display);font-size:14px;letter-spacing:.04em}
+.nftx span{font-size:12.5px;color:var(--muted);line-height:1.4}
+.nfctl{display:flex;align-items:center;gap:8px;margin-left:auto}
+.nfctl input[type=time]{background:rgba(0,0,0,.45);color:var(--text);border:1px solid var(--line-dim);padding:5px 8px;font-family:var(--display);font-size:14px;color-scheme:dark;min-width:0}
+.nfctl input[type=time]:disabled{opacity:.4}
+.nftg{display:inline-flex;align-items:center;gap:7px;min-width:92px;padding:6px 10px;border:1px solid var(--line-dim);background:rgba(0,0,0,.35);color:var(--muted);font-family:var(--display);font-size:12.5px;letter-spacing:.05em;cursor:pointer;border-radius:2px}
+.nftg span{width:26px;height:14px;border-radius:8px;background:#2a3a55;position:relative;flex:none;transition:background .15s}
+.nftg span::after{content:"";position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:#8aa;transition:left .15s,background .15s}
+.nftg[aria-pressed="true"]{color:var(--text);border-color:var(--line)}
+.nftg[aria-pressed="true"] span{background:rgba(58,169,240,.55)}
+.nftg[aria-pressed="true"] span::after{left:14px;background:#fff}
+.nfsteps{margin:10px 0 0;padding-left:20px;display:grid;gap:12px;font-size:13.5px}
+.nfsteps li::marker{color:var(--gold);font-family:var(--display);font-weight:700}
+.nfsteps code,.nful code{font-family:var(--display);background:rgba(0,0,0,.45);border:1px solid var(--line-dim);padding:1px 6px;color:var(--gold);word-break:break-all}
+.nfkey{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px}
+.nfkey code{font-size:11px;color:var(--muted)}
+.linkbtn{background:none;border:0;padding:0 2px;color:var(--glow);font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+a.btn{text-decoration:none;display:inline-flex;align-items:center}
+.nfdevs{display:flex;flex-wrap:wrap;gap:6px}
+.nfdev{display:inline-flex;align-items:center;gap:6px;padding:4px 6px 4px 10px;border:1px solid var(--line-dim);background:rgba(0,0,0,.3);font-size:12.5px}
+.nfdev .linkbtn{text-decoration:none;color:var(--muted);font-size:12px}
+.nful{margin:0;padding-left:18px;display:grid;gap:8px;font-size:13.5px;color:var(--text)}
+.nful li{line-height:1.5}
+@media (max-width:520px){.nfctl{margin-left:0;width:100%;justify-content:space-between}}
 </style>
 </head>
 <body>
@@ -1422,6 +1452,10 @@ span.enh.big{position:absolute;right:-6px;top:-6px;font-size:15px}
           <span id="resetBox" class="row"><button class="btn danger" type="button" data-act="resetAsk">Tüm ilerlemeyi sıfırla</button></span>
         </div>
         <p class="help" style="margin:10px 0 0">Animasyonları kapatmak tablette akıcılığı artırır. Bu ayar ve ses ayarı yalnızca bu cihaz için geçerlidir.</p>
+      </section>
+      <section class="win" id="nfSec">
+        <div class="win-head"><div class="win-title">Bildirimler</div></div>
+        <div id="nfBox"></div>
       </section>
       <section class="win">
         <div class="win-head"><div class="win-title">Kayıt ve Senkron</div></div>
@@ -2183,6 +2217,7 @@ function normalize(s){
   o.timer=s.timer&&typeof s.timer==="object"&&s.timer.q&&s.timer.dur>0?Object.assign({acc:0,paused:false},s.timer):null;
   o.todaySt=s.todaySt&&typeof s.todaySt==="object"?Object.assign({},s.todaySt):{};
   o.autoB=!!s.autoB;
+  o.notif=nfNorm(s.notif);
   o.v=4;
   return o;
 }
@@ -2192,6 +2227,7 @@ function postMigrate(){
   if(S.energy==null) S.energy=5;
   if(S.mig<9){S.mig=9;S.sysNote9=1;S.inv.cons.mpS=Math.max(S.inv.cons.mpS|0,2);S.inv.mat.m1=(S.inv.mat.m1|0)+3}
   if(S.mig<10){S.mig=10;const A=S.arena;A.r=0;A.best=0;A.sb=0;A.opps=null;A.pl=1;["glad","amaster","alegend"].forEach(t=>{S.titles=S.titles.filter(x=>x!==t);if(S.title===t) S.title=null});if(!S.sysNote9) S.sysNote10=1}
+  if(S.mig<11){S.mig=11;S.sysNote11=1}
 }
 
 let S,muted=false,hadLocal=false,ANIM=true,DEV=false;
@@ -4575,6 +4611,7 @@ function renderSettings(){
   $("devBtn").textContent="Geliştirici modu: "+(DEV?"açık":"kapalı");$("devBtn").hidden=!DEV;
   renderProfileSet();
   renderCustom();
+  renderNotif();
   renderBackup();
   $("devWin").hidden=!DEV;
   if(DEV) renderDev();
@@ -5484,6 +5521,211 @@ function fxLog(B,l){
 }
 function ensureFx(){return fxEnsure()}
 
+/* ================= BİLDİRİMLER, DURUM KARTI, KISAYOLLAR (v29) ================= */
+var NF_REPO="FarFromTrue01/Hunter",NF_SECRET="HUNTER_PUSH",LS_DEVID="hunter-sistemi-devid",LS_VAPID="hunter-sistemi-vapid",LS_STK="hunter-sistemi-stk",NF_WIN=2*3600000;
+function nfTypes(){return [
+  {k:"morning",n:"Günün görevleri",d:"Güne başlarken bugün kaç görevin olduğunu ve serini söyler.",t:"09:00",on:1},
+  {k:"remind",n:"Görev hatırlatma",d:"Görevlerin bitmediyse kaç tane kaldığını hatırlatır.",t:"19:00",on:1},
+  {k:"streak",n:"Seri uyarısı",d:"Gün bitmeden görevler tamamlanmadıysa serin ve goldun için son uyarı.",t:"22:30",on:1},
+  {k:"arena",n:"Arena hakları",d:"O günkü maç hakların kullanılmadıysa haber verir.",t:"18:00",on:1},
+  {k:"season",n:"Sezon sonu",d:"Pazar günü arena sezonu bitmeden son şansını hatırlatır.",t:"20:00",on:1},
+  {k:"timer",n:"Zamanlayıcı bitti",d:"Odak süresi dolunca bildirir (uygulama kapalıyken de).",on:1},
+  {k:"status",n:"Durum kartı",d:"Bildirim panelinde seviyeni, görevlerini, serini ve enerjini gösteren sessiz kart.",on:1}]}
+function nfNorm(n){
+  n=n&&typeof n==="object"?n:{};const p={},src=n.p&&typeof n.p==="object"?n.p:{};
+  nfTypes().forEach(t=>{const x=src[t.k]||{};p[t.k]={on:x.on==null?!!t.on:!!x.on,t:/^\d\d:\d\d$/.test(x.t||"")?x.t:(t.t||"")}});
+  const subs={};if(n.subs&&typeof n.subs==="object") for(const k in n.subs){const v=n.subs[k];if(v&&v.e&&v.k&&v.k.p256dh&&v.k.auth) subs[k]=v}
+  const sent={},now=Date.now();if(n.sent&&typeof n.sent==="object") for(const k in n.sent){if(now-(+n.sent[k]||0)<5*86400000) sent[k]=+n.sent[k]}
+  return {on:!!n.on,p,pub:typeof n.pub==="string"?n.pub:"",subs,plan:Array.isArray(n.plan)?n.plan.filter(x=>x&&x.id&&x.at):[],sent,test:+n.test||0,ok:+n.ok||0,tz:typeof n.tz==="string"?n.tz:""};
+}
+function nfN(){if(!S.notif||!S.notif.p) S.notif=nfNorm(S.notif);return S.notif}
+function b64u(u8){let s="";u8.forEach(b=>s+=String.fromCharCode(b));return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+function b64uDec(t){t=t.replace(/-/g,"+").replace(/_/g,"/");while(t.length%4) t+="=";const b=atob(t),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++) u[i]=b.charCodeAt(i);return u}
+function nfDevId(){let d="";try{d=localStorage.getItem(LS_DEVID)||""}catch(e){}if(!d){d="d"+uid()+uid();try{localStorage.setItem(LS_DEVID,d)}catch(e){}}return d}
+function nfDevName(){const u=navigator.userAgent||"";if(/Android/i.test(u)) return /Mobile/i.test(u)?"Android telefon":"Android tablet";if(/iPhone/i.test(u)) return "iPhone";if(/iPad|Macintosh.*Mobile/i.test(u)) return "iPad";return "Bilgisayar"}
+function nfPerm(){try{return "Notification" in window?Notification.permission:"none"}catch(e){return "none"}}
+function nfSupported(){return IS_PWA&&"serviceWorker" in navigator&&"Notification" in window}
+function nfPushOk(){return nfSupported()&&"PushManager" in window}
+async function nfReg(){if(!("serviceWorker" in navigator)) return null;try{return await Promise.race([navigator.serviceWorker.ready,new Promise(r=>setTimeout(()=>r(null),4000))])}catch(e){return null}}
+
+/* ---- içerik ---- */
+function nfAt(dk,t){const a=(t||"09:00").split(":").map(Number),d=parseKey(dk);d.setHours(a[0]||0,a[1]||0,0,0);return d.getTime()}
+function nfDay(off){
+  const dk=addDays(todayKey(),off),dow=(parseKey(dk).getDay()+6)%7;
+  const qs=S.quests.filter(q=>!q.once&&(!(Array.isArray(q.days)&&q.days.length)||q.days.includes(dow)));
+  const scroll=(S.inv.cons.scroll|0)>0,A=S.arena||{};
+  const o={dk,dow,total:qs.length,scroll};
+  if(off===0){o.done=qs.filter(q=>qCount(q)>=qTimes(q)).length;o.cleared=!!S.cleared;o.pen=!!(S.penalty.active&&!S.penalty.done);o.streak=S.streak|0;o.tk=A.day===todayKey()?(A.tk|0):ARENA_DAILY}
+  else{o.done=0;o.cleared=false;o.pen=off===1&&!S.cleared&&!scroll;o.streak=off===1&&(S.cleared||scroll)?S.streak|0:0;o.tk=ARENA_DAILY}
+  return o;
+}
+function nfStatus(off){
+  const D=nfDay(off||0),en=S.energy;
+  const l1=D.total?(D.cleared?`✓ Günlük görev tamamlandı · Seri ${D.streak} gün`:`Görevler ${D.done}/${D.total}${D.pen?" · ceza görevi var":""} · Seri ${D.streak} gün`):`Bugün görev yok · Seri ${D.streak} gün`;
+  const l2=`Enerji ${fmt(en)}/${fmt(maxEnergy())} · Arena ${D.tk+(S.inv.cons.ticket|0)} hak · ${fmt(S.gold)} gold`;
+  return {ti:`${S.name||"Avcı"} · Seviye ${S.level} · ${curRank()} rütbe`,b:l1+"\n"+l2};
+}
+function nfPlan(){
+  const N=nfN();if(!N.on){N.plan=[];return}
+  const now=Date.now(),P=N.p,out=[],A=S.arena||{},played=(A.w|0)+(A.l|0)>0,stOn=P.status.on;
+  try{N.tz=Intl.DateTimeFormat().resolvedOptions().timeZone||""}catch(e){}
+  for(let off=0;off<=3;off++){
+    const D=nfDay(off),st=stOn?nfStatus(off):null,add=(k,ti,b,x)=>{const at=nfAt(D.dk,P[k].t);if(at>now) out.push(Object.assign({id:`${k}-${D.dk}`,tp:k,at,ti,b,go:"quests"},st?{st}:{},x||{}))};
+    if(D.total&&!D.cleared){
+      const left=D.total-D.done;
+      if(P.morning.on) add("morning","[Sistem] Yeni gün, yeni görevler",`Bugün ${D.total} görev seni bekliyor.${D.streak>0?` Serin ${D.streak} gün; bugün de bitirirsen ${D.streak+1} olur.`:" Yeni bir seri başlatma zamanı."}${D.pen?" Önce ceza görevini bitirmelisin.":""}`);
+      if(P.remind.on) add("remind","[Sistem] Görevler bekliyor",D.done?`${D.done}/${D.total} görev tamamlandı · ${left} görev kaldı.`:`Bugünkü ${D.total} görevin henüz başlamadı. Hepsini bitirince günlük ödülü alırsın.`);
+      if(P.streak.on){const at=nfAt(D.dk,P.streak.t),mid=parseKey(addDays(D.dk,1)).getTime(),ml=mid-at;
+        const lead=ml>0&&ml<=12*3600000?`Gece yarısına ${fmtLeft(ml)} kaldı. `:"";
+        add("streak","[Uyarı] Gün bitiyor",lead+(D.scroll?`${left} görev kaldı. Bitirmezsen Kurtuluş Parşömeni harcanır${D.streak>0?`, ${D.streak} günlük serin korunur`:""}.`:`${left} görev kaldı. Bitirmezsen ${D.streak>0?`${D.streak} günlük serin sıfırlanır, `:""}goldunun %10'unu kaybedersin ve ceza görevi gelir.`),{go:"quests"})}
+    }
+    if(P.arena.on&&played&&D.tk>0) add("arena","[Arena] Maç hakların duruyor",`${off?"Bugün":"Bugün hâlâ"} ${D.tk} maç hakkın var. Ligin: ${lgName(A.r|0)} · ${fmt(A.r|0)} puan.`,{go:"arena"});
+    if(P.season.on&&played&&D.dow===6) add("season","[Arena] Sezon bu gece bitiyor",`Sezon ödülü sezon zirvene göre verilir. Şu anki zirven: ${lgName(Math.max(A.sb|0,off?0:A.r|0))}. Üst lig için son maçlar.`,{go:"arena"});
+    if(stOn&&off>0){const at=nfAt(D.dk,"00:03");if(at>now) out.push({id:`st-${D.dk}`,tp:"status",at,so:1,st})}
+  }
+  const T=S.timer;
+  if(T&&!T.paused&&P.timer.on){const q=S.quests.find(x=>x.id===T.q),at=T.st+(T.dur-(T.acc||0));
+    out.push({id:`tm-${T.st}-${T.dur}`,tp:"timer",tag:"hunter-timer",at,lo:1,ti:"Odak süresi tamamlandı",b:`${q?q.name:"Görev"} · ${fmt(T.dur/60000)} dk bitti. Uygulamayı açınca görev tamamlanır.`,go:"quests"})}
+  if(N.test&&now-N.test<NF_WIN) out.push({id:`test-${N.test}`,tp:"test",at:N.test,srv:1,ti:"[Sistem] Bağlantı kuruldu",b:"Anlık bildirimler çalışıyor. Uygulama kapalıyken de hatırlatmalar gelecek.",go:"set"});
+  out.sort((a,b)=>a.at-b.at);
+  N.plan=out.slice(0,40);
+}
+
+/* ---- gösterim ---- */
+function nfOpt(it,extra){return Object.assign({body:it.b,tag:it.tag||it.id,icon:"icon-192.png",badge:"badge-96.png",data:{go:it.go||"quests"},vibrate:[180,90,180],renotify:false},extra||{})}
+async function nfShow(ti,opt){try{const r=await nfReg();if(r&&r.showNotification){await r.showNotification(ti,opt);return true}new Notification(ti,opt);return true}catch(e){return false}}
+async function nfShownSW(){try{const c=await caches.open("hunter-meta"),r=await c.match("/__shown");return r?await r.json():{}}catch(e){return {}}}
+async function nfStatusShow(force){
+  const N=nfN();if(!nfSupported()||!N.on||!N.p.status.on||nfPerm()!=="granted") return;
+  const st=nfStatus(0),k=st.ti+"|"+st.b;let old="";try{old=localStorage.getItem(LS_STK)||""}catch(e){}
+  if(!force&&k===old){try{const r=await nfReg();if(!r||!r.getNotifications) return;const ex=await r.getNotifications({tag:"hunter-status"});if(ex.length) return}catch(e){return}}
+  try{localStorage.setItem(LS_STK,k)}catch(e){}
+  await nfShow(st.ti,{body:st.b,tag:"hunter-status",icon:"icon-192.png",badge:"badge-96.png",silent:true,renotify:false,data:{go:"quests"},actions:[{action:"quests",title:"Görevler"},{action:"gates",title:"Zindanlar"}]});
+}
+async function nfStatusOff(){try{const r=await nfReg();if(r&&r.getNotifications){(await r.getNotifications({tag:"hunter-status"})).forEach(n=>n.close())}localStorage.removeItem(LS_STK)}catch(e){}}
+async function nfMeta(){
+  if(!nfSupported()) return;const N=nfN();
+  try{const c=await caches.open("hunter-meta");await c.put("/__notif",new Response(JSON.stringify({on:N.on&&nfPerm()==="granted",plan:N.plan,sent:N.sent,stOn:N.p.status.on}),{headers:{"content-type":"application/json"}}))}catch(e){}
+}
+var nfBusy=false;
+async function nfTick(){
+  const N=nfN();if(nfBusy||!nfSupported()||!N.on||nfPerm()!=="granted") return;nfBusy=true;
+  try{
+    const now=Date.now(),sh=await nfShownSW();let ch=false,stDue=false;
+    for(const it of N.plan){
+      if(it.srv||it.lo||it.at>now||now-it.at>NF_WIN||N.sent[it.id]||sh[it.id]) continue;
+      N.sent[it.id]=now;ch=true;
+      if(it.so){stDue=true;continue}
+      await nfShow(it.ti,nfOpt(it));
+    }
+    if(ch){commit();await nfStatusShow(stDue)}
+  }catch(e){}
+  nfBusy=false;
+}
+var nfT=null;
+function nfAfterCommit(){if(!nfSupported()) return;clearTimeout(nfT);nfT=setTimeout(()=>{nfMeta();nfStatusShow(false).catch(()=>{})},1200)}
+
+/* ---- anlık bildirim (sunucu) ---- */
+function nfVapidLocal(){try{const o=JSON.parse(localStorage.getItem(LS_VAPID)||"null");return o&&o.pub&&o.d?o:null}catch(e){return null}}
+function nfSecret(v){return "HS1."+b64u(new TextEncoder().encode(JSON.stringify({c:[syncCode()],d:v.d,x:v.x,y:v.y,p:v.pub})))}
+async function nfGenKeys(){
+  const kp=await crypto.subtle.generateKey({name:"ECDSA",namedCurve:"P-256"},true,["sign","verify"]);
+  const j=await crypto.subtle.exportKey("jwk",kp.privateKey),raw=new Uint8Array(await crypto.subtle.exportKey("raw",kp.publicKey));
+  const v={pub:b64u(raw),d:j.d,x:j.x,y:j.y,code:syncCode(),at:Date.now()};
+  try{localStorage.setItem(LS_VAPID,JSON.stringify(v))}catch(e){}
+  return v;
+}
+async function nfSubscribe(){
+  const N=nfN();if(!nfPushOk()||!N.pub||nfPerm()!=="granted") return false;
+  const r=await nfReg();if(!r||!r.pushManager) return false;
+  let sub=await r.pushManager.getSubscription();
+  if(sub){let cur="";try{cur=sub.options&&sub.options.applicationServerKey?b64u(new Uint8Array(sub.options.applicationServerKey)):""}catch(e){}if(cur&&cur!==N.pub){try{await sub.unsubscribe()}catch(e){}sub=null}}
+  if(!sub) sub=await r.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64uDec(N.pub)});
+  const j=sub.toJSON(),id=nfDevId(),old=N.subs[id];
+  if(!old||old.e!==j.endpoint){N.subs[id]={e:j.endpoint,k:j.keys,n:nfDevName(),at:Date.now()};return true}
+  return false;
+}
+async function nfPeriodic(){try{const r=await nfReg();if(!r||!("periodicSync" in r)) return;const p=await navigator.permissions.query({name:"periodic-background-sync"});if(p.state!=="granted") return;await r.periodicSync.register("hunter-remind",{minInterval:3600000})}catch(e){}}
+function nfGo(go){
+  if(!go) return;
+  if(go==="focus"){if(S.timer){openFocus();return}go="quests"}
+  if(["quests","gates","arena","char","map","set","home","store"].includes(go)){if(showing) nextOverlay();setTab(go);if(go==="set") setTimeout(()=>{const el=$("nfBox");if(el) scrollToEl(el)},120)}
+}
+async function nfBoot(){
+  if(!nfSupported()) return;const N=nfN();
+  try{
+    const sh=await nfShownSW();let ch=false;
+    for(const k in sh){if(!N.sent[k]){N.sent[k]=sh[k];ch=true}if(k.startsWith("test-")&&sh[k]>N.ok){N.ok=sh[k];ch=true}}
+    if(N.on&&nfPerm()==="granted"){if(N.pub&&await nfSubscribe().catch(()=>false)) ch=true;nfPeriodic()}
+    if(ch) commit();else{nfPlan();nfMeta()}
+    nfStatusShow(false);
+  }catch(e){}
+  setInterval(nfTick,20000);setTimeout(nfTick,3000);
+}
+if("serviceWorker" in navigator) navigator.serviceWorker.addEventListener("message",e=>{
+  const d=e.data||{};if(!d.nf) return;
+  if(d.nf==="go") nfGo(d.go);
+  if(d.nf==="push"&&d.id){const N=nfN();N.sent[d.id]=d.at||Date.now();if(String(d.id).startsWith("test-")){N.ok=d.at||Date.now();N.test=0;toast("Anlık bildirim bağlantısı çalışıyor.")}commit()}
+});
+{const g=new URLSearchParams(location.search).get("go");if(g){setTimeout(()=>nfGo(g),60);try{history.replaceState(null,"",location.pathname)}catch(e){}}}
+
+/* ---- ayarlar arayüzü ---- */
+function NF_BELL(c,s){return `<svg class="ic" width="${s||18}" height="${s||18}" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16.5V11a6 6 0 0112 0v5.5l1.6 2H4.4zM10 20.5a2.2 2.2 0 004 0" stroke="${c}" stroke-width="1.9" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg>`}
+var nfKeyShow=false;
+function nfAgo(t){const m=Math.max(0,Math.round((Date.now()-t)/60000));return m<1?"az önce":m<60?`${m} dk önce`:m<1440?`${Math.floor(m/60)} sa önce`:`${Math.floor(m/1440)} gün önce`}
+function renderNotif(){
+  const el=$("nfBox");if(!el) return;const N=nfN();
+  if(!IS_PWA){el.innerHTML=`<p class="help" style="margin:0">Bildirimler, durum kartı ve kısayollar yalnızca ana ekrana yüklenen uygulama sürümünde çalışır.</p>`;return}
+  if(!nfSupported()){el.innerHTML=`<p class="help" style="margin:0">Bu tarayıcı bildirimleri desteklemiyor. Oyunu Chrome'dan ana ekrana yükleyip oradan aç.</p>`;return}
+  const pm=nfPerm(),on=N.on&&pm==="granted";
+  let h=`<div class="syncrow"><span class="syncdot${on?" on":""}"></span><div style="flex:1;min-width:0"><b>${on?"Bildirimler açık":pm==="denied"?"Bildirim izni engellenmiş":"Bildirimler kapalı"}</b><div class="small muted">${on?"Hatırlatmaları ve saatlerini aşağıdan ayarlayabilirsin.":pm==="denied"?"Android Ayarlar → Uygulamalar → Hunter → Bildirimler kısmından izin ver, sonra buraya dön.":"Açınca izin istenecek. Ayarlar tüm cihazlarında ortak olur."}</div></div></div>
+<div class="row" style="margin-top:10px">${on?`<button class="btn sm" type="button" data-nfa="test">Deneme bildirimi</button><button class="btn sm danger" type="button" data-nfa="off">Bildirimleri kapat</button>`:pm==="denied"?`<button class="btn sm" type="button" data-nfa="recheck">Tekrar kontrol et</button>`:`<button class="btn primary" type="button" data-nfa="on">${NF_BELL("currentColor",16)} Bildirimleri aç</button>`}</div>`;
+  if(on){
+    h+=`<div class="divider"></div><p class="sec-label">Hatırlatmalar</p><div class="nflist">`+nfTypes().map(t=>{const p=N.p[t.k];return `<div class="nfrow${p.on?"":" off"}"><div class="nftx"><b>${esc(t.n)}</b><span>${esc(t.d)}</span></div><div class="nfctl">${t.t?`<input type="time" data-nft="${t.k}" value="${p.t}"${p.on?"":" disabled"} aria-label="${esc(t.n)} saati">`:""}<button class="nftg" type="button" data-nftog="${t.k}" aria-pressed="${p.on}"><span></span>${p.on?"Açık":"Kapalı"}</button></div></div>`}).join("")+`</div>
+<p class="help" style="margin:8px 0 0">Görevlerin zaten bittiyse o günün görev hatırlatmaları gelmez. Arena bildirimleri en az bir arena maçı yaptıktan sonra başlar. Sezon sonu hatırlatması yalnızca pazar günleri gelir.</p>`;
+    /* sunucu */
+    const v=nfVapidLocal(),code=syncCode(),devs=Object.keys(N.subs),me=nfDevId(),srvOk=N.ok>0;
+    h+=`<div class="divider"></div><p class="sec-label">Uygulama kapalıyken bildirim</p>`;
+    if(!nfPushOk()) h+=`<p class="help" style="margin:0">Bu cihaz anlık bildirimleri desteklemiyor. Hatırlatmalar yalnızca uygulama arka plandayken gelir.</p>`;
+    else if(!FB_CONFIG||!code) h+=`<p class="help" style="margin:0">Uygulama kapalıyken bildirim gelmesi için önce aşağıdaki <b>Kayıt ve Senkron</b> bölümünden bulut senkronunu açmalısın. Şu an hatırlatmalar yalnızca uygulama açıkken veya arka plandayken gelir.</p>`;
+    else{
+      h+=`<div class="syncrow"><span class="syncdot${srvOk?" on":""}"></span><div style="flex:1;min-width:0"><b>${srvOk?"Sunucu bağlantısı çalışıyor":N.pub?(N.test?"Test bekleniyor…":"Kurulum yarım kaldı"):"Kurulmadı"}</b><div class="small muted">${srvOk?`Son test ${nfAgo(N.ok)} ulaştı. Hatırlatmalar uygulama kapalıyken de gelir (birkaç dakika gecikebilir).`:N.test?"Birkaç dakika içinde “Bağlantı kuruldu” bildirimi gelmeli. Gelmezse adımları kontrol et.":"Bir kerelik kurulum: yaklaşık 3 dakika."}</div></div></div>`;
+      if(!srvOk||nfKeyShow){
+        h+=`<ol class="nfsteps">
+<li><b>Anahtar oluştur.</b> ${v&&N.pub===v.pub&&v.code===code?`<span class="own">Hazır</span><div class="nfkey"><code>${esc(nfSecret(v).slice(0,26))}…</code><button class="btn sm primary" type="button" data-nfa="copykey">Anahtarı kopyala</button></div>`:N.pub?`<div class="small muted" style="margin:4px 0">Anahtar başka bir cihazda oluşturulmuş. O cihazdan kopyalayabilir ya da burada yenisini oluşturabilirsin (eskisi geçersiz olur).</div><button class="btn sm" type="button" data-nfa="key">Yeni anahtar oluştur</button>`:`<button class="btn sm primary" type="button" data-nfa="key">Anahtar oluştur</button>`}</li>
+<li><b>GitHub'a ekle.</b> Aşağıdaki düğmeyle açılan sayfada <b>Name</b> kısmına <code>${NF_SECRET}</code> yaz (<button class="linkbtn" type="button" data-nfa="copyname">kopyala</button>), <b>Secret</b> kısmına kopyaladığın anahtarı yapıştır ve <b>Add secret</b>'a bas.<div style="margin-top:6px"><a class="btn sm" href="https://github.com/${NF_REPO}/settings/secrets/actions/new" target="_blank" rel="noopener">GitHub'da aç ↗</a></div></li>
+<li><b>Test et.</b> <button class="btn sm goldb" type="button" data-nfa="srvtest"${N.pub?"":" disabled"}>Bağlantıyı test et</button><div class="small muted" style="margin-top:4px">Sunucu her 10 dakikada bir çalışır. Beklemek istemezsen GitHub'da <b>Actions → Hunter bildirimleri → Run workflow</b>'a bas.</div></li></ol>`;
+      }else h+=`<div class="row" style="margin-top:10px"><button class="btn sm" type="button" data-nfa="srvtest">Tekrar test et</button><button class="btn sm" type="button" data-nfa="keyshow">Kurulum adımları</button></div>`;
+      if(devs.length) h+=`<p class="small muted" style="margin:10px 0 4px">Bildirim alan cihazlar:</p><div class="nfdevs">${devs.map(k=>`<span class="nfdev">${esc(N.subs[k].n||"Cihaz")}${k===me?" <b>(bu cihaz)</b>":""}<button type="button" class="linkbtn" data-nfa="rmdev" data-dev="${esc(k)}" aria-label="Kaldır">✕</button></span>`).join("")}</div>`;
+    }
+  }
+  h+=`<div class="divider"></div><p class="sec-label">Widget yerine: durum kartı ve kısayollar</p>
+<p class="help" style="margin:0 0 8px">Android, web uygulamalarının ana ekrana widget eklemesine henüz izin vermiyor. Onun yerine:</p>
+<ul class="nful"><li><b>Durum kartı:</b> bildirim panelinde seviyeni, görevlerini, serini ve enerjini gösterir; sen ilerledikçe kendiliğinden güncellenir. Kaydırıp kapatırsan bir sonraki güncellemede geri gelir.${on&&N.p.status.on?` <button class="linkbtn" type="button" data-nfa="stnow">Şimdi göster</button>`:""}</li>
+<li><b>Kısayollar:</b> ana ekrandaki Hunter simgesine <b>basılı tut</b>: Görevler, Zindanlar, Arena ve Karakter doğrudan açılır. Bir kısayolu da basılı tutup sürükleyerek ana ekrana ayrı simge olarak koyabilirsin. Kısayollar güncellemeden sonra bir gün içinde görünür.</li></ul>`;
+  el.innerHTML=h;
+}
+async function nfClick(d,el){
+  const N=nfN();
+  switch(d.nfa){
+    case "on":{let p=nfPerm();if(p==="default"){try{p=await Notification.requestPermission()}catch(e){}}
+      if(p!=="granted"){toast("Bildirim izni verilmedi.");renderNotif();return}
+      N.on=true;if(N.pub) await nfSubscribe().catch(()=>{});nfPeriodic();commit();renderNotif();toast("Bildirimler açıldı.");setTimeout(()=>nfStatusShow(true),400);return}
+    case "off":N.on=false;delete N.subs[nfDevId()];try{const r=await nfReg();const sb=r&&r.pushManager&&await r.pushManager.getSubscription();if(sb) await sb.unsubscribe()}catch(e){}await nfStatusOff();commit();renderNotif();toast("Bildirimler kapatıldı.");return;
+    case "recheck":renderNotif();return;
+    case "test":await nfShow("[Sistem] Deneme bildirimi",nfOpt({id:"hunter-test",b:"Bildirimler bu cihazda çalışıyor.",go:"set"}));return;
+    case "key":{if(!syncCode()){toast("Önce bulut senkronunu aç.");return}const v=await nfGenKeys();N.pub=v.pub;N.ok=0;N.test=0;for(const k in N.subs) if(k!==nfDevId()) delete N.subs[k];await nfSubscribe().catch(e=>toast("Abonelik kurulamadı: "+esc(e&&e.message||"")));commit();renderNotif();return}
+    case "copykey":{const v=nfVapidLocal();if(!v) return;const t=nfSecret(v);if(!(await copyText(t,"Anahtar kopyalandı. Şimdi GitHub'a yapıştır."))){const b=el.parentNode;b.innerHTML=`<textarea rows="3" readonly style="width:100%;font-size:11px;background:rgba(0,0,0,.45);color:var(--text);border:1px solid var(--line-dim)">${esc(t)}</textarea>`;const ta=b.querySelector("textarea");ta.focus();ta.select()}return}
+    case "copyname":copyText(NF_SECRET,"Ad kopyalandı: "+NF_SECRET);return;
+    case "srvtest":{let err="";await nfSubscribe().catch(e=>{err=e&&e.message||"bilinmeyen hata"});if(!N.subs[nfDevId()]){toast("Bu cihaz anlık bildirime kaydolamadı"+(err?": "+esc(err):"")+". İnternet bağlantını kontrol edip tekrar dene.");renderNotif();return}}N.test=Date.now();N.ok=0;commit();renderNotif();toast("Test gönderildi. Birkaç dakika içinde bildirim gelmeli.");return;
+    case "keyshow":nfKeyShow=!nfKeyShow;renderNotif();return;
+    case "rmdev":delete N.subs[d.dev];if(d.dev===nfDevId()){try{const r=await nfReg();const sb=r&&await r.pushManager.getSubscription();if(sb) await sb.unsubscribe()}catch(e){}}commit();renderNotif();return;
+    case "stnow":nfStatusShow(true);toast("Durum kartı bildirim paneline eklendi.");return;
+  }
+  if(d.nftog){const p=N.p[d.nftog];p.on=!p.on;if(d.nftog==="status"&&!p.on) nfStatusOff();commit();renderNotif();if(d.nftog==="status"&&p.on) setTimeout(()=>nfStatusShow(true),300)}
+}
+document.addEventListener("change",e=>{const t=e.target;if(!t||!t.dataset||!t.dataset.nft) return;if(!/^\d\d:\d\d$/.test(t.value)) return;nfN().p[t.dataset.nft].t=t.value;commit();toast("Saat kaydedildi: "+t.value)});
+
 /* ================= TABS & EVENTS ================= */
 const TABS=["home","quests","gates","arena","store","char","map","story","set"];
 const TGROUP={home:"home",quests:"quests",gates:"quests",arena:"quests",char:"char",store:"char",map:"map",story:"story",set:"set"};
@@ -5509,6 +5751,7 @@ document.addEventListener("click",e=>{
   const el=e.target.closest("button");if(!el) return;
   const d=el.dataset;
   if(d.nav){setTab(GLAST[d.nav]||d.nav);return}
+  if(d.nfa||d.nftog){nfClick(d,el);return}
   if(d.arsub){arSub=d.arsub;renderArena();return}
   if(d.arfight!==undefined){startArena(+d.arfight);return}
   if(d.arref){arenaRefresh();return}
@@ -5669,7 +5912,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&showing&&$("modal")
 /* ================= BACKUP & SYNC ================= */
 const IS_PWA=true;
 const FB_CONFIG={"apiKey": "AIzaSyBsNalG4Fl7crcsluhf2hqDXlWawD6DJ2I", "authDomain": "hunter-sistemi.firebaseapp.com", "projectId": "hunter-sistemi", "storageBucket": "hunter-sistemi.firebasestorage.app", "messagingSenderId": "550981824995", "appId": "1:550981824995:web:bd6d609b92a2b74b8f70d6"};
-const APP_VER="28";
+const APP_VER="29";
 const LS_SYNC="hunter-sistemi-sync";
 function b64e(t){return btoa(unescape(encodeURIComponent(t)))}
 function b64d(t){return decodeURIComponent(escape(atob(t)))}
@@ -5752,9 +5995,10 @@ function checkRank(){
   S.rankSeen=r;
 }
 function commit(){
-  checkRank();checkTitles();
+  checkRank();checkTitles();try{nfPlan()}catch(e){}
   S.updatedAt=Date.now();cacheLocal();render();
   if(ref){clearTimeout(saveT);saveT=setTimeout(flush,700)}
+  nfAfterCommit();
 }
 async function flush(){
   if(!ref) return;
@@ -5766,6 +6010,9 @@ async function flush(){
   writing=false;if(dirty) flush();
 }
 function showRefund(){
+  if(S.sysNote11){delete S.sysNote11;let seen=false;try{seen=localStorage.getItem("hunter-sistemi-note11")==="1";localStorage.setItem("hunter-sistemi-note11","1")}catch(e){}
+    if(!seen&&IS_PWA) overlay(head("Sistem Güncellemesi")+`<div class="big gold">BİLDİRİMLER</div><div class="updl"><p>${NF_BELL("#ffc53d",16)}<span><b>Hatırlatmalar:</b> günün görevleri, görev hatırlatma, seri uyarısı, arena hakları, sezon sonu ve zamanlayıcı. Saatlerini sen seçiyorsun.</span></p><p>${ico("level","#62d2ff",16)}<span><b>Durum kartı:</b> bildirim panelinde seviyen, görevlerin, serin ve enerjin. Widget yerine geçer.</span></p><p>${ico("sword","#ff5470",16)}<span><b>Kısayollar:</b> ana ekrandaki simgeye basılı tut; Görevler, Zindanlar, Arena ve Karakter doğrudan açılır.</span></p><p class="small muted">Açmak için: Ayarlar → Bildirimler. Uygulama kapalıyken de gelmesi için oradaki 3 adımlık kurulumu bir kez yap.</p></div>`,{sfx:sfx.rank});
+    cacheLocal();}
   if(S.sysNote10){delete S.sysNote10;let seen=false;try{seen=localStorage.getItem("hunter-sistemi-note10")==="1";localStorage.setItem("hunter-sistemi-note10","1")}catch(e){}
     if(!seen) overlay(head("Sistem Güncellemesi")+`<div class="big gold">YENİLİKLER</div><div class="updl"><p>${ico("sword","#ffc53d",16)}<span><b>Arena sıfırlandı:</b> herkes 0 puandan başlıyor. Rakipler artık savaş gücüne göre geliyor; ligleri baştan tırman.</span></p><p>${ico("power","#ff3b4f",16)}<span><b>Savaş efektleri:</b> her saldırının, yeteneğin ve canavar hareketinin kendi efekti var.</span></p><p>${ico("title","#62d2ff",16)}<span><b>Karakter özelleştirme:</b> kaş, göz şekli, ağız, sakal, yara izi, yüz işareti, aksesuar, özel renkler ve hazır görünümler. Profil resmi olarak kendi karakterini seçebilirsin. Ayarlar → Karakter Özelleştirme.</span></p><p>${ico("map","#62d2ff",16)}<span><b>Loncalar:</b> yabancı bir loncaya katılmak için önce o ülkeyi tamamen keşfetmelisin.</span></p></div>`,{sfx:sfx.rank});
     cacheLocal();}
@@ -5841,7 +6088,7 @@ document.addEventListener("visibilitychange",()=>{if(!document.hidden){timerTick
 bResume();
 schedTimer();pillUpdate();
 setTimeout(()=>{try{(window.requestIdleCallback||setTimeout)(()=>mapLblLoad())}catch(e){mapLblLoad()}},2500);
-initDb();
+initDb().then(()=>nfBoot(),()=>nfBoot());
 })();
 </script>
 

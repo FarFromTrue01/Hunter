@@ -1,0 +1,46 @@
+name: Hunter bildirimleri
+
+on:
+  schedule:
+    - cron: "4,14,24,34,44,54 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: hunter-push
+  cancel-in-progress: false
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github/push
+      - uses: actions/cache/restore@v4
+        with:
+          path: .pushlog
+          key: pushlog-${{ github.run_id }}
+          restore-keys: pushlog-
+      - name: Bildirimleri gönder
+        env:
+          HUNTER_PUSH: ${{ secrets.HUNTER_PUSH }}
+        run: node .github/push/send.mjs
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: .pushlog
+          key: pushlog-${{ github.run_id }}
+      - name: Zamanlamayı canlı tut
+        if: github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ "$(date -u +%H%M)" \< "0010" ]; then
+            curl -s -o /dev/null -w "%{http_code}\n" -X PUT -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/${{ github.repository }}/actions/workflows/push.yml/enable" || true
+          fi
