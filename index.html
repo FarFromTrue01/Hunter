@@ -366,6 +366,70 @@ button.mcard:focus-visible{outline:2px solid var(--glow);outline-offset:2px}
 .note-box{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:10px 12px;margin-bottom:12px;border:1px dashed rgba(255,197,61,.45);background:rgba(60,40,0,.25);font-size:13px}
 .classbar{grid-column:1/-1;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 12px;border:1px solid var(--line-dim);background:rgba(4,12,30,.55);font-family:var(--display);font-size:14px}
 .classbar .btn{margin-left:auto}
+/* ===== TOP POWER BOX (rank-tiered) ===== */
+@property --tpa{syntax:"<angle>";inherits:false;initial-value:0deg}
+.tpow{--rc:#b09a86;position:relative;display:inline-block;margin-top:9px;padding:1px;border:0;cursor:pointer;font:inherit;color:inherit;background:color-mix(in srgb,var(--rc) 32%,transparent);clip-path:none;border-radius:3px;-webkit-tap-highlight-color:transparent}
+.tpow:focus-visible{outline:2px solid var(--glow);outline-offset:3px}
+.tp-in{position:relative;overflow:hidden;display:flex;align-items:center;gap:8px;padding:7px 12px 9px 12px;border-radius:2px;background:linear-gradient(180deg,#0c1322,#070b16)}
+.tp-lbl{display:flex;align-items:center;gap:5px;font-family:var(--display);font-size:10.5px;letter-spacing:.2em;color:var(--muted);font-weight:600}
+.tp-val{font-family:var(--display);font-weight:700;font-size:17px;letter-spacing:.03em;font-variant-numeric:tabular-nums;line-height:1;color:color-mix(in srgb,var(--rc) 70%,#fff)}
+.tp-prog{position:absolute;left:0;right:0;bottom:0;height:2px;background:rgba(255,255,255,.06)}
+.tp-prog i{position:absolute;inset:0 auto 0 0;background:var(--rc);box-shadow:0 0 6px var(--rc)}
+.tp-rank{position:absolute;z-index:3;top:-9px;left:7px;min-width:20px;padding:0 6px;font-family:var(--display);font-weight:700;font-size:11px;line-height:16px;letter-spacing:.06em;text-align:center;color:var(--rc);background:#0a0f1c;border:1px solid color-mix(in srgb,var(--rc) 55%,transparent);transform:skewX(-12deg)}
+.tp-rank span{display:inline-block;transform:skewX(12deg)}
+.tp-sheen,.tp-spark{display:none}
+/* E */
+.tpow.t1{background:color-mix(in srgb,var(--rc) 55%,transparent)}
+.tpow.t1 .tp-in{background:linear-gradient(180deg,#121a2b,#080c17)}
+/* D */
+.tpow.t2{background:color-mix(in srgb,var(--rc) 70%,transparent);box-shadow:0 0 10px color-mix(in srgb,var(--rc) 30%,transparent)}
+.tpow.t2 .tp-val,.tpow.t3 .tp-val,.tpow.t4 .tp-val,.tpow.t5 .tp-val{text-shadow:0 0 10px color-mix(in srgb,var(--rc) 70%,transparent)}
+.tpow.t2 .tp-in{background:linear-gradient(180deg,color-mix(in srgb,var(--rc) 12%,#0a1020),#070b16)}
+/* rank tag filled from D up */
+.tpow:is(.t2,.t3,.t4,.t5,.t6,.t7,.t8) .tp-rank{color:#08101c;background:var(--rc);border-color:var(--rc);box-shadow:0 0 10px color-mix(in srgb,var(--rc) 60%,transparent)}
+/* C: corner brackets */
+.tpow:is(.t3,.t4,.t5,.t6,.t7,.t8)::after{content:"";position:absolute;inset:-4px;pointer-events:none;
+  background:linear-gradient(var(--rc),var(--rc)) right top/9px 2px,linear-gradient(var(--rc),var(--rc)) right top/2px 9px,linear-gradient(var(--rc),var(--rc)) left bottom/9px 2px,linear-gradient(var(--rc),var(--rc)) left bottom/2px 9px;background-repeat:no-repeat;filter:drop-shadow(0 0 4px var(--rc))}
+.tpow.t3{background:var(--rc);box-shadow:0 0 14px color-mix(in srgb,var(--rc) 40%,transparent)}
+.tpow:is(.t3,.t4,.t5) .tp-in{background:linear-gradient(180deg,color-mix(in srgb,var(--rc) 16%,#0a1020),#060a14)}
+/* B: sheen sweep */
+.tpow:is(.t4,.t5,.t6,.t7,.t8) .tp-sheen{display:block;position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 35%,color-mix(in srgb,var(--rc) 35%,transparent) 50%,transparent 65%);background-size:250% 100%;animation:tpsheen 3.6s ease-in-out infinite}
+@keyframes tpsheen{0%{background-position:130% 0}60%,100%{background-position:-30% 0}}
+.tpow.t4{background:var(--rc);box-shadow:0 0 16px color-mix(in srgb,var(--rc) 45%,transparent)}
+.tpow:is(.t4,.t5,.t6,.t7,.t8) .tp-val{font-size:18px}
+/* A: pulsing aura */
+.tpow.t5{background:var(--rc);animation:tppulse 2.4s ease-in-out infinite}
+@keyframes tppulse{0%,100%{box-shadow:0 0 12px color-mix(in srgb,var(--rc) 40%,transparent)}50%{box-shadow:0 0 24px color-mix(in srgb,var(--rc) 75%,transparent),0 0 2px var(--rc)}}
+/* S+: rotating energy border */
+.tpow:is(.t6,.t7,.t8){padding:1.5px;background:conic-gradient(from var(--tpa),var(--rc),transparent 22%,var(--rc2,var(--rc)) 50%,transparent 72%,var(--rc));animation:tpspin 3.2s linear infinite,tppulse 2.4s ease-in-out infinite}
+@keyframes tpspin{to{--tpa:360deg}}
+.tpow:is(.t6,.t7,.t8) .tp-in{background:radial-gradient(120% 140% at 50% 120%,color-mix(in srgb,var(--rc) 28%,transparent),transparent 60%),linear-gradient(180deg,#0e0a18,#05060d)}
+.tpow:is(.t6,.t7,.t8) .tp-val{font-size:19px;background:linear-gradient(180deg,#fff 10%,color-mix(in srgb,var(--rc) 80%,#fff) 60%,var(--rc));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 8px color-mix(in srgb,var(--rc) 70%,transparent))}
+.tpow:is(.t6,.t7,.t8) .tp-rank{font-size:12px;padding:0 8px}
+.tpow.t6{--rc2:#ffb36b}
+/* SS: flicker + darker crimson core */
+.tpow.t7{--rc2:#ffd166}
+.tpow.t7 .tp-rank{animation:tpflick 3s steps(1) infinite}
+@keyframes tpflick{0%,100%{opacity:1}92%{opacity:.55}94%{opacity:1}96%{opacity:.7}}
+/* X: prismatic */
+.tpow.t8{--rc2:#6ff0ff;background:conic-gradient(from var(--tpa),#d7b8ff,#6ff0ff,#ff8ad8,#fff3a8,#d7b8ff)}
+.tpow.t8 .tp-rank{background:linear-gradient(90deg,#d7b8ff,#6ff0ff,#ff8ad8);border:0}
+.tpow.t8 .tp-val{background:linear-gradient(90deg,#fff,#d7b8ff,#6ff0ff,#ff8ad8,#fff);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;animation:tpshim 3s linear infinite}
+@keyframes tpshim{to{background-position:-200% 0}}
+.tpow:is(.t7,.t8) .tp-spark{display:block;position:absolute;width:3px;height:3px;border-radius:50%;background:var(--rc2);box-shadow:0 0 6px var(--rc2);pointer-events:none;animation:tpspk 2.6s ease-in infinite;opacity:0}
+.tp-spark.s1{left:20%;bottom:2px}.tp-spark.s2{left:55%;bottom:2px;animation-delay:.9s!important}.tp-spark.s3{left:82%;bottom:2px;animation-delay:1.7s!important}
+@keyframes tpspk{0%{opacity:0;transform:translateY(0)}20%{opacity:1}100%{opacity:0;transform:translateY(-26px)}}
+body.noanim .tpow .tp-sheen{display:none}
+@media (max-width:600px){
+  .topbar{display:grid;grid-template-columns:minmax(0,1fr) auto auto;column-gap:10px;row-gap:2px;align-items:center}
+  .top-right{display:contents}
+  .brand{grid-column:1;grid-row:1}
+  .sync{grid-column:1;grid-row:2;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  #goldTop{grid-column:2;grid-row:1/3;padding:3px 10px 3px 5px;font-size:14px}
+  .tpow{grid-column:3;grid-row:1/3;margin-top:8px}
+  .tp-in{padding:6px 10px 8px}
+  .tp-lbl{font-size:9.5px;letter-spacing:.14em}
+}
 .goldpill.neg{color:#ff6b7c;border-color:rgba(255,74,103,.5);background:rgba(80,10,25,.4)}
 .jobbtn .jn{font-family:var(--display);font-weight:700}
 .jobbtn .jd{font-size:12.5px;color:var(--muted)}
@@ -798,6 +862,7 @@ body.scrolling .spin,body.scrolling .pulse,body.scrolling .breathe{animation-pla
     <div class="top-right">
       <span class="sync" id="sync">Yükleniyor…</span>
       <span class="goldpill" id="goldTop"></span>
+      <button type="button" class="tpow" id="powTop" aria-label="Savaş gücü ve rütbe"></button>
     </div>
   </header>
 
@@ -1266,7 +1331,7 @@ const CONS={
   xpScroll:{n:"Bilgelik Parşömeni",icon:"scrollB",t:"C",p:1200,d:"Anında, mevcut seviyenin gerektirdiği XP'nin %20'si kadar XP verir."},
   scroll:{n:"Kurtuluş Parşömeni",icon:"scroll",t:"B",p:1500,d:"Bir günü kaçırırsan otomatik kullanılır. Ceza gelmez, serin korunur."},
   classDoc:{n:"Sınıf Belgesi",icon:"doc",t:"A",p:2000,d:"Sınıf değiştirme bekleme süresini anında sıfırlar."},
-  box:{n:"Rastgele Kutu",icon:"box",t:"C",p:800,d:"Aç: gold, iksir, parşömen ya da nadiren ekipman çıkar."},
+  box:{n:"Rastgele Kutu",icon:"box",t:"C",p:800,d:"Aç: %60 gold, %22 iksir, %7 Kurtuluş Parşömeni, %6 Bilgelik Parşömeni, %5 ekipman (rütbene kadar)."},
   gearBox:{n:"Ekipman Sandığı",icon:"chestbox",t:"A",p:0,d:"Mevcut rütbende, sahip olmadığın rastgele bir ekipman verir. Fiyatı rütbene göre belirlenir."}
 };
 function niceP(v){if(v<1000) return Math.round(v/10)*10;if(v<10000) return Math.round(v/50)*50;if(v<100000) return Math.round(v/500)*500;return Math.round(v/5000)*5000}
@@ -3519,6 +3584,7 @@ function renderDungeon(){
 <div class="energy"><div class="etop"><span>${BOLT("#ffd84a",18)} ENERJİ</span><b class="${E<0?"neg":""}">${E} / ${M}</b></div><div class="bar en"><i style="width:${Math.max(0,Math.min(100,E/M*100)).toFixed(1)}%"></i></div>
 <p class="help" style="margin:8px 0 0">Görev tamamlayınca enerji kazanırsın: F·E·D <b>+1</b>, C·B <b>+2</b>, A·S <b>+3</b>, SS <b>+4</b>, X <b>+5</b>. Enerji günden güne birikir, en fazla 5 + 2×seviye.</p></div>
 <div class="dlist">`;
+  const dcPct=(dropChance()*100).toFixed(1).replace(".",",");
   DUNGEONS.forEach(D=>{
     const r=D.r,ok=rankOk(r),n=dRunsToday(r),cost=dCost(r),rw=dReward(r),full=n>=3;
     let act;
@@ -3531,11 +3597,12 @@ function renderDungeon(){
     h+=`<div class="dcard${ok?"":" locked"}" style="--rc:${RCOL[r]}"><div class="dboss">${monSvg(D.boss)}</div><div class="dinfo"><div class="gname">${remb(r,22)} ${esc(D.n)} <span style="color:${RCOL[r]}">· ${r}</span></div><div class="small muted" style="margin:2px 0 6px">${esc(D.d)}</div>
 <div class="dline">Canavarlar: <b>${esc(mons)}</b></div><div class="dline">Boss: <b style="color:${RCOL[r]}">${esc(MONS[D.boss].n)}</b>${MTRAIT[D.boss]?` <span class="muted">· ${esc(MTRAIT[D.boss])}</span>`:""}</div>
 <div class="dline">Önerilen güç: <b>~${fmt(D.rec)}</b> <span class="muted">(senin: ${fmt(power())})</span></div>
-<div class="dline">Ödül: <b style="color:#6fb8ff">+${fmt(rw.xp)} XP</b> · <b style="color:var(--gold)">+${fmt(rw.gold)}G</b> · <span style="color:${RCOL[r]}">nadiren ${r} rütbe eşya</span></div></div>
+<div class="dline">Ödül: <b style="color:#6fb8ff">+${fmt(rw.xp)} XP</b> · <b style="color:var(--gold)">+${fmt(rw.gold)}G</b> · ${(()=>{const gp=gearPool(r).length;return gp?`<span style="color:${RCOL[r]}"><b>%${dcPct}</b> şansla ${r} rütbe eşya</span> <span class="muted">(${gp} eşya kaldı)</span>`:`<span class="muted">${r} rütbe eşyaların hepsi sende</span>`})()}</div></div>
 <div class="dact"><div class="dcost"><span>${BOLT()} ${full?"–":cost}</span><span>${coinSvg(14)} ${fmt(rw.fee)}</span></div><div class="druns">${[0,1,2].map(i=>`<i class="${i<n?"on":""}"></i>`).join("")}<span>${n}/3 bugün</span></div>${act}</div></div>`;
   });
   h+=`<div class="dcard locked soon"><div class="dinfo"><div class="gname">${remb("B",22)} B – X rütbe zindanlar</div><div class="small muted">Yakında açılacak.</div></div></div></div>
-<p class="help" style="margin:14px 0 0">Her zindanda 2 dalga canavar ve bir boss var. Giriş enerji ve gold ister; aynı gün her girişte enerji maliyeti 3 katına çıkar (günde en fazla 3 giriş). Yenilirsen ya da kaçarsan enerji ve giriş ücreti geri gelmez. Can her girişte dolu başlar, dalgalar arasında yenilenmez. Zindanlar stat puanı vermez.</p></section>`;
+<p class="help" style="margin:14px 0 0">Her zindanda 2 dalga canavar ve bir boss var. Giriş enerji ve gold ister; aynı gün her girişte enerji maliyeti 3 katına çıkar (günde en fazla 3 giriş). Yenilirsen ya da kaçarsan enerji ve giriş ücreti geri gelmez. Can her girişte dolu başlar, dalgalar arasında yenilenmez. Zindanlar stat puanı vermez.</p>
+<p class="help" style="margin:8px 0 0"><b>Eşya düşme şansı:</b> Boss'u yenince zindanın rütbesinden bir ekipman düşme şansı <b>%${dcPct}</b>. Temel oran %5; <b>Algı (PER)</b> arttıkça yükselir, en fazla %10'a yaklaşır (formül: %5 × (1 + PER ÷ (PER + 200)); PER ${fmt(total("PER"))}). Sahip olduğun ya da sınıfına uymayan eşyalar düşmez.</p></section>`;
   v.innerHTML=h;
 }
 function bRender(full){
@@ -3578,11 +3645,17 @@ function rbadge(r,sz){return remb(r,sz||24)}
 let curTab="home",storeSub="weapons",storeSlot="chest",storeCls=null,storeKind=null,storeTier=null,guildView=null,avatarKey="",guildRendered=false;
 function render(){
   if(!S.rankSeen) S.rankSeen=curRank();
-  $("goldTop").innerHTML=coinSvg(20)+fmt(S.gold);$("goldTop").classList.toggle("neg",S.gold<0);
+  $("goldTop").innerHTML=coinSvg(20)+fmt(S.gold);$("goldTop").classList.toggle("neg",S.gold<0);renderPowTop();
   {const dq=dailyQuests();$("navQDot").hidden=S.cleared||!dq.length}
   renderTab(curTab);
   renderViewers();
   tick();
+}
+function renderPowTop(){
+  const pw=power(),r=rankOf(pw),nr=nextRank(pw),lo=RP[r],pct=nr?Math.min(100,Math.max(0,(pw-lo)/(nr[1]-lo)*100)):100,el=$("powTop");
+  el.className="tpow t"+TIERS.indexOf(r);el.style.setProperty("--rc",RCOL[r]);
+  el.title=nr?`${r} rütbe · ${nr[0]} rütbe için ${fmt(nr[1]-pw)} güç daha`:`${r} rütbe · en yüksek rütbe`;
+  el.innerHTML=`<span class="tp-rank"><span>${r}</span></span><span class="tp-in"><span class="tp-sheen"></span><span class="tp-lbl">${ico("power",RCOL[r],13)}GÜÇ</span><b class="tp-val">${fmt(pw)}</b><span class="tp-prog"><i style="width:${pct.toFixed(1)}%"></i></span><i class="tp-spark s1"></i><i class="tp-spark s2"></i><i class="tp-spark s3"></i></span>`;
 }
 let heroKey="";
 function renderHome(){
@@ -4049,6 +4122,7 @@ function bindPair(rid,nid,key,lo,hi){
 }
 bindPair("hRange","hNum","height",150,200);
 bindPair("wRange","wNum","weight",50,WMAX);
+$("powTop").addEventListener("click",()=>{const pw=power(),r=rankOf(pw),nr=nextRank(pw);toast(nr?`<b style="color:${RCOL[r]}">${r} rütbe</b> · ${fmt(pw)} güç — <b style="color:${RCOL[nr[0]]}">${nr[0]}</b> için ${fmt(nr[1]-pw)} daha`:`<b style="color:${RCOL[r]}">${r} rütbe</b> · en yüksek rütbedesin`)});
 $("muteBtn").addEventListener("click",()=>{muted=!muted;try{localStorage.setItem(LS_MUTE,muted?"1":"0")}catch(e){}renderSettings()});
 $("animBtn").addEventListener("click",()=>{ANIM=!ANIM;try{localStorage.setItem(LS_ANIM,ANIM?"1":"0")}catch(e){}document.body.classList.toggle("noanim",!ANIM);avatarKey="";["viewerChar","viewerSet"].forEach(k=>$(k).innerHTML="");render()});
 {let bc=0,bt=0;document.querySelector(".brand").addEventListener("click",()=>{const n=Date.now();bc=n-bt<1500?bc+1:1;bt=n;if(bc>=7){bc=0;DEV=!DEV;try{localStorage.setItem(LS_DEV,DEV?"1":"0")}catch(e){}renderSettings();toast(DEV?"Geliştirici modu açıldı (Ayarlar'ın en altında).":"Geliştirici modu kapatıldı.")}})}
