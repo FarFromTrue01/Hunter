@@ -1,5 +1,5 @@
-const C="hunter-cache-1",META="hunter-meta";
-const CORE=["./","index.html","manifest.webmanifest","icon-192.png","icon-512.png","icon-maskable.png","badge-96.png"];
+const C="hunter-cache-2",META="hunter-meta";
+const CORE=["./","index.html","manifest.webmanifest","logo-192.png","logo-512.png","logo-maskable.png","nf-icon.png","nf-badge.png"];
 self.addEventListener("install",e=>{self.skipWaiting();e.waitUntil(caches.open(C).then(c=>c.addAll(CORE)).catch(()=>{}))});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C&&k!==META).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener("fetch",e=>{
@@ -17,8 +17,8 @@ self.addEventListener("fetch",e=>{
 /* ---- bildirimler ---- */
 async function jget(k){try{const c=await caches.open(META),r=await c.match(k);return r?await r.json():null}catch(e){return null}}
 async function jput(k,o){try{const c=await caches.open(META);await c.put(k,new Response(JSON.stringify(o),{headers:{"content-type":"application/json"}}))}catch(e){}}
-function opt(it,x){return Object.assign({body:it.b||"",tag:it.tag||it.id||"hunter",icon:"icon-192.png",badge:"badge-96.png",data:{go:it.go||"quests"},vibrate:[180,90,180],renotify:false},x||{})}
-function stOpt(st){return {body:st.b,tag:"hunter-status",icon:"icon-192.png",badge:"badge-96.png",silent:true,renotify:false,data:{go:"quests"},actions:[{action:"quests",title:"Görevler"},{action:"gates",title:"Zindanlar"}]}}
+function opt(it,x){return Object.assign({body:it.b||"",tag:it.tag||it.id||"hunter",icon:"nf-icon.png",badge:"nf-badge.png",data:{go:it.go||"quests"},vibrate:[180,90,180],renotify:false},x||{})}
+function stOpt(st){return {body:st.b,tag:"hunter-status",icon:"nf-icon.png",badge:"nf-badge.png",silent:true,renotify:false,data:{go:"quests"},actions:[{action:"quests",title:"Görevler"},{action:"gates",title:"Zindanlar"}]}}
 async function markShown(id){const sh=(await jget("/__shown"))||{},now=Date.now();sh[id]=now;for(const k in sh) if(now-sh[k]>5*86400000) delete sh[k];await jput("/__shown",sh)}
 async function tell(msg){const cl=await self.clients.matchAll({type:"window",includeUncontrolled:true});cl.forEach(c=>{try{c.postMessage(msg)}catch(e){}})}
 self.addEventListener("push",e=>{
