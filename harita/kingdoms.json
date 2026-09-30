@@ -1,0 +1,59 @@
+{
+ "kingdoms": [
+  {
+   "id": "elonth",
+   "n": "Elonth",
+   "col": "#5f9a3c",
+   "tag": "Krallığı"
+  },
+  {
+   "id": "vorhal",
+   "n": "Vorhal",
+   "col": "#7b4a8f",
+   "tag": "İmparatorluğu"
+  },
+  {
+   "id": "nordra",
+   "n": "Nordra",
+   "col": "#5d93c9",
+   "tag": "Krallığı"
+  },
+  {
+   "id": "kaelis",
+   "n": "Kaelis",
+   "col": "#cf4d34",
+   "tag": "Krallığı"
+  },
+  {
+   "id": "solmyr",
+   "n": "Solmyr",
+   "col": "#e0a42a",
+   "tag": "Sultanlığı"
+  },
+  {
+   "id": "valdor",
+   "n": "Valdor",
+   "col": "#2f63b8",
+   "tag": "Krallığı"
+  },
+  {
+   "id": "lyria",
+   "n": "Lyria",
+   "col": "#2c9a86",
+   "tag": "Krallığı"
+  }
+ ],
+ "old2new": {
+  "eros": "elonth",
+  "eldmark": "elonth",
+  "verdanis": "vorhal",
+  "drakmor": "vorhal",
+  "nordhavn": "nordra",
+  "ashkara": "kaelis",
+  "thalassia": "kaelis",
+  "solmara": "solmyr",
+  "morvain": "solmyr",
+  "valdoria": "valdor",
+  "lyrandel": "lyria"
+ }
+}
