@@ -1249,6 +1249,25 @@ button.tmopt{cursor:pointer}
 .hm input{width:72px;text-align:center}
 .fscoef{margin-top:12px;padding:10px 12px;border:1px solid rgba(255,140,60,.4);background:rgba(60,20,0,.22);font-size:13px;line-height:1.6}
 .fscoef b{color:#ffcf9a;font-family:var(--display)}
+.qhead{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.qhead-l{display:grid;gap:10px;justify-items:start;min-width:0;flex:1 1 220px}
+.qhead-l .q-sub{margin:0;text-align:left}
+.qfocus{flex:0 1 300px;border:1px solid var(--line-dim);background:rgba(4,12,30,.6);padding:8px 10px;display:grid;gap:6px;position:relative}
+.qfocus::before{content:"";position:absolute;top:-2px;right:-2px;width:10px;height:10px;border-top:2px solid var(--glow);border-right:2px solid var(--glow)}
+.qfo-k{font-family:var(--display);font-size:10.5px;letter-spacing:.22em;color:var(--muted)}
+.qfo-btns{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.qfo-b{display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 8px;border:1px solid rgba(98,210,255,.45);background:rgba(20,60,110,.4);color:#cfeeff;font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.04em;border-radius:2px;cursor:pointer;min-width:0}
+.qfo-b.grn{border-color:rgba(109,255,179,.45);background:rgba(10,70,50,.35);color:#c8ffe4}
+.qfo-b:hover{box-shadow:0 0 12px rgba(98,210,255,.35)}
+.qfo-run{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--glow);background:rgba(20,60,110,.45);border-radius:2px;cursor:pointer;color:inherit;font:inherit;text-align:left;box-shadow:0 0 14px rgba(98,210,255,.25)}
+.qfo-run b{display:block;font-family:var(--display);font-size:20px;font-variant-numeric:tabular-nums;color:var(--glow);line-height:1.1}
+.qfo-run small{font-size:11.5px;color:var(--muted)}
+.foc-goal{width:100%}
+.foc-goal .bar{margin-top:4px}
+.rord{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px;align-items:center;padding:8px 10px;border:1px solid var(--line-dim);background:var(--panel-2)}
+.rord.off{opacity:.62}
+.rord .btn{width:44px;height:40px;padding:0;font-size:15px}
+@media (max-width:560px){.qfocus{flex:1 1 100%}}
 @media (max-width:600px){.brand .blogo{width:28px;height:28px}.brand .bword b{font-size:13.5px;letter-spacing:.26em}.brand .bword span{font-size:8.5px}}
 @media (max-width:420px){.qlg{grid-template-columns:minmax(0,1fr) auto}.qlg .tm{grid-column:1/-1;margin-bottom:-4px}.foc-btns.three{grid-template-columns:1fr 1fr}.foc-btns.three .goldb{grid-column:1/-1;order:-1}}
 </style>
@@ -1312,8 +1331,10 @@ button.tmopt{cursor:pointer}
     <div class="wrap">
       <div class="seg subnav"><button type="button" data-tab="quests">Görevler</button><button type="button" data-tab="gates">Zindanlar</button><button type="button" data-tab="arena">Arena</button></div>
       <section class="win">
-        <div class="win-head"><div class="win-title"><span class="bang">!</span>Görev Bilgisi</div></div>
-        <div class="q-sub">[Günlük Görev: <b>Güçlenmeye Hazırlık</b>]</div>
+        <div class="qhead">
+          <div class="qhead-l"><div class="win-title"><span class="bang">!</span>Görev Bilgisi</div><div class="q-sub">[Günlük Görev: <b>Güçlenmeye Hazırlık</b>]</div></div>
+          <div class="qfocus" id="qFocus"></div>
+        </div>
         <div class="qf-bar" id="qfBar"></div>
         <div class="qf-panel" id="qfPanel" hidden></div>
         <div class="qlist" id="qlist"></div>
@@ -1344,8 +1365,8 @@ button.tmopt{cursor:pointer}
         <div class="tscroll"><table class="table" id="rankTable"></table></div>
         <p class="help" id="rankNote" style="margin-top:10px"></p>
         <p class="help" style="margin-top:6px">Görev yalnızca seçtiğin statı artırır. <b>Seviye atlayınca tüm statlara</b> yeni seviyen kadar puan eklenir: 1. seviyeye çıkınca +1, 16. seviyeye çıkınca +16. Seviye için gereken XP her seviyede 1,25 katına çıkar. Sınıfının statındaki görevler ekstra XP ve gold verir.</p>
-        <p class="help" style="margin-top:6px"><b>Odak modu (isteğe bağlı):</b> her görevin yanındaki saat düğmesiyle <b>kronometre</b> ya da <b>zamanlayıcı</b> başlatabilirsin. Birimi <b>dk</b> ya da <b>saat</b> olan görevlerde zamanlayıcı görevin süresi kadardır; süre dolunca görev kendiliğinden tamamlanır. Kronometrede işin bitince <b>Tamamla</b>'ya basarsın.</p>
-        <p class="help" style="margin-top:6px"><b>Sıkıldım düğmesi:</b> odak ekranında sıkıldığında ya da başın ağrımaya başladığında bas. O andan sonra devam ettiğin süre <b>Boring Time</b> olarak sayılır ve görev ödülüne ek XP, gold ve stat verir (en fazla %50). Katsayı Ayarlar → Odak ve Sıkılma'dan belirlenir.</p>
+        <p class="help" style="margin-top:6px"><b>Odak oturumu (isteğe bağlı):</b> Görev Bilgisi'nin sağ üstündeki kutudan <b>kronometre</b> ya da <b>zamanlayıcı</b> başlat. Oturum görevlerden bağımsızdır; ödül odaklandığın süreye göre verilir (30 dk ≈ C rütbe bir görev; oturum başına en fazla 4 saat sayılır, 1 dk altı ödül vermez).</p>
+        <p class="help" style="margin-top:6px"><b>Sıkıldım düğmesi:</b> odak ekranında sıkıldığında ya da başın ağrımaya başladığında bas. O andan sonra devam ettiğin süre <b>Boring Time</b> sayılır ve oturum ödülüne %50'ye kadar ek ödül verir. Mevcut odak süren ne kadar kısaysa her dakika o kadar değerlidir (Ayarlar → Odak ve Sıkılma).</p>
         <p class="help" style="margin-top:6px"><b>Tek seferlik görevler</b> yalnızca tamamlandıktan 24 saat sonra listeden kalkar; tamamlanmayanlar yerinde kalır. Tamamladığın her görev Karakter → Kayıtlar → Görevler'de saklanır.</p>
         <p class="help" style="margin-top:6px"><b>Rütbe savaş gücüne göre belirlenir:</b> F 0 · E 75 · D 300 · C 750 · B 2.000 · A 5.000 · S 20.000 · SS 50.000 · X 200.000. Her stat puanı 5, her seviye 25 güç verir.</p>
       </section>
@@ -2042,7 +2063,7 @@ const TITLES=[
   {id:"unbeat",n:"Yenilmez",d:"Arenada üst üste 10 maç kazan.",xp:5,t:s=>!!(s.arena&&s.arena.bst>=10)},
   {id:"smith5",n:"Demirci Çırağı",d:"Bir ekipmanı +5'e çıkar.",gold:2,t:s=>(s.cnt.enhMax|0)>=5},
   {id:"smith10",n:"Usta Demirci",d:"Bir ekipmanı +10'a çıkar.",xp:3,gold:5,t:s=>(s.cnt.enhMax|0)>=10},
-  {id:"focus",n:"Odak Ustası",d:"Zamanlayıcıyla 10 görev tamamla.",xp:3,t:s=>(s.cnt.timers|0)>=10}
+  {id:"focus",n:"Odak Ustası",d:"10 odak oturumu tamamla.",xp:3,t:s=>(s.cnt.timers|0)>=10}
 ];
 const SKINS=[{c:"#f3d2bc",n:"Açık"},{c:"#e2b08a",n:"Buğday"},{c:"#c08457",n:"Esmer"},{c:"#8a5636",n:"Koyu esmer"},{c:"#5a3824",n:"Koyu"},{c:"#fae6d8",n:"Porselen"},{c:"#d8a47e",n:"Bal"},{c:"#a86b46",n:"Bronz"},{c:"#3e271a",n:"Abanoz"}];
 const EYES=[{c:"#5a3518",n:"Kahve"},{c:"#8a6a2a",n:"Ela"},{c:"#3f9a55",n:"Yeşil"},{c:"#3a82d8",n:"Mavi"},{c:"#8e9aa8",n:"Gri"},{c:"#1a1614",n:"Siyah"},{c:"#c98a1a",n:"Kehribar"},{c:"#8a4fd8",n:"Mor"},{c:"#c0202e",n:"Kızıl"},{c:"#6fd8ff",n:"Buz mavisi"},{c:"#2fb89a",n:"Turkuaz"}];
@@ -2316,7 +2337,7 @@ function normalize(s){
   o.inv.mat=Object.assign({m1:0,m2:0,m3:0},(s.inv||{}).mat||{});
   o.inv.enh=Object.assign({},(s.inv||{}).enh||{});
   for(const k in o.inv.enh){if(!ITEMS[k]||!o.inv.items.includes(k)) delete o.inv.enh[k];else o.inv.enh[k]=clamp(o.inv.enh[k]|0,0,ENH_MAX)}
-  o.timer=s.timer&&typeof s.timer==="object"&&s.timer.q&&(s.timer.dur>0||s.timer.mode==="sw")?Object.assign({acc:0,paused:false,mode:"tm",bs:null},s.timer):null;
+  o.timer=s.timer&&typeof s.timer==="object"&&(s.timer.dur>0||s.timer.mode==="sw")?Object.assign({acc:0,paused:false,mode:"tm",bs:null},s.timer):null;
   o.qlog=Array.isArray(s.qlog)?s.qlog.filter(e=>e&&typeof e==="object").slice(-QLOG_MAX):[];
   o.qf=s.qf&&typeof s.qf==="object"?Object.assign({},s.qf):{};
   o.focus=s.focus&&typeof s.focus==="object"?{cur:clamp(Math.round(s.focus.cur)||25,1,1440),want:clamp(Math.round(s.focus.want)||60,1,1440)}:null;
@@ -4664,11 +4685,11 @@ function renderTab(t){
   else if(t==="story") renderStory();
   else if(t==="arena") renderArena();
 }
-const QF_DEF={type:"all",st:"all",stat:"all",rank:"all",sort:"def",sep:true};
-let qfOpen=false;
+const QF_DEF={type:"all",st:"all",stat:"all",rank:"all",sort:"def",sep:true,first:"habit"};
+let qfOpen=false,qOrd=false;
 function qfGet(){return Object.assign({},QF_DEF,S.qf||{})}
 function qfCount(){const f=qfGet();return ["type","st","stat","rank"].filter(k=>f[k]!=="all").length+(f.sort!=="def"?1:0)}
-const QF_SORT=[["def","Ekleme sırası"],["todo","Bekleyenler önce"],["name","Ada göre (A–Z)"],["rankd","Zorluk: yüksekten"],["ranka","Zorluk: düşükten"],["xp","XP ödülü"],["stat","Stata göre"]];
+const QF_SORT=[["def","Özel sıra"],["todo","Bekleyenler önce"],["name","Ada göre (A–Z)"],["rankd","Zorluk: yüksekten"],["ranka","Zorluk: düşükten"],["xp","XP ödülü"],["stat","Stata göre"]];
 function qfApply(list,useSt){
   const f=qfGet(),idx=new Map(S.quests.map((q,i)=>[q.id,i])),ix=q=>idx.get(q.id)||0;
   const L=list.filter(q=>(f.type==="all"||(f.type==="habit"?!q.once:!!q.once))&&(f.stat==="all"||q.stat===f.stat)&&(f.rank==="all"||q.rank===f.rank)&&(!useSt||f.st==="all"||(f.st==="done"?qFull(q):!qFull(q))));
@@ -4678,20 +4699,23 @@ function qfApply(list,useSt){
 }
 function qGroup(list,fn){
   const f=qfGet();if(!f.sep||f.type!=="all") return list.map(fn).join("");
-  const h=list.filter(q=>!q.once),o=list.filter(q=>q.once);
-  return h.map(fn).join("")+(h.length&&o.length?`<div class="qsep">Tek seferlik</div>`:"")+o.map(fn).join("");
+  const h=list.filter(q=>!q.once),o=list.filter(q=>q.once),[A,B,lb]=f.first==="once"?[o,h,"Alışkanlıklar"]:[h,o,"Tek seferlik"];
+  return A.map(fn).join("")+(A.length&&B.length?`<div class="qsep">${lb}</div>`:"")+B.map(fn).join("");
 }
 function renderQF(){
   const f=qfGet(),n=qfCount(),all=S.quests.filter(qVisible).length,shown=qfApply(S.quests.filter(qVisible),true).length;
-  $("qfBar").innerHTML=`<button type="button" class="btn sm" data-qfopen="1" aria-expanded="${qfOpen}">${ico("level","#62d2ff",14)} Filtrele ve sırala${n?` <b>(${n})</b>`:""} ${qfOpen?"▴":"▾"}</button><span class="qf-sum">${(QF_SORT.find(x=>x[0]===f.sort)||QF_SORT[0])[1]} · ${shown===all?`${all} görev`:`${shown} / ${all} görev gösteriliyor`}</span>${n?`<button type="button" class="btn sm" data-qfreset="1">Temizle</button>`:""}`;
+  if(qOrd){$("qfBar").innerHTML=`<span class="qf-sum" style="color:var(--gold)">Sıralama modu · okları kullanarak taşı</span><button type="button" class="btn sm primary" data-qord="done">Tamam</button>`;$("qfPanel").hidden=true;$("qfPanel").innerHTML="";return}
+  $("qfBar").innerHTML=`<button type="button" class="btn sm" data-qfopen="1" aria-expanded="${qfOpen}">${ico("level","#62d2ff",14)} Filtrele${n?` <b>(${n})</b>`:""} ${qfOpen?"▴":"▾"}</button><button type="button" class="btn sm" data-qord="on">⇅ Sırala</button><span class="qf-sum">${(QF_SORT.find(x=>x[0]===f.sort)||QF_SORT[0])[1]} · ${shown===all?`${all} görev`:`${shown} / ${all} görev gösteriliyor`}</span>${n?`<button type="button" class="btn sm" data-qfreset="1">Temizle</button>`:""}`;
   const P=$("qfPanel");P.hidden=!qfOpen;if(!qfOpen){P.innerHTML="";return}
   const ch=(k,list)=>`<div class="chips">${list.map(x=>`<button type="button" class="chipbtn" data-qf="${k}:${x[0]}" aria-pressed="${String(f[k])===String(x[0])}">${x[1]}</button>`).join("")}</div>`;
   P.innerHTML=`<div class="qf-row"><span>Tür</span>${ch("type",[["all","Tümü"],["habit","Alışkanlıklar"],["once","Tek seferlik"]])}</div>
 <div class="qf-row"><span>Durum (bugün)</span>${ch("st",[["all","Tümü"],["todo","Bekleyen"],["done","Tamamlanan"]])}</div>
 <div class="qf-row"><span>Stat</span>${ch("stat",[["all","Tümü"]].concat(STATS.map(x=>[x.k,`<span style="color:${x.c}">${x.k}</span>`])))}</div>
 <div class="qf-row"><span>Zorluk</span>${ch("rank",[["all","Tümü"]].concat(QR.map(r=>[r,remb(r,18)+r])))}</div>
-<div class="qf-row"><span>Sırala</span>${ch("sort",QF_SORT)}</div>
-<div class="qf-row"><span>Alışkanlık / tek seferlik ayırıcı çizgi</span>${ch("sep",[[true,"Açık"],[false,"Kapalı"]])}</div>`;
+<div class="qf-row"><span>Sıralama ölçütü</span>${ch("sort",QF_SORT)}</div>
+<div class="qf-row"><span>Alışkanlık / tek seferlik ayırıcı çizgi</span>${ch("sep",[[true,"Açık"],[false,"Kapalı"]])}</div>
+<div class="qf-row"><span>Önce gösterilen${f.sep?"":" (ayırıcı açıkken geçerli)"}</span>${ch("first",[["habit","Alışkanlıklar"],["once","Tek seferlikler"]])}</div>
+<p class="help" style="margin:0">Görevleri istediğin sıraya koymak için <b>Sırala</b>'ya bas. Özel sıra, Sırala modunda belirlediğin sıradır.</p>`;
 }
 function qItemHtml(q){
   const s=SC[q.stat],unit=q.unit?" "+esc(q.unit):"";
@@ -4703,24 +4727,43 @@ function qItemHtml(q){
   const boxIn=full?CHECK:(k>0?`<b class="pn">${k}</b>`:CHECK);
   const note=q.once?(full&&q.doneAt?`<span class="qleft">${hLeft(DAY_MS-(Date.now()-q.doneAt))} sonra listeden kalkar</span>`:`<span>Tamamlayınca 24 saat sonra kalkar</span>`):`<span>Gece yarısına kadar</span>`;
   const main=`<button type="button" class="quest${full?" done":""}${k>0&&!full?" partial":""}" data-q="${q.id}" aria-pressed="${full}"><span class="box">${boxIn}</span><span><div class="qname">${esc(q.name)}</div>${desc?`<div class="qdesc">${desc}</div>`:""}${t>1?`<div class="reps">${Array.from({length:t},(_,i)=>`<i class="${i<k?"on":""}"></i>`).join("")}<span>${k}/${t}</span></div>`:""}<div class="qmeta">${rbadge(q.rank)}<span class="stgain" style="--sc:${s.c}">${ico(q.stat,s.c,13)}+${rw.st} ${q.stat}</span>${repInfo}${note}${rw.bf?`<span class="qtag bt">Boring +%${rw.bf}</span>`:""}</div></span><span class="qright"><span class="qxp">+${rw.xp} XP</span><span class="qgold">+${rw.gold}G</span><span class="qen">${BOLT("#ffd84a",11)}+${full&&arr?(rw.en||0):(ENERGY_Q[q.rank]||1)}</span></span></button>`;
-  const tmM=qMinutes(q),run=S.timer&&S.timer.q===q.id,sw=run&&tmIsSw(S.timer);
-  const tlab=run?(sw?mmssUp(tmEl()):mmss(tmLeft())):(tmM?tmM+" dk":"Odak");
-  const ex=(t>1&&k>0&&!full?`<button type="button" class="qminus" data-qundo="${q.id}" aria-label="Bir tekrarı geri al">−1</button>`:"")+(!full||run?`<button type="button" class="qtimer${run?" run":""}${!run&&!tmM?" nt":""}" data-qtm="${q.id}" aria-label="Kronometre ve zamanlayıcı">${ico("clock",run?"#08101c":"#62d2ff",18)}<span>${tlab}</span></button>`:"");
+  const ex=t>1&&k>0&&!full?`<button type="button" class="qminus" data-qundo="${q.id}" aria-label="Bir tekrarı geri al">−1</button>`:"";
   return ex?`<div class="qwrap">${main}${ex}</div>`:main;
 }
+function ordList(){const f=qfGet(),L=S.quests.slice();if(!f.sep) return L;const h=L.filter(q=>!q.once),o=L.filter(q=>q.once);return f.first==="once"?o.concat(h):h.concat(o)}
+function qMove(id,dir){
+  const D=ordList(),i=D.findIndex(q=>q.id===id),j=i+dir,f=qfGet();if(i<0||j<0||j>=D.length) return;
+  if(f.sep&&!!D[i].once!==!!D[j].once){toast("Ayırıcı açıkken tek seferlikler ile alışkanlıklar arasında taşıma yapılamaz.");return}
+  const x=D[i];D[i]=D[j];D[j]=x;S.quests=D;commit();
+}
+function ordHtml(){
+  const f=qfGet(),D=ordList();
+  let h=`<p class="help" style="margin:0 0 4px">${f.sep?"Ayırıcı açık: alışkanlıklar ve tek seferlikler yalnızca kendi bölümlerinde sıralanır.":"Ayırıcı kapalı: tüm görevleri serbestçe sıralayabilirsin."}</p>`;
+  D.forEach((q,i)=>{const p=D[i-1],n=D[i+1],up=p&&(!f.sep||!!p.once===!!q.once),dn=n&&(!f.sep||!!n.once===!!q.once);
+    if(f.sep&&p&&!!p.once!==!!q.once) h+=`<div class="qsep">${q.once?"Tek seferlik":"Alışkanlıklar"}</div>`;
+    h+=`<div class="rord${qVisible(q)?"":" off"}"><div style="min-width:0"><div class="qname" style="font-size:14.5px">${esc(q.name)}</div><div class="qmeta">${rbadge(q.rank)}<span class="qtag">${q.once?"Tek seferlik":(Array.isArray(q.days)&&q.days.length&&q.days.length<7?q.days.slice().sort().map(d=>DAYS[d]).join(" · "):"Her gün")}</span></div></div><button type="button" class="btn sm" data-qmv="${q.id}:-1" aria-label="Yukarı taşı"${up?"":" disabled"}>▲</button><button type="button" class="btn sm" data-qmv="${q.id}:1" aria-label="Aşağı taşı"${dn?"":" disabled"}>▼</button></div>`});
+  return h+`<div style="text-align:center;margin-top:12px"><button type="button" class="btn primary" data-qord="done">Tamam</button></div>`;
+}
+function renderQFocus(){
+  const el=$("qFocus");if(!el) return;const T=S.timer;
+  if(T){const sw=tmIsSw(T);el.innerHTML=`<div class="qfo-k">ODAK OTURUMU</div><button type="button" class="qfo-run" data-tmopen="1">${ico("clock",sw?"#6dffb3":"#62d2ff",22)}<span><b id="qfoT">${sw?mmssUp(tmEl()):mmss(tmLeft())}</b><small>${sw?"Kronometre":"Zamanlayıcı"}${T.paused?" · duraklatıldı":""}${T.bs!=null?" · sıkıldım":""} · aç</small></span></button>`;return}
+  el.innerHTML=`<div class="qfo-k">ODAK OTURUMU</div><div class="qfo-btns"><button type="button" class="qfo-b grn" data-sess="sw">${ico("clock","#6dffb3",18)}<span>Kronometre</span></button><button type="button" class="qfo-b" data-sess="tm">${ico("clock","#62d2ff",18)}<span>Zamanlayıcı</span></button></div>`;
+}
 function renderQuests(){
-  let html="";
+  let html="";renderQFocus();
   if(S.penalty.active){
     const d=S.penalty.done;
     html+=`<button type="button" class="quest penalty${d?" done":""}" data-penalty="1"><span class="box">${CHECK}</span><span><div class="qname">CEZA: ${esc(S.penaltyText)}</div><div class="qmeta"><span class="rbadge" style="color:var(--red)">CEZA</span><span>Zorunlu · ödül yok</span></div></span><span class="qright"><span class="qxp" style="color:var(--red);text-shadow:none">—</span></span></button>`;
   }
   renderQF();
   const vis=S.quests.filter(qVisible),L=qfApply(vis,true);
+  if(qOrd) html=ordHtml();else{
   html+=qGroup(L,qItemHtml);
   if(!vis.length) html+=`<div class="empty-note">Bugün için görev yok. Aşağıdan görev ekle.</div>`;
   else if(!L.length) html+=`<div class="empty-note">Bu filtreye uyan görev yok. <button type="button" class="btn sm" data-qfreset="1">Filtreyi temizle</button></div>`;
   const off=qfApply(S.quests.filter(q=>!qVisible(q)&&!q.finished),false);
   if(off.length) html+=`<p class="sec-label" style="margin:10px 0 0">Bugün olmayan görevler</p>`+off.map(q=>`<div class="edit-row off"><div><div class="qname" style="font-size:14.5px">${esc(q.name)}</div><div class="qmeta">${rbadge(q.rank)}${Array.isArray(q.days)&&q.days.length?`<span class="qtag">${q.days.slice().sort().map(d=>DAYS[d]).join(" · ")}</span>`:""}</div></div></div>`).join("");
+  }
   $("qlist").innerHTML=html;
   const dq=dailyQuests();
   $("qDone").textContent=dq.filter(q=>qCount(q)>=qTimes(q)).length+"/"+dq.length;
@@ -4799,12 +4842,12 @@ function renderChar(){
   $("cCombat").innerHTML=combatKv();renderConv();renderSkills();renderSmith();renderRecords();
 }
 function renderFocusSet(){
-  const el=$("focSet");if(!el) return;const f=focusCfg(),pm=50/f.gap;
-  const coef=`Katsayı: Boring Time'da her dakika <b>+%${pm.toFixed(2).replace(".",",")}</b> ek ödül · <b>${f.gap} dk</b> dayanınca %50 tavana ulaşır.${f.set?"":` <span class="muted">(Varsayılan: 25 dk → 1 sa)</span>`}<br><span class="small muted">Örnek: 10 dk Boring Time → +%${Math.min(50,pm*10).toFixed(1).replace(".",",")} XP, gold ve stat. Hedefine yaklaştıkça dakika başı ödül artar.</span>`;
+  const el=$("focSet");if(!el) return;const f=focusCfg(),pc=x=>(50*(1-Math.exp(-x/f.base))).toFixed(1).replace(".",",");
+  const coef=`Boring tabanı: <b>${f.base} dk</b>${f.cur<20?` <span class="muted">(20 dk ve altı odak süreleri için 20 dk sayılır)</span>`:""}<br>Ek ödül = %50 × (1 − e<sup>−Boring/${f.base}</sup>) · örnekler: 10 dk → <b>+%${pc(10)}</b> · ${f.base} dk → <b>+%${pc(f.base)}</b> · ${2*f.base} dk → <b>+%${pc(2*f.base)}</b> · ${3*f.base} dk → <b>+%${pc(3*f.base)}</b><br><span class="small muted">Mevcut odak süren ne kadar kısaysa, sıkıldıktan sonra dayandığın her dakika o kadar değerli. İstenen süre ödülü etkilemez; odak ekranında hedef çubuğu olarak görünür.</span>`;
   if(el.contains(document.activeElement)&&$("fsCoef")){$("fsCoef").innerHTML=coef;return}
   const hm=(k,v)=>`<div class="hm"><input type="number" id="fs${k}H" min="0" max="23" value="${Math.floor(v/60)}" aria-label="Saat"> sa <input type="number" id="fs${k}M" min="0" max="59" value="${v%60}" aria-label="Dakika"> dk</div>`;
-  el.innerHTML=`<p class="help" style="margin:0 0 12px">Odak ekranında <b>SIKILDIM</b>'a bastıktan sonra devam ettiğin süre <b>Boring Time</b> sayılır ve görevin normal ödülüne ek XP, gold ve stat verir (en fazla %50). Katsayı, şu anki odaklanma süren ile hedefin arasındaki farktan hesaplanır.</p>
-<div class="fsgrid"><div class="fl">Mevcut odaklanma süren${hm("C",f.cur)}</div><div class="fl">İstenen odaklanma süresi${hm("W",f.want)}</div></div>
+  el.innerHTML=`<p class="help" style="margin:0 0 12px">Odak ekranında <b>SIKILDIM</b>'a bastıktan sonra devam ettiğin süre <b>Boring Time</b> sayılır ve oturum ödülüne %50'ye kadar ek XP, gold ve stat verir. Katsayı <b>mevcut odaklanma sürene</b> göre hesaplanır.</p>
+<div class="fsgrid"><div class="fl">Mevcut odaklanma süren${hm("C",f.cur)}</div><div class="fl">İstenen odaklanma süresi (hedef)${hm("W",f.want)}</div></div>
 <div class="fscoef" id="fsCoef">${coef}</div>`;
 }
 document.addEventListener("change",e=>{const id=e.target&&e.target.id;if(!/^fs[CW][HM]$/.test(id||"")) return;
@@ -5301,12 +5344,15 @@ function tmEl(){const T=S.timer;if(!T) return 0;return T.acc+(T.paused?0:Math.ma
 function tmLeft(){const T=S.timer;if(!T||tmIsSw(T)) return 0;return Math.max(0,T.dur-tmEl())}
 function tmWork(){const T=S.timer;if(!T) return 0;const e=tmEl();return tmIsSw(T)?e:Math.min(e,T.dur)}
 function btMs(){const T=S.timer;if(!T||T.bs==null) return 0;return Math.max(0,tmWork()-T.bs)}
-function focusCfg(){const f=S.focus||{},cur=clamp(Math.round(f.cur)||25,1,1440),want=clamp(Math.round(f.want)||60,1,1440);return {cur,want,set:!!S.focus,gap:Math.max(10,want-cur)}}
-function boredFrac(ms){return Math.min(.5,(ms/60000)*.5/focusCfg().gap)}
-function tmQuest(){return S.timer?S.quests.find(q=>q.id===S.timer.q)||null:null}
+function focusCfg(){const f=S.focus||{},cur=clamp(Math.round(f.cur)||25,1,1440),want=clamp(Math.round(f.want)||60,1,1440);return {cur,want,set:!!S.focus,base:Math.max(20,cur)}}
+function boredFrac(ms){return .5*(1-Math.exp(-(ms/60000)/focusCfg().base))}
+const SESS_MAX=240;
+function sessStatOf(T){return T&&SC[T.stat]?T.stat:(S.job&&SC[S.job]?S.job:"INT")}
+function sessReward(ms,stat){const m=Math.min(SESS_MAX,ms/60000),b=bonuses(),jb=jobBonus(stat),L=S.level;return {xp:Math.round(Q_XP.C/30*m*lvMul(1.1,L)*(1+(b.xp+jb)/100)),gold:Math.round(Q_GOLD.C/30*m*lvMul(1.2,L)*(1+(b.gold+jb)/100)),st:Math.round(Q_STAT.C/30*m*lvMul(1.2,L))}}
+function fmtMin(m){const h=Math.floor(m/60),r=m%60;return h?`${h} sa${r?" "+r+" dk":""}`:`${r} dk`}
 function mmss(ms){const t=Math.ceil(ms/1000),h=Math.floor(t/3600),m=Math.floor(t%3600/60),s=t%60,p=x=>String(x).padStart(2,"0");return h?`${h}:${p(m)}:${p(s)}`:`${p(m)}:${p(s)}`}
 function mmssUp(ms){return mmss(Math.floor(ms/1000)*1000)}
-let focOpen=false,wakeL=null,tmT=null,focConf=false;
+let focOpen=false,wakeL=null,tmT=null,focConf=false,sessStat=null,tmLast=25;
 function askNotif(){try{if("Notification" in window&&Notification.permission==="default") Notification.requestPermission().catch(()=>{})}catch(e){}}
 function notify(t,b){
   try{navigator.vibrate&&navigator.vibrate([220,120,220])}catch(e){}
@@ -5319,32 +5365,27 @@ function notify(t,b){
 async function wakeOn(){try{if(navigator.wakeLock&&!wakeL) wakeL=await navigator.wakeLock.request("screen")}catch(e){wakeL=null}}
 function wakeOff(){try{if(wakeL){wakeL.release();wakeL=null}}catch(e){wakeL=null}}
 function schedTimer(){clearTimeout(tmT);if(S.timer&&!S.timer.paused&&!tmIsSw(S.timer)){const l=tmLeft();tmT=setTimeout(timerTick,Math.min(l+80,2147000000))}}
-function tmPick(id){
-  const q=S.quests.find(x=>x.id===id);if(!q||!activeToday(q)) return;
-  if(S.timer){if(S.timer.q!==id) toast("Zaten çalışan bir odak oturumu var.");openFocus();return}
-  if(qCount(q)>=qTimes(q)){toast("Bu görev bugün zaten tamamlandı.");return}
-  const fx=qMinutes(q);
-  overlay(head("Odak Modu")+`<div class="big" style="font-size:24px;letter-spacing:.04em">${esc(q.name)}</div><p class="small muted">İsteğe bağlı: görevi istersen doğrudan listeden de işaretleyebilirsin.</p>
-<div class="tmpick">
-<button type="button" class="tmopt" data-tmgo="sw" data-tmid="${q.id}">${ico("clock","#6dffb3",30)}<span><b>KRONOMETRE</b><span class="d">İleri sayar. İşin bitince <b style="display:inline;color:var(--text)">Tamamla</b>'ya bas, görev ödülünü alırsın.</span></span></button>
-<div class="tmopt">${ico("clock","#62d2ff",30)}<span><b>ZAMANLAYICI</b><span class="d">${fx?`Görev süresi: <b style="display:inline;color:var(--text)">${fx} dk</b>. Süre dolunca görev kendiliğinden tamamlanır.`:"Süreyi seç. Süre dolunca görev kendiliğinden tamamlanır."}</span><span class="tmdur">${fx?"":`<input type="number" id="tmH" min="0" max="10" value="0" aria-label="Saat"> sa <input type="number" id="tmM" min="0" max="59" value="25" aria-label="Dakika"> dk`}<button type="button" class="btn sm primary" data-tmgo="tm" data-tmid="${q.id}">Başlat</button></span></span></div>
-</div>
-<p class="help" style="margin-top:12px">İkisinde de <b>SIKILDIM</b> düğmesi var: sıkıldığında bas, o andan sonraki Boring Time ek ödül kazandırır.</p>
-<div class="mbtns"><button class="btn" type="button" data-act="modalOk">Vazgeç</button></div>`,{noOk:true});
+function sessPick(mode){
+  if(S.timer){openFocus();return}
+  if(!sessStat) sessStat=S.job&&SC[S.job]?S.job:"INT";
+  const sw=mode==="sw";
+  overlay(head("Odak Oturumu")+`<div class="big" style="font-size:26px;letter-spacing:.1em;color:${sw?"#6dffb3":"#62d2ff"};text-shadow:0 0 18px ${sw?"rgba(109,255,179,.6)":"rgba(98,210,255,.7)"}">${sw?"KRONOMETRE":"ZAMANLAYICI"}</div><p class="small muted">${sw?"İleri sayar; işin bitince <b>Bitir</b>'e bas.":"Süre dolunca oturum kendiliğinden biter."} Ödül odaklandığın süreye göre verilir.</p>
+<p class="sec-label" style="margin-top:14px">Geliştireceği stat</p><div class="chips" style="justify-content:center;margin:0">${STATS.map(x=>`<button type="button" class="chipbtn" data-sstat="${x.k}" aria-pressed="${sessStat===x.k}"><span style="color:${x.c}">${x.k}</span></button>`).join("")}</div>
+${sw?"":`<p class="sec-label" style="margin-top:14px">Süre</p><div class="tmdur" style="justify-content:center"><input type="number" id="tmH" min="0" max="10" value="${Math.floor(tmLast/60)}" aria-label="Saat"> sa <input type="number" id="tmM" min="0" max="59" value="${tmLast%60}" aria-label="Dakika"> dk</div>`}
+<p class="help" style="margin-top:12px">30 dk odak ≈ C rütbe bir görev kadar ödül (oturum başına en fazla ${SESS_MAX/60} saat sayılır). Sıkıldığında <b>SIKILDIM</b>'a bas: dayandığın Boring Time %50'ye kadar ek ödül verir.</p>
+<div class="mbtns"><button class="btn primary" type="button" data-tmgo="${sw?"sw":"tm"}">Başlat</button><button class="btn" type="button" data-act="modalOk">Vazgeç</button></div>`,{noOk:true});
 }
-function startTimer(id,mode,mins){
-  const q=S.quests.find(x=>x.id===id);if(!q||!activeToday(q)) return;
-  if(S.timer){if(S.timer.q!==id) toast("Zaten çalışan bir odak oturumu var.");openFocus();return}
-  if(qCount(q)>=qTimes(q)){toast("Bu görev bugün zaten tamamlandı.");return}
+function startSess(mode,mins){
+  if(S.timer){openFocus();return}
   mode=mode==="sw"?"sw":"tm";
-  if(mode==="tm"){mins=Math.min(600,qMinutes(q)||Math.round(mins)||0);if(!(mins>0)){toast("Süre en az 1 dk olmalı.");return}}
-  S.timer={q:id,mode,st:Date.now(),dur:mode==="tm"?mins*60000:0,acc:0,paused:false,day:todayKey(),bs:null};focConf=false;
+  if(mode==="tm"){mins=Math.min(600,Math.round(mins)||0);if(!(mins>0)){toast("Süre en az 1 dk olmalı.");return}tmLast=mins}
+  S.timer={mode,st:Date.now(),dur:mode==="tm"?mins*60000:0,acc:0,paused:false,day:todayKey(),bs:null,stat:sessStat||"INT"};focConf=false;
   askNotif();tone([392,523,659],0.5,"sine");
-  toast(mode==="sw"?`[Kronometre] ${esc(q.name)} başladı`:`[Zamanlayıcı] ${esc(q.name)} · ${mins} dk başladı`);
+  toast(mode==="sw"?"[Kronometre] Odak oturumu başladı":`[Zamanlayıcı] ${fmtMin(mins)} odak oturumu başladı`);
   commit();schedTimer();openFocus();
 }
 function pauseTimer(){const T=S.timer;if(!T) return;if(T.paused){T.st=Date.now();T.paused=false;wakeOn()}else{T.acc+=Math.max(0,Date.now()-T.st);T.paused=true;wakeOff()}commit();schedTimer();focusRender()}
-function cancelTimer(){if(!S.timer) return;S.timer=null;focConf=false;clearTimeout(tmT);closeFocus();commit();toast("Odak oturumu iptal edildi.")}
+function cancelTimer(){if(!S.timer) return;S.timer=null;focConf=false;clearTimeout(tmT);closeFocus();commit();toast("Odak oturumu iptal edildi (ödül yok).")}
 function boredAct(v){
   const T=S.timer;if(!T) return;
   if(v==="ask"){if(T.bs==null){focConf=true;focusRender()}return}
@@ -5352,16 +5393,28 @@ function boredAct(v){
   if(v==="yes"&&T.bs==null){T.bs=tmWork();focConf=false;tone([330,262,196],0.35,"triangle");toast("[Sıkılma modu] Boring Time başladı. Dayan, ödül büyüyor.");commit();focusRender()}
 }
 function finishTimer(silent){
-  const T=S.timer;if(!T) return;const q=S.quests.find(x=>x.id===T.q),sw=tmIsSw(T);
+  const T=S.timer;if(!T) return;const sw=tmIsSw(T),stat=sessStatOf(T);
   const work=tmWork(),bt=btMs(),bf=bt?boredFrac(bt):0;
-  S.timer=null;focConf=false;clearTimeout(tmT);S.cnt.timers=(S.cnt.timers|0)+1;S.cnt.focusMin=(S.cnt.focusMin|0)+Math.round(work/60000);if(bt) S.cnt.boredMin=(S.cnt.boredMin|0)+Math.round(bt/60000);
+  S.timer=null;focConf=false;clearTimeout(tmT);
   if(focOpen) closeFocus();
-  const did=q&&activeToday(q)&&qCount(q)<qTimes(q);
-  const res=did?doQuest(q,{bf,bt,fs:work,md:T.mode}):null;
-  if(!sw) notify("Odak süresi tamamlandı",(q?q.name:"Görev")+(did?" · görev tamamlandı":""));
+  let base=null,bonus=null,tot=null;
+  if(work>=60000){
+    base=sessReward(work,stat);
+    if(bf>0) bonus={xp:Math.round(base.xp*bf),gold:Math.round(base.gold*bf),st:Math.round(base.st*bf)};
+    tot={xp:base.xp+(bonus?bonus.xp:0),gold:base.gold+(bonus?bonus.gold:0),st:base.st+(bonus?bonus.st:0)};
+    S.cnt.timers=(S.cnt.timers|0)+1;S.cnt.focusMin=(S.cnt.focusMin|0)+Math.round(work/60000);if(bt) S.cnt.boredMin=(S.cnt.boredMin|0)+Math.round(bt/60000);
+    S.base[stat]+=tot.st;S.todaySt=S.todaySt||{};S.todaySt[stat]=(S.todaySt[stat]|0)+tot.st;
+    if(!Array.isArray(S.qlog)) S.qlog=[];
+    const e={t:Date.now(),id:"focus",n:"Odak oturumu",c:null,u:"",s:stat,r:"C",rp:"focus",k:1,tt:1,md:T.mode,fs:Math.round(work/1000),xp:tot.xp,g:tot.gold,st:tot.st};
+    if(bt){e.bt=Math.round(bt/1000);e.bf=Math.round(bf*1000)/10}
+    S.qlog.push(e);if(S.qlog.length>QLOG_MAX) S.qlog=S.qlog.slice(-QLOG_MAX);
+    addGold(tot.gold);addXp(tot.xp);
+  }
+  if(!sw) notify("Odak süresi tamamlandı",tot?`${fmtMin(Math.round(work/60000))} odak · +${tot.xp} XP · +${tot.gold}G`:"Oturum bitti");
   if(!silent){
-    const b=res&&res.bonus;
-    overlay(head("Odak Modu")+`<div class="foc-done">${ico("clock","#6dffb3",64)}</div><div class="big gold">${sw?"GÖREV TAMAMLANDI":"SÜRE TAMAMLANDI"}</div><p><b>${esc(q?q.name:"Görev")}</b> · ${mmssUp(work)} odaklandın.</p>${bt?`<div class="rew"><div><span>Boring Time</span><b style="color:#ffb35c">${mmssUp(bt)}</b></div>${b?`<div><span>Ek ödül (+%${res.rw.bf})</span><b>+${fmt(b.xp)} XP · +${fmt(b.gold)}G${b.st?` · +${b.st} ${q.stat}`:""}</b></div>`:""}</div>`:""}<p class="small muted">${did?(sw?"Görev ödülü verildi.":"Görev otomatik olarak tamamlandı."):"Bu görev zaten tamamlanmıştı."}</p>`,{sfx:sfx.clear});commit()}
+    overlay(head("Odak Oturumu")+`<div class="foc-done">${ico("clock","#6dffb3",64)}</div><div class="big gold">${sw?"OTURUM BİTTİ":"SÜRE TAMAMLANDI"}</div><p><b>${mmssUp(work)}</b> odaklandın.</p>`+(tot?`<div class="rew"><div><span>Odak ödülü</span><b>+${fmt(base.xp)} XP · +${fmt(base.gold)}G${base.st?` · +${base.st} ${stat}`:""}</b></div>${bt?`<div><span>Boring Time</span><b style="color:#ffb35c">${mmssUp(bt)}</b></div>`:""}${bonus?`<div><span>Ek ödül (+%${(bf*100).toFixed(1).replace(".",",")})</span><b>+${fmt(bonus.xp)} XP · +${fmt(bonus.gold)}G${bonus.st?` · +${bonus.st} ${stat}`:""}</b></div>`:""}</div>`:`<p class="small muted">1 dakikadan kısa oturumlar ödül vermez.</p>`),{sfx:sfx.clear});
+    commit();
+  }
 }
 function timerTick(){if(!S.timer) {pillUpdate();return}if(!S.timer.paused&&!tmIsSw(S.timer)&&tmLeft()<=0){finishTimer();return}focusUpdate();pillUpdate()}
 function timerRollover(){
@@ -5379,29 +5432,34 @@ function boredHtml(){
   return `<button type="button" class="bbtn" data-bored="ask"><span class="lamp"></span>SIKILDIM / BAŞIM AĞRIYOR</button><span class="small muted" style="text-align:center">Sıkıldığında bas. O andan sonra devam ettiğin süre ek ödül kazandırır.</span>`;
 }
 function focusRender(){
-  const el=$("focus");if(!el||!focOpen) return;const T=S.timer,q=tmQuest();if(!T){closeFocus();return}
-  const sw=tmIsSw(T),rw=q?questReward(q):null,R=120,C=2*Math.PI*R,col=sw?"#6dffb3":"#62d2ff";
+  const el=$("focus");if(!el||!focOpen) return;const T=S.timer;if(!T){closeFocus();return}
+  const sw=tmIsSw(T),stat=sessStatOf(T),sc=SC[stat],R=120,C=2*Math.PI*R,col=sw?"#6dffb3":"#62d2ff",f=focusCfg();
   el.innerHTML=`<div class="foc-in"><div class="foc-top"><span class="foc-k">${ico("clock",col,15)} ${sw?"KRONOMETRE":"ZAMANLAYICI"}</span><button type="button" class="btn sm" data-tmmin="1">Küçült</button></div>
-<div class="foc-q">${q?`${remb(q.rank,26)}<b>${esc(q.name)}</b>`:"Görev"}</div>
+<div class="foc-q"><span class="stgain" style="--sc:${sc.c};font-size:14px;padding:3px 10px">${ico(stat,sc.c,15)} ${stat} · ${esc(sc.n)}</span></div>
 <div class="foc-ring"><svg viewBox="0 0 280 280"><circle cx="140" cy="140" r="${R}" fill="none" stroke="rgba(58,169,240,.15)" stroke-width="12"/><circle id="focArc" cx="140" cy="140" r="${R}" fill="none" stroke="${col}" stroke-width="12" stroke-linecap="round" stroke-dasharray="0 ${C.toFixed(1)}" transform="rotate(-90 140 140)" style="filter:drop-shadow(0 0 10px ${col})"/></svg><div class="foc-t"><b id="focT">--:--</b><span id="focS">${sw?"geçti":"kaldı"}</span></div></div>
+<div class="foc-goal"><div class="lvrow2"><span>HEDEF · ${fmtMin(f.want)}</span><span id="focGP">%0</span></div><div class="bar thin"><i id="focGB" style="width:0%"></i></div></div>
 <div class="bored${T.bs!=null?" on":""}">${boredHtml()}</div>
-${rw?`<div class="foc-rw">${sw?"Tamamlayınca":"Bitince"}: <span style="color:${SC[q.stat].c}">+${rw.st} ${q.stat}</span> · <span style="color:#6fb8ff">+${fmt(rw.xp)} XP</span> · <span style="color:var(--gold)">+${fmt(rw.gold)}G</span>${T.bs!=null?` <span style="color:#ffb35c">+ Boring bonusu</span>`:""}</div>`:""}
-<div class="foc-btns${sw?" three":""}"><button type="button" class="btn big ${T.paused?"primary":""}" data-tmp="1">${T.paused?"Devam et":"Duraklat"}</button>${sw?`<button type="button" class="btn big goldb" data-tmdone="1">Tamamla</button>`:""}<button type="button" class="btn big danger" data-tmc="1">İptal</button></div>
-<p class="help foc-note">${sw?"Kronometre uygulamayı kapatsan da saymaya devam eder. İşin bitince Tamamla'ya bas.":"Uygulamayı kapatsan da süre işlemeye devam eder; tekrar açtığında görev kendiliğinden tamamlanır. Telefonun ekranı kapalıyken bildirim gelmeyebilir."}</p></div>`;
+<div class="foc-rw" id="focRw"></div>
+<div class="foc-btns three"><button type="button" class="btn big ${T.paused?"primary":""}" data-tmp="1">${T.paused?"Devam et":"Duraklat"}</button><button type="button" class="btn big goldb" data-tmdone="1">Bitir</button><button type="button" class="btn big danger" data-tmc="1">İptal</button></div>
+<p class="help foc-note">${sw?"Kronometre uygulamayı kapatsan da saymaya devam eder.":"Uygulamayı kapatsan da süre işler; dolunca oturum biter ve ödül verilir."} <b>Bitir</b> o ana kadarki süreye göre ödül verir, <b>İptal</b> ödül vermez.</p></div>`;
   focusUpdate();
 }
 function focusUpdate(){
-  if(!focOpen||!S.timer) return;const T=S.timer,sw=tmIsSw(T),R=120,C=2*Math.PI*R,e=tmEl();
+  if(!focOpen||!S.timer) return;const T=S.timer,sw=tmIsSw(T),R=120,C=2*Math.PI*R,e=tmEl(),w=tmWork(),f=focusCfg(),stat=sessStatOf(T);
   const p=sw?(e%3600000)/3600000:Math.min(1,e/T.dur);
   const a=$("focArc");if(a) a.setAttribute("stroke-dasharray",`${(C*p).toFixed(1)} ${C.toFixed(1)}`);
   if($("focT")) $("focT").textContent=sw?mmssUp(e):mmss(tmLeft());if($("focS")) $("focS").textContent=T.paused?"duraklatıldı":(sw?"geçti":"kaldı");
-  if(T.bs!=null&&$("focBT")){const b=btMs(),fr=boredFrac(b);$("focBT").textContent=mmssUp(b);$("focBR").innerHTML=`Ek ödül: <b>+%${(fr*100).toFixed(1).replace(".",",")}</b>${fr>=.5?" · tavan":` · dakikada +%${(50/focusCfg().gap).toFixed(2).replace(".",",")}`}`}
+  const gp=Math.min(100,w/(f.want*60000)*100);if($("focGB")) $("focGB").style.width=gp.toFixed(1)+"%";if($("focGP")) $("focGP").textContent=gp>=100?"HEDEF TAMAM":"%"+Math.floor(gp);
+  const b=btMs(),fr=b?boredFrac(b):0;
+  if(T.bs!=null&&$("focBT")){$("focBT").textContent=mmssUp(b);$("focBR").innerHTML=`Ek ödül: <b>+%${(fr*100).toFixed(1).replace(".",",")}</b> · taban ${f.base} dk`}
+  const r=$("focRw");if(r){if(w<60000) r.innerHTML=`<span class="muted">Ödül 1. dakikadan sonra birikmeye başlar.</span>`;else{const rw=sessReward(w,stat),k=1+fr;r.innerHTML=`Şu ana kadar: <span style="color:${SC[stat].c}">+${Math.round(rw.st*k)} ${stat}</span> · <span style="color:#6fb8ff">+${fmt(Math.round(rw.xp*k))} XP</span> · <span style="color:var(--gold)">+${fmt(Math.round(rw.gold*k))}G</span>${fr?` <span style="color:#ffb35c">(Boring dahil)</span>`:""}${w/60000>=SESS_MAX?` <span class="muted">· 4 sa tavanı</span>`:""}`}}
 }
 function pillUpdate(){
   const el=$("tPill");if(!el) return;const T=S.timer;
   if(!T||focOpen){el.hidden=true;return}
-  const q=tmQuest();el.hidden=false;el.classList.toggle("paused",!!T.paused);
-  el.innerHTML=`${ico("clock",T.paused?"#ffb35c":(tmIsSw(T)?"#6dffb3":"#62d2ff"),16)}<span class="tpn">${esc(q?q.name:"Görev")}</span>${T.bs!=null?'<span class="bdot"></span>':""}<b>${tmIsSw(T)?mmssUp(tmEl()):mmss(tmLeft())}</b>`;
+  el.hidden=false;el.classList.toggle("paused",!!T.paused);
+  {const x=$("qfoT");if(x) x.textContent=tmIsSw(T)?mmssUp(tmEl()):mmss(tmLeft())}
+  el.innerHTML=`${ico("clock",T.paused?"#ffb35c":(tmIsSw(T)?"#6dffb3":"#62d2ff"),16)}<span class="tpn">${tmIsSw(T)?"Kronometre":"Zamanlayıcı"}</span>${T.bs!=null?'<span class="bdot"></span>':""}<b>${tmIsSw(T)?mmssUp(tmEl()):mmss(tmLeft())}</b>`;
 }
 
 /* ================= RECORDS (KAYITLAR) ================= */
@@ -5421,18 +5479,18 @@ function renderRecords(){
 }
 let qlType="all",qlN=40;
 function recQuests(){
-  const all=(S.qlog||[]).slice().reverse(),L=all.filter(e=>qlType==="all"||(qlType==="once"?e.rp==="once":e.rp!=="once"));
-  let h=pchips(qlType,"qlt",[["all","Tümü"],["habit","Alışkanlıklar"],["once","Tek seferlik"]]);
+  const all=(S.qlog||[]).slice().reverse(),L=all.filter(e=>qlType==="all"||(qlType==="once"?e.rp==="once":qlType==="focus"?e.rp==="focus":(e.rp==="daily"||e.rp==="days")));
+  let h=pchips(qlType,"qlt",[["all","Tümü"],["habit","Alışkanlıklar"],["once","Tek seferlik"],["focus","Odak"]]);
   const wk=Date.now()-7*DAY_MS,w=all.filter(e=>e.t>=wk),bt=all.reduce((a,e)=>a+(e.bt||0),0),fs=all.reduce((a,e)=>a+(e.fs||0),0);
   h+=`<div class="kvs" style="margin-bottom:6px"><div class="kv"><div class="k">Kayıtlı görev</div><div class="v">${fmt(all.length)}</div></div><div class="kv"><div class="k">Son 7 gün</div><div class="v ok">${fmt(w.length)}</div></div><div class="kv"><div class="k">Odak süresi</div><div class="v">${fmt(Math.round(fs/60))} dk</div></div><div class="kv"><div class="k">Boring Time</div><div class="v" style="color:#ffb35c">${fmt(Math.round(bt/60))} dk</div></div></div>`;
   if(!L.length) return h+`<div class="empty-note">Henüz kayıt yok. Tamamladığın her görev burada adı, hedefi, ödülü ve saatiyle birlikte saklanır.</div>`;
   const dk=e=>e.t?todayKey(new Date(e.t)):"leg",tot={};L.forEach(e=>{const k=dk(e);const o=tot[k]=tot[k]||{n:0,xp:0};o.n++;o.xp+=e.xp||0});
   let cur=null;
   L.slice(0,qlN).forEach(e=>{const k=dk(e);
-    if(k!==cur){if(cur!==null) h+=`</div>`;cur=k;h+=`<div class="qlg-day"><div class="qlg-dh">${k==="leg"?"Önceki tek seferlikler":`${fmtD(k)} ${k.slice(0,4)}${k===todayKey()?" · bugün":""}`}<span>${tot[k].n} görev${tot[k].xp?` · +${fmt(tot[k].xp)} XP`:""}</span></div>`}
+    if(k!==cur){if(cur!==null) h+=`</div>`;cur=k;h+=`<div class="qlg-day"><div class="qlg-dh">${k==="leg"?"Önceki tek seferlikler":`${fmtD(k)} ${k.slice(0,4)}${k===todayKey()?" · bugün":""}`}<span>${tot[k].n} kayıt${tot[k].xp?` · +${fmt(tot[k].xp)} XP`:""}</span></div>`}
     const sc=SC[e.s]||SC.STR,d=e.t?new Date(e.t):null,tm=d?String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"):"—";
-    const rp=e.rp==="once"?"Tek seferlik":e.rp==="days"?"Belirli günler":"Her gün";
-    h+=`<div class="qlg"><span class="tm">${tm}</span><div><div class="nm">${esc(e.n)}${e.c?` <small>· ${fmt(e.c)}${e.u?" "+esc(e.u):""}</small>`:""}${e.tt>1?` <small>· ${e.k}/${e.tt}</small>`:""}</div><div class="mt">${rbadge(QR.includes(e.r)?e.r:"C",18)}<span style="color:${sc.c}">+${e.st} ${esc(e.s)}</span><span class="qtag">${rp}</span>${e.md?`<span class="qtag fm">${e.md==="sw"?"Kronometre":"Zamanlayıcı"}${e.fs?" · "+mmssUp(e.fs*1000):""}</span>`:""}${e.bt?`<span class="qtag bt">Boring ${mmssUp(e.bt*1000)} · +%${e.bf}</span>`:""}</div></div><div class="rw">${e.leg?`<span class="muted small">ödül kaydı yok</span>`:`<b>+${fmt(e.xp)} XP</b><i>+${fmt(e.g)}G</i>`}</div></div>`});
+    const rp=e.rp==="once"?"Tek seferlik":e.rp==="days"?"Belirli günler":e.rp==="focus"?"Odak oturumu":"Her gün";
+    h+=`<div class="qlg"><span class="tm">${tm}</span><div><div class="nm">${esc(e.n)}${e.c?` <small>· ${fmt(e.c)}${e.u?" "+esc(e.u):""}</small>`:""}${e.tt>1?` <small>· ${e.k}/${e.tt}</small>`:""}</div><div class="mt">${e.rp==="focus"?"":rbadge(QR.includes(e.r)?e.r:"C",18)}<span style="color:${sc.c}">+${e.st} ${esc(e.s)}</span><span class="qtag">${rp}</span>${e.md?`<span class="qtag fm">${e.md==="sw"?"Kronometre":"Zamanlayıcı"}${e.fs?" · "+mmssUp(e.fs*1000):""}</span>`:""}${e.bt?`<span class="qtag bt">Boring ${mmssUp(e.bt*1000)} · +%${e.bf}</span>`:""}</div></div><div class="rw">${e.leg?`<span class="muted small">ödül kaydı yok</span>`:`<b>+${fmt(e.xp)} XP</b><i>+${fmt(e.g)}G</i>`}</div></div>`});
   h+=`</div>`;
   if(L.length>qlN) h+=`<div style="text-align:center;margin-top:12px"><button class="btn sm" type="button" data-qlmore="1">Daha fazla göster (${Math.min(40,L.length-qlN)})</button></div>`;
   return h;
@@ -5863,8 +5921,8 @@ function nfPlan(){
     if(stOn&&off>0){const at=nfAt(D.dk,"00:03");if(at>now) out.push({id:`st-${D.dk}`,tp:"status",at,so:1,st})}
   }
   const T=S.timer;
-  if(T&&!T.paused&&!tmIsSw(T)&&P.timer.on){const q=S.quests.find(x=>x.id===T.q),at=T.st+(T.dur-(T.acc||0));
-    out.push({id:`tm-${T.st}-${T.dur}`,tp:"timer",tag:"hunter-timer",at,lo:1,ti:"Odak süresi tamamlandı",b:`${q?q.name:"Görev"} · ${fmt(T.dur/60000)} dk bitti. Uygulamayı açınca görev tamamlanır.`,go:"quests"})}
+  if(T&&!T.paused&&!tmIsSw(T)&&P.timer.on){const at=T.st+(T.dur-(T.acc||0));
+    out.push({id:`tm-${T.st}-${T.dur}`,tp:"timer",tag:"hunter-timer",at,lo:1,ti:"Odak süresi tamamlandı",b:`${fmt(T.dur/60000)} dk odak oturumu bitti. Uygulamayı açınca ödülün verilir.`,go:"quests"})}
   if(N.test&&now-N.test<NF_WIN) out.push({id:`test-${N.test}`,tp:"test",at:N.test,srv:1,ti:"[Sistem] Bağlantı kuruldu",b:"Anlık bildirimler çalışıyor. Uygulama kapalıyken de hatırlatmalar gelecek.",go:"set"});
   out.sort((a,b)=>a.at-b.at);
   N.plan=out.slice(0,40);
@@ -6098,8 +6156,11 @@ document.addEventListener("click",e=>{
   if(d.enh){openEnh(d.enh);return}
   if(d.enhopt){const k=d.enhopt==="luck"?"luck":"prot";enhOpt[k]=!enhOpt[k];enhRefresh();return}
   if(d.enhgo){doEnh();return}
-  if(d.qtm){tmPick(d.qtm);return}
-  if(d.tmgo){const q=S.quests.find(x=>x.id===d.tmid);let m=0;if(d.tmgo==="tm"&&q&&!qMinutes(q)){m=clamp(Math.round(+($("tmH")||{}).value||0),0,10)*60+clamp(Math.round(+($("tmM")||{}).value||0),0,59);if(m<1){toast("Süre en az 1 dk olmalı.");return}}nextOverlay();startTimer(d.tmid,d.tmgo,m);return}
+  if(d.sess){sessPick(d.sess);return}
+  if(d.sstat){sessStat=d.sstat;document.querySelectorAll("[data-sstat]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.sstat===sessStat)));return}
+  if(d.tmgo){let m=0;if(d.tmgo==="tm"){m=clamp(Math.round(+($("tmH")||{}).value||0),0,10)*60+clamp(Math.round(+($("tmM")||{}).value||0),0,59);if(m<1){toast("Süre en az 1 dk olmalı.");return}}nextOverlay();startSess(d.tmgo,m);return}
+  if(d.qord){if(d.qord==="on"){qOrd=true;qfOpen=false;renderQuests()}else{qOrd=false;S.qf=Object.assign(qfGet(),{sort:"def"});commit();toast("Sıralama kaydedildi.")}return}
+  if(d.qmv){const i=d.qmv.lastIndexOf(":");qMove(d.qmv.slice(0,i),+d.qmv.slice(i+1));return}
   if(d.tmdone){finishTimer();return}
   if(d.bored){boredAct(d.bored);return}
   if(d.qfopen){qfOpen=!qfOpen;renderQuests();return}
@@ -6252,7 +6313,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&showing&&$("modal")
 /* ================= BACKUP & SYNC ================= */
 const IS_PWA=true;
 const FB_CONFIG={"apiKey": "AIzaSyBsNalG4Fl7crcsluhf2hqDXlWawD6DJ2I", "authDomain": "hunter-sistemi.firebaseapp.com", "projectId": "hunter-sistemi", "storageBucket": "hunter-sistemi.firebasestorage.app", "messagingSenderId": "550981824995", "appId": "1:550981824995:web:bd6d609b92a2b74b8f70d6"};
-const APP_VER="32";
+const APP_VER="33";
 const LS_SYNC="hunter-sistemi-sync";
 function b64e(t){return btoa(unescape(encodeURIComponent(t)))}
 function b64d(t){return decodeURIComponent(escape(atob(t)))}
