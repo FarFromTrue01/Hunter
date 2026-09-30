@@ -2449,7 +2449,7 @@ function normalize(s){
   o.qlog=Array.isArray(s.qlog)?s.qlog.filter(e=>e&&typeof e==="object").slice(-QLOG_MAX):[];
   o.qf=s.qf&&typeof s.qf==="object"?Object.assign({},s.qf):{};
   o.fday=s.fday&&typeof s.fday==="object"?Object.assign({},s.fday):{};{const ks=Object.keys(o.fday).sort();if(ks.length>800) ks.slice(0,ks.length-800).forEach(k=>delete o.fday[k])}
-  o.focus=s.focus&&typeof s.focus==="object"?{cur:clamp(Math.round(s.focus.cur)||25,1,1440),want:clamp(Math.round(s.focus.want)||60,1,1440)}:null;
+  o.focus=s.focus&&typeof s.focus==="object"?{cur:clamp(Math.round(s.focus.cur)||25,1,1440),want:clamp(Math.round(s.focus.want)||60,20,1440)}:null;
   o.todaySt=s.todaySt&&typeof s.todaySt==="object"?Object.assign({},s.todaySt):{};
   o.autoB=!!s.autoB;
   o.notif=nfNorm(s.notif);
@@ -4968,13 +4968,13 @@ function renderFocusSet(){
   const q=Math.round(cap/4);
   const coef=`Boring tabanı: <b>${f.base} dk</b>${f.cur<20?` <span class="muted">(20 dk ve altı odak süreleri için 20 dk sayılır)</span>`:""} · %50 tavan: <b>${cap} dk</b><br>Ek ödül = %50 × (Boring / ${cap})² — dayandıkça her dakika bir öncekinden değerli:<br>${q} dk → <b>+%${pc(q)}</b> · ${2*q} dk → <b>+%${pc(2*q)}</b> · ${3*q} dk → <b>+%${pc(3*q)}</b> · ${cap} dk → <b>+%50</b><br><span class="small muted">Duraklatınca Boring Time sıfırlanır ama ulaştığın oran korunur. Tekrar SIKILDIM'a basınca 0'dan başlar; oran ancak önceki en yüksek oranı geçince yükselir (oranlar toplanmaz, tek katsayı vardır). Mevcut odak süren ne kadar kısaysa tavana o kadar çabuk ulaşırsın. İstenen süre ödülü etkilemez; odak ekranında hedef çubuğu olarak görünür.</span>`;
   if(el.contains(document.activeElement)&&$("fsCoef")){$("fsCoef").innerHTML=coef;return}
-  const hm=(k,v)=>`<div class="hm"><input type="number" id="fs${k}H" min="0" max="23" value="${Math.floor(v/60)}" aria-label="Saat"> sa <input type="number" id="fs${k}M" min="0" max="59" value="${v%60}" aria-label="Dakika"> dk</div>`;
+  const hm=(k,v)=>`<div class="hm"><input type="number" id="fs${k}H" min="0" max="${k==="W"?24:23}" value="${Math.floor(v/60)}" aria-label="Saat"> sa <input type="number" id="fs${k}M" min="0" max="59" value="${v%60}" aria-label="Dakika"> dk</div>`;
   el.innerHTML=`<p class="help" style="margin:0 0 12px">Odak ekranında <b>SIKILDIM</b>'a bastıktan sonra devam ettiğin süre <b>Boring Time</b> sayılır ve oturum ödülüne %50'ye kadar ek XP, gold ve stat verir. Katsayı <b>mevcut odaklanma sürene</b> göre hesaplanır.</p>
-<div class="fsgrid"><div class="fl">Mevcut odaklanma süren${hm("C",f.cur)}</div><div class="fl">İstenen odaklanma süresi (hedef)${hm("W",f.want)}</div></div>
+<div class="fsgrid"><div class="fl">Mevcut odaklanma süren${hm("C",f.cur)}</div><div class="fl">İstenen odaklanma süresi (hedef, 20 dk – 24 sa)${hm("W",f.want)}</div></div>
 <div class="fscoef" id="fsCoef">${coef}</div>`;
 }
 document.addEventListener("change",e=>{const id=e.target&&e.target.id;if(!/^fs[CW][HM]$/.test(id||"")) return;
-  const g=k=>Math.max(0,Math.round(+$(k).value||0));const cur=Math.max(1,Math.min(23,g("fsCH"))*60+Math.min(59,g("fsCM"))),want=Math.max(1,Math.min(23,g("fsWH"))*60+Math.min(59,g("fsWM")));
+  const g=k=>Math.max(0,Math.round(+$(k).value||0));const cur=Math.max(1,Math.min(23,g("fsCH"))*60+Math.min(59,g("fsCM"))),want=clamp(Math.min(24,g("fsWH"))*60+Math.min(59,g("fsWM")),20,1440);
   S.focus={cur,want};commit();renderFocusSet()});
 function renderSettings(){
   const a=S.app;renderFocusSet();
@@ -5472,7 +5472,7 @@ function btMs(){const T=S.timer;if(!T) return 0;return (T.btAcc||0)+segMs()}
 function sessFrac(){const T=S.timer;if(!T) return 0;return Math.max(T.bfMax||0,boredFrac(segMs()))}
 function fracMin(fr){return boredCap()*Math.sqrt(Math.min(1,fr/.5))}
 function pct(fr){return (fr*100).toFixed(1).replace(".",",")}
-function focusCfg(){const f=S.focus||{},cur=clamp(Math.round(f.cur)||25,1,1440),want=clamp(Math.round(f.want)||60,1,1440);return {cur,want,set:!!S.focus,base:Math.max(20,cur)}}
+function focusCfg(){const f=S.focus||{},cur=clamp(Math.round(f.cur)||25,1,1440),want=clamp(Math.round(f.want)||60,20,1440);return {cur,want,set:!!S.focus,base:Math.max(20,cur)}}
 function boredCap(){return 2*focusCfg().base}
 function boredFrac(ms){const x=Math.min(1,(ms/60000)/boredCap());return .5*x*x}
 const SESS_MIN=40,SESS_RK="B";
@@ -5534,7 +5534,7 @@ function startSess(mode,mins){
 }
 function pauseTimer(){
   const T=S.timer;if(!T) return;
-  if(T.paused){T.st=Date.now();T.paused=false;wakeOn()}
+  if(T.paused){T.st=Date.now();T.paused=false;T.gs=tmWork();wakeOn()}
   else{T.acc+=Math.max(0,Date.now()-T.st);T.paused=true;
     if(T.bs!=null){const seg=segMs();T.bfMax=Math.max(T.bfMax||0,boredFrac(seg));T.btAcc=(T.btAcc||0)+seg;T.bs=null;focConf=false;toast(`[Boring Time sıfırlandı] Ödül katsayın +%${pct(T.bfMax)} olarak kaldı.`)}
     }
@@ -5622,7 +5622,7 @@ function focusRender(){
 <div class="foc-l">
 <div class="foc-q"><span class="stgain" style="--sc:${sc.c};font-size:14px;padding:3px 10px">${ico(stat,sc.c,15)} ${stat} · ${esc(sc.n)}</span><span class="small muted">başlangıç ${hhmm(T.st0||T.st)}${sw?"":` · bitiş <b id="focEnd">${hhmm(Date.now()+tmLeft())}</b>`}</span></div>
 <div class="foc-ring"><svg viewBox="0 0 280 280"><circle cx="140" cy="140" r="${R}" fill="none" stroke="rgba(58,169,240,.15)" stroke-width="10"/><circle id="focArc" cx="140" cy="140" r="${R}" fill="none" stroke="${col}" stroke-width="10" stroke-linecap="round" stroke-dasharray="0 ${C.toFixed(1)}" transform="rotate(-90 140 140)" style="filter:drop-shadow(0 0 10px ${col})"/></svg><div class="foc-t"><b id="focT">--:--</b><span id="focS">${sw?"geçti":"kaldı"}</span><button type="button" class="wkbtn${wakeKeep?" on":""}" data-wake="1" aria-pressed="${wakeKeep}">☀ Ekranı açık tut</button></div></div>
-<div class="foc-goal"><div class="lvrow2"><span>HEDEF · ${fmtMin(f.want)}</span><span id="focGP">%0</span></div><div class="bar thin"><i id="focGB" style="width:0%"></i></div></div>
+<div class="foc-goal"><div class="lvrow2"><span>HEDEF · ${fmtMin(f.want)}${T.paused?" · duraklatınca sıfırlandı":""}</span><span id="focGP">%0</span></div><div class="bar thin"><i id="focGB" style="width:0%"></i></div></div>
 </div>
 <div class="foc-r">
 <div class="bored${on?" on":""}">${boredHtml()}</div>
@@ -5635,11 +5635,11 @@ function focusRender(){
 }
 function focusUpdate(){
   if(!focOpen||!S.timer) return;const T=S.timer,sw=tmIsSw(T),R=120,C=2*Math.PI*R,e=tmEl(),w=tmWork(),f=focusCfg(),stat=sessStatOf(T);
-  const p=sw?(e%3600000)/3600000:Math.min(1,e/T.dur);
+  const p=sw?Math.min(1,w/(f.want*60000)):Math.min(1,e/T.dur);
   const a=$("focArc");if(a) a.setAttribute("stroke-dasharray",`${(C*p).toFixed(1)} ${C.toFixed(1)}`);
   if($("focT")) $("focT").textContent=sw?mmssUp(e):mmss(tmLeft());if($("focS")) $("focS").textContent=T.paused?"duraklatıldı":(sw?"geçti":"kaldı");
   if($("focEnd")) $("focEnd").textContent=hhmm(Date.now()+tmLeft());
-  const gp=Math.min(100,w/(f.want*60000)*100);if($("focGB")) $("focGB").style.width=gp.toFixed(1)+"%";if($("focGP")) $("focGP").textContent=gp>=100?"HEDEF TAMAM":"%"+Math.floor(gp);
+  const gp=T.paused?0:Math.min(100,Math.max(0,w-(T.gs||0))/(f.want*60000)*100);if($("focGB")) $("focGB").style.width=gp.toFixed(1)+"%";if($("focGP")) $("focGP").textContent=gp>=100?"HEDEF TAMAM":"%"+Math.floor(gp);
   const sg=segMs(),sf=boredFrac(sg),mx=T.bfMax||0,fr=sessFrac();
   if(T.bs!=null&&$("focBT")&&$("focBR")){$("focBT").textContent=mmssUp(sg);const cap=boredCap(),left=mx>sf?fracMin(mx)*60000-sg:0;$("focBR").innerHTML=`Ek ödül katsayısı: <b>+%${pct(fr)}</b>${fr>=.5?" · tavan":` · %50 tavan ${cap} dk'da`}${left>0?`<br><span class="small">Bu tur +%${pct(sf)} · önceki +%${pct(mx)}'i geçmeye ${mmssUp(left)}</span>`:""}`}
   const L=T.laps||[];if(L.length&&$("focLapCur")) $("focLapCur").textContent=mmssUp(Math.max(0,w-L[L.length-1].w));
@@ -6535,7 +6535,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&showing&&$("modal")
 /* ================= BACKUP & SYNC ================= */
 const IS_PWA=true;
 const FB_CONFIG={"apiKey": "AIzaSyBsNalG4Fl7crcsluhf2hqDXlWawD6DJ2I", "authDomain": "hunter-sistemi.firebaseapp.com", "projectId": "hunter-sistemi", "storageBucket": "hunter-sistemi.firebasestorage.app", "messagingSenderId": "550981824995", "appId": "1:550981824995:web:bd6d609b92a2b74b8f70d6"};
-const APP_VER="43";
+const APP_VER="44";
 const LS_SYNC="hunter-sistemi-sync";
 function b64e(t){return btoa(unescape(encodeURIComponent(t)))}
 function b64d(t){return decodeURIComponent(escape(atob(t)))}
