@@ -1473,7 +1473,7 @@ body.noanim .rqfx,body.noanim .rqfx::before{animation:none!important}
         <div class="tscroll"><table class="table" id="rankTable"></table></div>
         <p class="help" id="rankNote" style="margin-top:10px"></p>
         <p class="help" style="margin-top:6px">Görev yalnızca seçtiğin statı artırır. <b>Seviye atlayınca tüm statlara</b> yeni seviyen kadar puan eklenir: 1. seviyeye çıkınca +1, 16. seviyeye çıkınca +16. Seviye için gereken XP her seviyede 1,25 katına çıkar. Sınıfının statındaki görevler ekstra XP ve gold verir.</p>
-        <p class="help" style="margin-top:6px"><b>Odak oturumu (isteğe bağlı):</b> Görev Bilgisi'nin sağ üstündeki kutudan <b>kronometre</b> ya da <b>zamanlayıcı</b> başlat. Oturum görevlerden bağımsızdır; ödül odaklandığın süreye göre verilir (40 dk ≈ B rütbe bir görev, üst sınır yok; 1 dk altı ödül vermez).</p>
+        <p class="help" style="margin-top:6px"><b>Odak oturumu (isteğe bağlı):</b> Görev Bilgisi'nin sağ üstündeki kutudan <b>kronometre</b> ya da <b>zamanlayıcı</b> başlat. Oturum görevlerden bağımsızdır; ödül odaklandığın süreye göre verilir (40 dk ≈ B rütbe bir görev ödülünün 3/5'i, üst sınır yok; 1 dk altı ödül vermez).</p>
         <p class="help" style="margin-top:6px"><b>Sıkıldım düğmesi:</b> odak ekranında sıkıldığında ya da başın ağrımaya başladığında bas. O andan sonra devam ettiğin süre <b>Boring Time</b> sayılır ve oturum ödülüne %50'ye kadar ek ödül verir. Mevcut odak süren ne kadar kısaysa her dakika o kadar değerlidir (Ayarlar → Odak ve Sıkılma).</p>
         <p class="help" style="margin-top:6px"><b>Tek seferlik görevler</b> yalnızca tamamlandıktan 24 saat sonra listeden kalkar; tamamlanmayanlar yerinde kalır. Tamamladığın her görev Karakter → Kayıtlar → Görevler'de saklanır.</p>
         <p class="help" style="margin-top:6px"><b>Rütbe savaş gücüne göre belirlenir:</b> F 0 · E 75 · D 300 · C 750 · B 2.000 · A 5.000 · S 20.000 · SS 50.000 · X 200.000. Her stat puanı 5, her seviye 25 güç verir.</p>
@@ -2524,7 +2524,7 @@ function qVisible(q){return activeToday(q)||onceShown(q)}
 function qFull(q){return onceShown(q)||qCount(q)>=qTimes(q)}
 function purgeOnce(){const n=S.quests.length;S.quests=S.quests.filter(q=>!(q.once&&q.finished&&(!q.doneAt||Date.now()-q.doneAt>=DAY_MS)));return S.quests.length!==n}
 function hLeft(ms){ms=Math.max(0,ms);const h=Math.floor(ms/3600000),m=Math.ceil(ms%3600000/60000);return h?`${h} sa${m&&m<60?" "+m+" dk":""}`:`${Math.max(1,m)} dk`}
-const RW_MUL=(1/3)*(3/5),RW_DIV=1/RW_MUL;
+const RW_MUL=1/3,RW_DIV=3;
 function rwN(v){return v>0?Math.max(1,Math.round(v*RW_MUL)):v}
 function rwCut(o){const r=Object.assign({},o);["xp","gold","st"].forEach(k=>{if(k in r) r[k]=rwN(r[k])});return r}
 function questReward(q){return rwCut(questReward0(q))}
@@ -5477,7 +5477,8 @@ function boredCap(){return 2*focusCfg().base}
 function boredFrac(ms){const x=Math.min(1,(ms/60000)/boredCap());return .5*x*x}
 const SESS_MIN=40,SESS_RK="B";
 function sessStatOf(T){return T&&SC[T.stat]?T.stat:(S.job&&SC[S.job]?S.job:"INT")}
-function sessReward(ms,stat){return rwCut(sessReward0(ms,stat))}
+const SESS_MUL=3/5;
+function sessReward(ms,stat){const r=sessReward0(ms,stat);return rwCut({xp:r.xp*SESS_MUL,gold:r.gold*SESS_MUL,st:r.st*SESS_MUL})}
 function sessReward0(ms,stat){const m=ms/60000,b=bonuses(),jb=jobBonus(stat),L=S.level;return {xp:Math.round(Q_XP[SESS_RK]/SESS_MIN*m*lvMul(1.1,L)*(1+(b.xp+jb)/100)),gold:Math.round(Q_GOLD[SESS_RK]/SESS_MIN*m*lvMul(1.2,L)*(1+(b.gold+jb)/100)),st:Math.round(Q_STAT[SESS_RK]/SESS_MIN*m*lvMul(1.2,L))}}
 function fmtMin(m){m=Math.round(m);const h=Math.floor(m/60),r=m%60;return h?`${h} sa${r?" "+r+" dk":""}`:`${r} dk`}
 function hhmm(t){const d=new Date(t);return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")}
@@ -5518,7 +5519,7 @@ function sessPick(mode){
   overlay(head("Odak Oturumu")+`<div class="big" style="font-size:26px;letter-spacing:.1em;color:${sw?"#6dffb3":"#62d2ff"};text-shadow:0 0 18px ${sw?"rgba(109,255,179,.6)":"rgba(98,210,255,.7)"}">${sw?"KRONOMETRE":"ZAMANLAYICI"}</div><p class="small muted">${sw?"İleri sayar; işin bitince <b>Bitir</b>'e bas.":"Süre dolunca oturum kendiliğinden biter."} Ödül odaklandığın süreye göre verilir.</p>
 <p class="sec-label" style="margin-top:14px">Geliştireceği stat</p><div class="chips" style="justify-content:center;margin:0">${STATS.map(x=>`<button type="button" class="chipbtn" data-sstat="${x.k}" aria-pressed="${sessStat===x.k}"><span style="color:${x.c}">${x.k}</span></button>`).join("")}</div>
 ${sw?"":`<p class="sec-label" style="margin-top:14px">Süre</p><div class="tmdur" style="justify-content:center"><input type="number" id="tmH" min="0" max="10" value="${Math.floor(tmLast/60)}" aria-label="Saat"> sa <input type="number" id="tmM" min="0" max="59" value="${tmLast%60}" aria-label="Dakika"> dk</div>`}
-<p class="help" style="margin-top:12px">${SESS_MIN} dk odak ≈ ${SESS_RK} rütbe bir görev kadar ödül; süre uzadıkça ödül de aynı oranda artar, üst sınır yok. Sıkıldığında <b>SIKILDIM</b>'a bas: dayandığın Boring Time %50'ye kadar ek ödül verir. Çalışırken <b>Ek nokta</b> ile bölümleri (örn. bir ünite) işaretleyebilirsin.</p>
+<p class="help" style="margin-top:12px">${SESS_MIN} dk odak ≈ ${SESS_RK} rütbe bir görev ödülünün 3/5'i; süre uzadıkça ödül de aynı oranda artar, üst sınır yok. Sıkıldığında <b>SIKILDIM</b>'a bas: dayandığın Boring Time %50'ye kadar ek ödül verir. Çalışırken <b>Ek nokta</b> ile bölümleri (örn. bir ünite) işaretleyebilirsin.</p>
 <div class="mbtns"><button class="btn primary" type="button" data-tmgo="${sw?"sw":"tm"}">Başlat</button><button class="btn" type="button" data-act="modalOk">Vazgeç</button></div>`,{noOk:true});
 }
 function startSess(mode,mins){
@@ -6534,7 +6535,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&showing&&$("modal")
 /* ================= BACKUP & SYNC ================= */
 const IS_PWA=true;
 const FB_CONFIG={"apiKey": "AIzaSyBsNalG4Fl7crcsluhf2hqDXlWawD6DJ2I", "authDomain": "hunter-sistemi.firebaseapp.com", "projectId": "hunter-sistemi", "storageBucket": "hunter-sistemi.firebasestorage.app", "messagingSenderId": "550981824995", "appId": "1:550981824995:web:bd6d609b92a2b74b8f70d6"};
-const APP_VER="42";
+const APP_VER="43";
 const LS_SYNC="hunter-sistemi-sync";
 function b64e(t){return btoa(unescape(encodeURIComponent(t)))}
 function b64d(t){return decodeURIComponent(escape(atob(t)))}
