@@ -1293,6 +1293,23 @@ button.tmopt{cursor:pointer}
 .qlg-lp{display:flex;flex-wrap:wrap;gap:3px 12px;margin-top:6px;font-size:12px;color:var(--muted)}
 .qlg-lp b{color:var(--gold);font-family:var(--display)}
 .qfo-run b{font-size:26px}
+.hero-main{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px;align-content:start}
+.hero-main>*{grid-column:1/-1}
+.hero-main>.h-kicker,.hero-main>.h-name,.hero-main>.hchips{grid-column:1}
+.hfoc{grid-column:2;grid-row:1/4;align-self:start;display:grid;gap:4px;justify-items:start;text-align:left;min-width:200px;max-width:250px;padding:10px 14px;margin-bottom:12px;border:1px solid rgba(109,255,179,.45);background:linear-gradient(135deg,rgba(20,90,60,.35),rgba(4,12,30,.6) 70%);border-radius:3px;cursor:pointer;color:inherit;font:inherit;box-shadow:0 0 16px rgba(109,255,179,.12)}
+.hfoc:hover{border-color:#6dffb3;box-shadow:0 0 20px rgba(109,255,179,.25)}
+.hfoc-k{display:flex;align-items:center;gap:6px;font-family:var(--display);font-size:11px;letter-spacing:.2em;color:#9fe8c4}
+.hfoc-live{font-style:normal;color:#6dffb3;letter-spacing:.06em}
+.hfoc-t{font-family:var(--display);font-size:30px;line-height:1.1;color:#dffff0;text-shadow:0 0 14px rgba(109,255,179,.45)}
+.hfoc-s{font-size:11.5px;color:var(--muted)}
+.fsum{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.fsc{display:inline-flex;align-items:center;gap:3px;font-family:var(--display);font-size:11.5px;font-weight:700;padding:1px 6px;border-radius:2px;color:var(--sc,#9fd8ff);border:1px solid color-mix(in srgb,var(--sc,#62d2ff) 50%,transparent);background:color-mix(in srgb,var(--sc,#62d2ff) 10%,transparent)}
+.fsc.xp{--sc:#6fb8ff}.fsc.gd{--sc:#ffc53d}
+.qfo-sum{border-top:1px solid var(--line-dim);padding-top:6px;display:grid;gap:4px}
+.qfo-sk{font-size:12px;color:var(--muted)}
+.qfo-sk b{color:#6dffb3;font-family:var(--display)}
+.qhead{margin-bottom:22px}
+@media (max-width:760px){.hfoc{grid-column:1/-1;grid-row:auto;max-width:none;width:100%;margin:4px 0 12px}.hero-main>*{order:2}.hero-main>.h-kicker,.hero-main>.h-name,.hero-main>.hchips{order:0}.hero-main>.hfoc{order:1}}
 @media (max-width:600px){.brand .blogo{width:28px;height:28px}.brand .bword b{font-size:13.5px;letter-spacing:.26em}.brand .bword span{font-size:8.5px}}
 @media (max-width:420px){.qlg{grid-template-columns:minmax(0,1fr) auto}.qlg .tm{grid-column:1/-1;margin-bottom:-4px}.foc-btns.three{grid-template-columns:1fr 1fr}.foc-btns.three .goldb{grid-column:1/-1;order:-1}}
 
@@ -1380,6 +1397,7 @@ body.noanim .rqfx,body.noanim .rqfx::before{animation:none!important}
         <div class="hero-grid">
           <div class="hero-fig"><div class="hero-avw"><div id="hFig"></div><div class="hero-emb" id="hBadge"></div></div></div>
           <div class="hero-main">
+            <button type="button" class="hfoc" id="hFoc" data-studyrec="1" aria-label="Bugünkü odak süresi ve kazanımları"></button>
             <div class="h-kicker" id="hKicker"></div>
             <div class="h-name" id="hName"></div>
             <div class="hchips" id="hChips"></div>
@@ -4715,7 +4733,8 @@ function renderHome(){
   $("hBadge").innerHTML=emblem(r);
   $("hKicker").innerHTML=`<span style="color:${RCOL[r]}">${r} RÜTBE AVCI</span><span class="sep">◆</span><span>Seviye ${S.level}</span>`;
   $("hName").textContent=S.name||"Avcı";
-  $("hChips").innerHTML=`<button type="button" class="hchip" style="--cc:#6dffb3" data-studyrec="1" title="Bugünkü odak süresi">${ico("clock","#6dffb3",14)}Bugün ${fmtMin(Math.floor(studyToday()/60))}</button>`+(jn?`<span class="hchip" style="--cc:${SC[S.job].c}">${ico(S.job,SC[S.job].c,14)}${esc(jn)}</span>`:`<button type="button" class="hchip warn" data-act="openJob">${ico("job","#ffc53d",14)}Sınıf seç</button>`)
+  {const o=focusSum();$("hFoc").innerHTML=`<span class="hfoc-k">${ico("clock","#6dffb3",14)} BUGÜNKÜ ODAK${S.timer?` <i class="hfoc-live">● sürüyor</i>`:""}</span><b class="hfoc-t">${fmtMin(Math.floor(o.sec/60))}</b><span class="hfoc-s">${o.n} oturum${o.n?"":" · kronometre ya da zamanlayıcıyla başla"}</span><span class="fsum">${focusSumChips(o)}</span>`}
+  $("hChips").innerHTML=(jn?`<span class="hchip" style="--cc:${SC[S.job].c}">${ico(S.job,SC[S.job].c,14)}${esc(jn)}</span>`:`<button type="button" class="hchip warn" data-act="openJob">${ico("job","#ffc53d",14)}Sınıf seç</button>`)
     +(t?`<span class="hchip" style="--cc:#ffc53d">${ico("title","#ffc53d",14)}${esc(t.n)}</span>`:"")
     +(mg?`<span class="hchip" style="--cc:${mg.gc}">${ico("crown",mg.gc,14)}${esc(mg.name)}</span>`:"");
   $("hLv").innerHTML=`<span>SV</span><b>${S.level}</b>`;
@@ -4844,9 +4863,9 @@ function ordHtml(){
   return h+`<div style="text-align:center;margin-top:12px"><button type="button" class="btn primary" data-qord="done">Tamam</button></div>`;
 }
 function renderQFocus(){
-  const el=$("qFocus");if(!el) return;const T=S.timer;
-  if(T){const sw=tmIsSw(T);el.innerHTML=`<div class="qfo-k">ODAK OTURUMU</div><button type="button" class="qfo-run" data-tmopen="1">${ico("clock",sw?"#6dffb3":"#62d2ff",22)}<span><b id="qfoT">${sw?mmssUp(tmEl()):mmss(tmLeft())}</b><small>${sw?"Kronometre":"Zamanlayıcı"}${T.paused?" · duraklatıldı":""}${T.bs!=null?" · sıkıldım":""} · aç</small></span></button>`;return}
-  el.innerHTML=`<div class="qfo-k">ODAK OTURUMU</div><div class="qfo-btns"><button type="button" class="qfo-b grn" data-sess="sw">${ico("clock","#6dffb3",18)}<span>Kronometre</span></button><button type="button" class="qfo-b" data-sess="tm">${ico("clock","#62d2ff",18)}<span>Zamanlayıcı</span></button></div>`;
+  const el=$("qFocus");if(!el) return;const T=S.timer,o=focusSum(),sm=`<div class="qfo-sum"><div class="qfo-sk">Bugün <b>${fmtMin(Math.floor(o.sec/60))}</b> odak · ${o.n} oturum</div><div class="fsum">${focusSumChips(o)}</div></div>`;
+  if(T){const sw=tmIsSw(T);el.innerHTML=`<div class="qfo-k">ODAK OTURUMU</div><button type="button" class="qfo-run" data-tmopen="1">${ico("clock",sw?"#6dffb3":"#62d2ff",22)}<span><b id="qfoT">${sw?mmssUp(tmEl()):mmss(tmLeft())}</b><small>${sw?"Kronometre":"Zamanlayıcı"}${T.paused?" · duraklatıldı":""}${T.bs!=null?" · sıkıldım":""} · aç</small></span></button>${sm}`;return}
+  el.innerHTML=`<div class="qfo-k">ODAK OTURUMU</div><div class="qfo-btns"><button type="button" class="qfo-b grn" data-sess="sw">${ico("clock","#6dffb3",18)}<span>Kronometre</span></button><button type="button" class="qfo-b" data-sess="tm">${ico("clock","#62d2ff",18)}<span>Zamanlayıcı</span></button></div>${sm}`;
 }
 function renderQuests(){
   let html="";renderQFocus();
@@ -5659,6 +5678,8 @@ function recQuests(){
 }
 function fdayMap(){const m=Object.assign({},S.fday||{});if(S.timer){const k=todayKey();m[k]=(m[k]||0)+Math.round(tmWork()/1000)}return m}
 function studyToday(){return fdayMap()[todayKey()]||0}
+function focusSum(){const t0=parseKey(todayKey()).getTime(),o={sec:studyToday(),xp:0,g:0,st:{},n:0};(S.qlog||[]).forEach(e=>{if(e.rp==="focus"&&e.t>=t0){o.n++;o.xp+=e.xp||0;o.g+=e.g||0;if(e.st&&SC[e.s]) o.st[e.s]=(o.st[e.s]||0)+e.st}});return o}
+function focusSumChips(o){const st=STATS.filter(x=>o.st[x.k]).map(x=>`<span class="fsc" style="--sc:${x.c}">${ico(x.k,x.c,13)}+${fmt(o.st[x.k])} ${x.k}</span>`).join("");return st+`<span class="fsc xp">+${fmt(o.xp)} XP</span><span class="fsc gd">+${fmt(o.g)}G</span>`}
 function weekStart(k){const d=parseKey(k);d.setDate(d.getDate()-((d.getDay()+6)%7));return todayKey(d)}
 function recStudy(){
   const m=fdayMap(),keys=Object.keys(m).filter(k=>m[k]>0).sort(),tk=todayKey();
@@ -6503,7 +6524,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&showing&&$("modal")
 /* ================= BACKUP & SYNC ================= */
 const IS_PWA=true;
 const FB_CONFIG={"apiKey": "AIzaSyBsNalG4Fl7crcsluhf2hqDXlWawD6DJ2I", "authDomain": "hunter-sistemi.firebaseapp.com", "projectId": "hunter-sistemi", "storageBucket": "hunter-sistemi.firebasestorage.app", "messagingSenderId": "550981824995", "appId": "1:550981824995:web:bd6d609b92a2b74b8f70d6"};
-const APP_VER="39";
+const APP_VER="40";
 const LS_SYNC="hunter-sistemi-sync";
 function b64e(t){return btoa(unescape(encodeURIComponent(t)))}
 function b64d(t){return decodeURIComponent(escape(atob(t)))}
