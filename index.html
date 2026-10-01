@@ -923,8 +923,13 @@ span.enh.big{position:absolute;right:-6px;top:-6px;font-size:15px}
 .smrow.empty{opacity:.5}
 .enhtbl td,.enhtbl th{padding:5px 6px}
 /* skills */
-.hfoc-tr{display:flex;align-items:center;gap:10px}
-.hfoc-tr .hfoc-t{white-space:nowrap;font-size:27px}
+.sbox .b{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 2px}
+.sbox .v{max-width:100%;white-space:nowrap}
+@media (max-width:430px){.sbox .v{font-size:17px}.sbox .b{font-size:10px}.sbox{padding:8px 2px}}
+.hfoc-main{position:relative;padding-bottom:12px!important}
+.hfoc-main .hfoc-t{white-space:nowrap}
+.hfoc-main .fsum{padding-right:48px}
+.mfadd.corner{position:absolute;right:10px;bottom:10px;width:36px;height:36px;font-size:24px}
 .mfadd{flex:none;width:30px;height:30px;display:grid;place-items:center;padding:0;font-family:var(--display);font-weight:700;font-size:20px;line-height:1;color:#6dffb3;background:rgba(10,60,40,.55);border:1.5px solid rgba(109,255,179,.6);border-radius:4px;cursor:pointer;box-shadow:0 0 10px rgba(109,255,179,.2)}
 .mfadd:hover{background:#6dffb3;color:#08101c}
 .mfadd:focus-visible{outline:2px solid #6dffb3;outline-offset:2px}
@@ -2349,6 +2354,9 @@ function dowTR(){return (new Date().getDay()+6)%7}
 const JOB_CD=86400000;
 function fmtDur(ms){const t=Math.max(1,Math.ceil(ms/60000)),h=Math.floor(t/60),m=t%60;return h?`${h} sa ${m} dk`:`${m} dk`}
 function fmt(n){return Math.round(n).toLocaleString("tr-TR")}
+/* Kısa sayı: 9.999'a kadar tam, sonra 23,4k · 234k · 1,2M · 3,4B (dar kutularda taşmasın diye) */
+function fmtK(n){n=Math.round(n||0);const a=Math.abs(n),sg=n<0?"-":"",f=(v,u)=>sg+(v<100?(Math.floor(v*10)/10).toLocaleString("tr-TR",{maximumFractionDigits:1}):Math.floor(v).toLocaleString("tr-TR"))+u;
+  if(a<10000) return fmt(n);if(a<1e6) return f(a/1e3,"k");if(a<1e9) return f(a/1e6,"M");return f(a/1e9,"B")}
 function esc(t){return String(t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function clone(x){return JSON.parse(JSON.stringify(x))}
 function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
@@ -4727,7 +4735,7 @@ function rbadge(r,sz){return remb(r,sz||24)}
 let curTab="home",storeSub="weapons",storeSlot="chest",storeCls=null,storeKind=null,storeTier=null,guildView=null,avatarKey="",guildRendered=false;
 function render(){
   if(!S.rankSeen) S.rankSeen=curRank();
-  $("goldTop").innerHTML=coinSvg(20)+fmt(S.gold);$("goldTop").classList.toggle("neg",S.gold<0);renderPowTop();
+  $("goldTop").innerHTML=coinSvg(20)+fmtK(S.gold);$("goldTop").title=fmt(S.gold)+" gold";$("goldTop").classList.toggle("neg",S.gold<0);renderPowTop();
   {const dq=dailyQuests();$("navQDot").hidden=S.cleared||!dq.length}
   renderTab(curTab);
   renderViewers();
@@ -4739,7 +4747,7 @@ function renderPowTop(){
   const pw=power(),r=rankOf(pw),nr=nextRank(pw),lo=RP[r],pct=nr?Math.min(100,Math.max(0,(pw-lo)/(nr[1]-lo)*100)):100,el=$("powTop");
   el.className="tpow t"+TIERS.indexOf(r);el.style.setProperty("--rc",RCOL[r]);
   el.title=nr?`${r} rütbe · ${nr[0]} rütbe için ${fmt(nr[1]-pw)} güç daha`:`${r} rütbe · en yüksek rütbe`;
-  el.innerHTML=`<span class="tp-rank"><span>${r}</span></span><span class="tp-in"><span class="tp-sheen"></span><span class="tp-lbl">${ico("power",RCOL[r],13)}GÜÇ</span><b class="tp-val">${fmt(pw)}</b><span class="tp-prog"><i style="width:${pct.toFixed(1)}%"></i></span><i class="tp-spark s1"></i><i class="tp-spark s2"></i><i class="tp-spark s3"></i></span>`;
+  el.innerHTML=`<span class="tp-rank"><span>${r}</span></span><span class="tp-in"><span class="tp-sheen"></span><span class="tp-lbl">${ico("power",RCOL[r],13)}GÜÇ</span><b class="tp-val">${fmtK(pw)}</b><span class="tp-prog"><i style="width:${pct.toFixed(1)}%"></i></span><i class="tp-spark s1"></i><i class="tp-spark s2"></i><i class="tp-spark s3"></i></span>`;
 }
 let heroKey="";
 function renderHome(){
@@ -4751,7 +4759,7 @@ function renderHome(){
   $("hKicker").innerHTML=`<span style="color:${RCOL[r]}">${r} RÜTBE AVCI</span><span class="sep">◆</span><span>Seviye ${S.level}</span>`;
   $("hName").textContent=S.name||"Avcı";
   {const o=focusSum(),T=S.timer,sw=T&&tmIsSw(T),tm=T&&!sw;
-   $("hFoc").innerHTML=`<div class="hfoc-main"><span class="hfoc-k">${ico("clock","#6dffb3",14)} BUGÜNKÜ ODAK${T?` <i class="hfoc-live">● sürüyor</i>`:""}</span><span class="hfoc-tr"><b class="hfoc-t">${fmtMin(Math.floor(o.sec/60))}</b><button type="button" class="mfadd" data-mfocus="1" aria-label="Kronometresiz çalıştığın süreyi elle ekle" title="Çalıştığın süreyi elle ekle">+</button></span><span class="hfoc-s">${o.n} oturum${o.n?"":" · sağdan kronometre ya da zamanlayıcı başlat"}</span><span class="fsum">${focusSumChips(o)}</span><button type="button" class="hfoc-rec" data-studyrec="1">Kayıtlar →</button></div><div class="hfoc-col"><button type="button" class="hfoc-b${sw?" on":""}" data-sess="sw">${ico("clock",sw?"#08101c":"#6dffb3",18)}Kronometre${sw?`<small>sürüyor · aç</small>`:""}</button><button type="button" class="hfoc-b${tm?" on":""}" data-sess="tm">${ico("clock",tm?"#08101c":"#62d2ff",18)}Zamanlayıcı${tm?`<small>sürüyor · aç</small>`:""}</button></div>`}
+   $("hFoc").innerHTML=`<div class="hfoc-main"><span class="hfoc-k">${ico("clock","#6dffb3",14)} BUGÜNKÜ ODAK${T?` <i class="hfoc-live">● sürüyor</i>`:""}</span><b class="hfoc-t">${fmtMin(Math.floor(o.sec/60))}</b><button type="button" class="mfadd corner" data-mfocus="1" aria-label="Kronometresiz çalıştığın süreyi elle ekle" title="Çalıştığın süreyi elle ekle">+</button><span class="hfoc-s">${o.n} oturum${o.n?"":" · sağdan kronometre ya da zamanlayıcı başlat"}</span><span class="fsum">${focusSumChips(o)}</span><button type="button" class="hfoc-rec" data-studyrec="1">Kayıtlar →</button></div><div class="hfoc-col"><button type="button" class="hfoc-b${sw?" on":""}" data-sess="sw">${ico("clock",sw?"#08101c":"#6dffb3",18)}Kronometre${sw?`<small>sürüyor · aç</small>`:""}</button><button type="button" class="hfoc-b${tm?" on":""}" data-sess="tm">${ico("clock",tm?"#08101c":"#62d2ff",18)}Zamanlayıcı${tm?`<small>sürüyor · aç</small>`:""}</button></div>`}
   $("hChips").innerHTML=(jn?`<span class="hchip" style="--cc:${SC[S.job].c}">${ico(S.job,SC[S.job].c,14)}${esc(jn)}</span>`:`<button type="button" class="hchip warn" data-act="openJob">${ico("job","#ffc53d",14)}Sınıf seç</button>`)
     +(t?`<span class="hchip" style="--cc:#ffc53d">${ico("title","#ffc53d",14)}${esc(t.n)}</span>`:"")
     +(mg?`<span class="hchip" style="--cc:${mg.gc}">${ico("crown",mg.gc,14)}${esc(mg.name)}</span>`:"");
@@ -4760,13 +4768,13 @@ function renderHome(){
   $("hXpBar").style.width=Math.min(100,S.xp/n*100)+"%";
   $("hXpNext").innerHTML=`Sonraki seviyede tüm statlar <b>+${lvlBonus(S.level)}</b> · kalan <b>${fmt(Math.max(0,n-S.xp))} XP</b>`;
   const M=maxEnergy(),en=S.energy;
-  $("hVit").innerHTML=`<div class="v3"><div class="top"><span>${ico("hp","#ff5a78",14)}HP</span><b>${fmt(hp())}</b></div><div class="bar hp thin"><i style="width:100%"></i></div></div>
-<div class="v3"><div class="top"><span>${ico("mp","#7d8cff",14)}MP</span><b>${fmt(mp())}</b></div><div class="bar mp thin"><i style="width:${mp()>0?100:0}%"></i></div></div>
+  $("hVit").innerHTML=`<div class="v3"><div class="top"><span>${ico("hp","#ff5a78",14)}HP</span><b title="${fmt(hp())}">${fmtK(hp())}</b></div><div class="bar hp thin"><i style="width:100%"></i></div></div>
+<div class="v3"><div class="top"><span>${ico("mp","#7d8cff",14)}MP</span><b title="${fmt(mp())}">${fmtK(mp())}</b></div><div class="bar mp thin"><i style="width:${mp()>0?100:0}%"></i></div></div>
 <div class="v3"><div class="top"><span>${BOLT("#ffd84a",14)}Enerji</span><b style="color:${en<0?"var(--red)":"#ffd84a"}">${en}/${M}</b></div><div class="bar en thin"><i style="width:${Math.max(0,Math.min(100,en/M*100)).toFixed(1)}%"></i></div></div>`;
   const lo=RP[r],pct=nr?Math.min(100,(pw-lo)/(nr[1]-lo)*100):100;
-  $("hPower").innerHTML=`<div class="pw-l"><span class="pk">${ico("power","#ff3b4f",16)}SAVAŞ GÜCÜ</span><b>${fmt(pw)}</b></div><div class="pw-r"><div class="pr-row">${remb(r,24)}<div class="bar thin"><i style="width:${pct.toFixed(1)}%;background:linear-gradient(90deg,#b8203c,${RCOL[nr?nr[0]:r]})"></i></div>${nr?remb(nr[0],24):""}</div><div class="pr-txt">${nr?`${nr[0]} rütbe için <b>${fmt(nr[1]-pw)}</b> güç daha`:"En yüksek rütbedesin"}</div></div>`;
+  $("hPower").innerHTML=`<div class="pw-l"><span class="pk">${ico("power","#ff3b4f",16)}SAVAŞ GÜCÜ</span><b title="${fmt(pw)}">${fmtK(pw)}</b></div><div class="pw-r"><div class="pr-row">${remb(r,24)}<div class="bar thin"><i style="width:${pct.toFixed(1)}%;background:linear-gradient(90deg,#b8203c,${RCOL[nr?nr[0]:r]})"></i></div>${nr?remb(nr[0],24):""}</div><div class="pr-txt">${nr?`${nr[0]} rütbe için <b>${fmt(nr[1]-pw)}</b> güç daha`:"En yüksek rütbedesin"}</div></div>`;
   const vals=STATS.map(x=>S.base[x.k]+eq[x.k]),mx=Math.max(1,...vals);
-  $("hStats").innerHTML=STATS.map((x,i)=>`<div class="sbox" style="--sc:${x.c}">${ico(x.k,x.c,20)}<div class="k">${x.k}</div><div class="v">${fmt(vals[i])}</div><div class="sb"><i style="width:${(vals[i]/mx*100).toFixed(0)}%"></i></div><div class="b">${eq[x.k]?"+"+fmt(eq[x.k])+" ekipman":SC[x.k].n}</div></div>`).join("");
+  $("hStats").innerHTML=STATS.map((x,i)=>`<div class="sbox" style="--sc:${x.c}">${ico(x.k,x.c,20)}<div class="k">${x.k}</div><div class="v" title="${fmt(vals[i])}">${fmtK(vals[i])}</div><div class="sb"><i style="width:${(vals[i]/mx*100).toFixed(0)}%"></i></div><div class="b">${eq[x.k]?"+"+fmtK(eq[x.k])+" ekipman":SC[x.k].n}</div></div>`).join("");
   $("jobCard").hidden=true;
   // today
   const dq=dailyQuests(),dn=dq.filter(q=>qCount(q)>=qTimes(q)).length,tot=dq.length,pc=tot?dn/tot:0,C=2*Math.PI*44;
@@ -4774,7 +4782,7 @@ function renderHome(){
   const act=S.quests.filter(activeToday),open=act.filter(q=>qCount(q)<qTimes(q)),done=act.length-open.length;
   let tq="";
   if(S.penalty.active&&!S.penalty.done) tq+=`<button type="button" class="tqrow pen" data-penalty="1"><span class="tqbox"></span><span class="tqn">CEZA: ${esc(S.penaltyText)}</span><span class="tqx" style="color:var(--red)">zorunlu</span></button>`;
-  tq+=open.slice(0,5).map(q=>{const rw=questReward(q),k=qCount(q),tt=qTimes(q);if(isDers(q)){const ds=dersSt();return `<button type="button" class="tqrow tqders" style="--dc:${ds.c}" data-q="${q.id}"><span class="tqbox">${k?`<b>${k}</b>`:""}</span><span class="tqdi">${accSvg("book",ds.c,16)}</span><span class="tqn">${esc(q.name)}${tt>1?` <span class="muted">${k}/${tt}</span>`:""}</span><span class="tqs" style="color:${ds.c}">DERS</span><span class="tqx"></span></button>`}return `<button type="button" class="tqrow" data-q="${q.id}"><span class="tqbox">${k?`<b>${k}</b>`:""}</span>${remb(q.rank,20)}<span class="tqn">${esc(q.name)}${tt>1?` <span class="muted">${k}/${tt}</span>`:""}</span><span class="tqs" style="color:${SC[q.stat].c}">+${rw.st} ${q.stat}</span><span class="tqx">+${fmt(rw.xp)} XP</span></button>`}).join("");
+  tq+=open.slice(0,5).map(q=>{const rw=questReward(q),k=qCount(q),tt=qTimes(q);if(isDers(q)){const ds=dersSt();return `<button type="button" class="tqrow tqders" style="--dc:${ds.c}" data-q="${q.id}"><span class="tqbox">${k?`<b>${k}</b>`:""}</span><span class="tqdi">${accSvg("book",ds.c,16)}</span><span class="tqn">${esc(q.name)}${tt>1?` <span class="muted">${k}/${tt}</span>`:""}</span><span class="tqs" style="color:${ds.c}">DERS</span><span class="tqx"></span></button>`}return `<button type="button" class="tqrow" data-q="${q.id}"><span class="tqbox">${k?`<b>${k}</b>`:""}</span>${remb(q.rank,20)}<span class="tqn">${esc(q.name)}${tt>1?` <span class="muted">${k}/${tt}</span>`:""}</span><span class="tqs" style="color:${SC[q.stat].c}">+${rw.st} ${q.stat}</span><span class="tqx">+${fmtK(rw.xp)} XP</span></button>`}).join("");
   if(!act.length) tq+=`<div class="small muted" style="padding:6px 0">Bugün için görev yok.</div>`;
   else if(!open.length) tq+=`<div class="tqdone">${ico("title","#6dffb3",16)} Bugünün tüm görevleri tamamlandı!</div>`;
   tq+=`<div class="tqfoot"><span class="small muted">${done?`${done} görev tamamlandı`:""}${open.length>5?` · +${open.length-5} görev daha`:""}</span><button class="btn sm primary" type="button" data-go="quests">Tüm görevler →</button></div>`;
@@ -4783,7 +4791,7 @@ function renderHome(){
   for(let i=6;i>=0;i--){const k=addDays(todayKey(),-i),d=parseKey(k),lab=DAYS[(d.getDay()+6)%7],today=i===0,h=today?{ok:S.cleared}:map[k];const cls=today?(S.cleared?"ok today":"today"):h?(h.ok?"ok":"miss"):"none";
     wk+=`<div class="wd ${cls}"><span>${lab}</span><i>${cls.includes("ok")?"✓":cls==="miss"?"✕":today?"•":"–"}</i></div>`}
   $("tWeek").innerHTML=`<div class="wlab">${ico("streak","#ff8a3a",15)}<b>${S.streak}</b> günlük seri <span class="muted">· en uzun ${S.best}</span></div><div class="wdays">${wk}</div>`;
-  $("tKvs").innerHTML=`<div class="kv"><div class="k">${ico("xp","#6fb8ff",14)}Bugün XP</div><div class="v blue">+${fmt(S.todayXp)}</div></div><div class="kv"><div class="k">${coinSvg(14)}Bugün gold</div><div class="v gold">+${fmt(S.todayGold)}</div></div><div class="kv"><div class="k">${ico("clock","#88a3c6",14)}Sıfırlanma</div><div class="v" id="tCd">--:--</div></div>`;
+  $("tKvs").innerHTML=`<div class="kv"><div class="k">${ico("xp","#6fb8ff",14)}Bugün XP</div><div class="v blue" title="+${fmt(S.todayXp)}">+${fmtK(S.todayXp)}</div></div><div class="kv"><div class="k">${coinSvg(14)}Bugün gold</div><div class="v gold" title="+${fmt(S.todayGold)}">+${fmtK(S.todayGold)}</div></div><div class="kv"><div class="k">${ico("clock","#88a3c6",14)}Sıfırlanma</div><div class="v" id="tCd">--:--</div></div>`;
   const b=bonuses();let bh="";
   if(b.xp) bh+=`<span class="buff">XP +%${b.xp}</span>`;
   if(b.gold){const rb=rankBonus(),gb=guildBonus();bh+=`<span class="buff">Gold +%${b.gold}${rb||gb?` <span style="opacity:.75">(${[rb?`rütbe +%${rb}`:"",gb?`lonca +%${gb}`:""].filter(Boolean).join(", ")} dahil)</span>`:""}</span>`}
@@ -4873,12 +4881,12 @@ function qItemHtml(q){
   const repInfo=q.once?`<span class="qtag">Tek seferlik</span>`:(Array.isArray(q.days)&&q.days.length&&q.days.length<7?`<span class="qtag">${q.days.slice().sort().map(d=>DAYS[d]).join(" · ")}</span>`:"");
   if(isDers(q)) return dqHtml(q,repInfo);
   if(onceShown(q)){const rw=q.doneRw||questReward(q);
-    return `<button type="button" class="quest done gone ${rqCls(q)}" style="--rc:${RCOL[q.rank]}" aria-pressed="true" aria-disabled="true">${rqFx(q)}<span class="box">${CHECK}</span><span><div class="qname">${esc(q.name)}</div>${q.count?`<div class="qdesc">${q.count}/${q.count}${unit}</div>`:""}<div class="qmeta">${rbadge(q.rank)}<span class="stgain" style="--sc:${s.c}">${ico(q.stat,s.c,13)}+${rw.st} ${q.stat}</span>${repInfo}<span class="qleft">${hLeft(DAY_MS-(Date.now()-q.doneAt))} sonra listeden kalkar</span></div></span><span class="qright"><span class="qxp">+${rw.xp} XP</span><span class="qgold">+${rw.gold}G</span></span></button>`}
+    return `<button type="button" class="quest done gone ${rqCls(q)}" style="--rc:${RCOL[q.rank]}" aria-pressed="true" aria-disabled="true">${rqFx(q)}<span class="box">${CHECK}</span><span><div class="qname">${esc(q.name)}</div>${q.count?`<div class="qdesc">${q.count}/${q.count}${unit}</div>`:""}<div class="qmeta">${rbadge(q.rank)}<span class="stgain" style="--sc:${s.c}">${ico(q.stat,s.c,13)}+${rw.st} ${q.stat}</span>${repInfo}<span class="qleft">${hLeft(DAY_MS-(Date.now()-q.doneAt))} sonra listeden kalkar</span></div></span><span class="qright"><span class="qxp">+${fmtK(rw.xp)} XP</span><span class="qgold">+${fmtK(rw.gold)}G</span></span></button>`}
   const k=qCount(q),t=qTimes(q),full=k>=t,arr=S.done[q.id],rw=full&&arr?arr[arr.length-1]:questReward(q);
   let desc=q.count?(t>1?`${q.count}${unit} · günde ${t} kez`:`${full?q.count:0}/${q.count}${unit}`):(t>1?`Günde ${t} kez`:"");
   const boxIn=full?CHECK:(k>0?`<b class="pn">${k}</b>`:CHECK);
   const note=q.once?(full&&q.doneAt?`<span class="qleft">${hLeft(DAY_MS-(Date.now()-q.doneAt))} sonra listeden kalkar</span>`:`<span>Tamamlayınca 24 saat sonra kalkar</span>`):`<span>Gece yarısına kadar</span>`;
-  const main=`<button type="button" class="quest ${rqCls(q)}${full?" done":""}${k>0&&!full?" partial":""}" style="--rc:${RCOL[q.rank]}" data-q="${q.id}" aria-pressed="${full}">${rqFx(q)}<span class="box">${boxIn}</span><span><div class="qname">${esc(q.name)}</div>${desc?`<div class="qdesc">${desc}</div>`:""}${t>1?`<div class="reps">${Array.from({length:t},(_,i)=>`<i class="${i<k?"on":""}"></i>`).join("")}<span>${k}/${t}</span></div>`:""}<div class="qmeta">${rbadge(q.rank)}<span class="stgain" style="--sc:${s.c}">${ico(q.stat,s.c,13)}+${rw.st} ${q.stat}</span>${repInfo}${note}${rw.bf?`<span class="qtag bt">Boring +%${rw.bf}</span>`:""}</div></span><span class="qright"><span class="qxp">+${rw.xp} XP</span><span class="qgold">+${rw.gold}G</span><span class="qen">${BOLT("#ffd84a",11)}+${full&&arr?(rw.en||0):(ENERGY_Q[q.rank]||1)}</span></span></button>`;
+  const main=`<button type="button" class="quest ${rqCls(q)}${full?" done":""}${k>0&&!full?" partial":""}" style="--rc:${RCOL[q.rank]}" data-q="${q.id}" aria-pressed="${full}">${rqFx(q)}<span class="box">${boxIn}</span><span><div class="qname">${esc(q.name)}</div>${desc?`<div class="qdesc">${desc}</div>`:""}${t>1?`<div class="reps">${Array.from({length:t},(_,i)=>`<i class="${i<k?"on":""}"></i>`).join("")}<span>${k}/${t}</span></div>`:""}<div class="qmeta">${rbadge(q.rank)}<span class="stgain" style="--sc:${s.c}">${ico(q.stat,s.c,13)}+${rw.st} ${q.stat}</span>${repInfo}${note}${rw.bf?`<span class="qtag bt">Boring +%${rw.bf}</span>`:""}</div></span><span class="qright"><span class="qxp">+${fmtK(rw.xp)} XP</span><span class="qgold">+${fmtK(rw.gold)}G</span><span class="qen">${BOLT("#ffd84a",11)}+${full&&arr?(rw.en||0):(ENERGY_Q[q.rank]||1)}</span></span></button>`;
   const ex=t>1&&k>0&&!full?`<button type="button" class="qminus" data-qundo="${q.id}" aria-label="Bir tekrarı geri al">−1</button>`:"";
   return ex?`<div class="qwrap">${main}${ex}</div>`:main;
 }
@@ -5177,7 +5185,7 @@ function openMember(key){
   overlay(head("Avcı Bilgisi")+`<div class="mdetail"><div class="mfig">${charSvg(m.app,npcGear(m),{rank:m.r,wtype:m.w,wt:m.r,noRuler:1})}</div><div class="minfo">
 <div class="row" style="gap:10px;flex-wrap:nowrap">${remb(m.r,44)}<div><div class="mname" style="font-size:20px;margin:0">${esc(m.name)}</div><div class="mrole">${esc(m.role)} · ${esc(g.name)}</div></div></div>
 <div class="bodyrow"><div class="kv"><div class="k">Boy</div><div class="v">${m.app.height} cm</div></div><div class="kv"><div class="k">Kilo</div><div class="v">${m.app.weight} kg</div></div><div class="kv"><div class="k">Cinsiyet</div><div class="v">${m.app.gender==="f"?"Kadın":"Erkek"}</div></div></div>
-<div class="cp" style="margin-top:12px"><span>${ico("power","#ff3b4f",16)}SAVAŞ GÜCÜ</span><b>${fmt(pw)}</b></div>
+<div class="cp" style="margin-top:12px"><span>${ico("power","#ff3b4f",16)}SAVAŞ GÜCÜ</span><b title="${fmt(pw)}">${fmtK(pw)}</b></div>
 <div class="vitals" style="margin-top:10px"><div class="vital"><div class="top"><span>${ico("hp","#ff5a78",14)}HP</span><b>${fmt(npcHp(m))}</b></div><div class="bar hp thin"><i style="width:100%"></i></div></div><div class="vital"><div class="top"><span>${ico("mp","#7d8cff",14)}MP</span><b>${fmt(npcMp(m))}</b></div><div class="bar mp thin"><i style="width:100%"></i></div></div></div>
 <div class="statrows">${rows}</div>
 <div class="mextra">${flagMini(H.c)} ${esc(COUNTRIES[H.c].n)} · Dünya <b>#${npcPos(H,"world")}</b> · Ülke <b>#${npcPos(H,"country")}</b> · Arena <b style="color:${lgOf(H.ar).c}">${fmt(H.ar)}</b></div>
@@ -5785,7 +5793,7 @@ function recQuests(){
 function fdayMap(){const m=Object.assign({},S.fday||{});if(S.timer){const k=todayKey();m[k]=(m[k]||0)+Math.round(tmWork()/1000)}return m}
 function studyToday(){return fdayMap()[todayKey()]||0}
 function focusSum(){const t0=parseKey(todayKey()).getTime(),o={sec:studyToday(),xp:0,g:0,st:{},n:0};(S.qlog||[]).forEach(e=>{if(e.rp==="focus"&&e.t>=t0){o.n++;o.xp+=e.xp||0;o.g+=e.g||0;if(e.st&&SC[e.s]) o.st[e.s]=(o.st[e.s]||0)+e.st}});return o}
-function focusSumChips(o){const st=STATS.filter(x=>o.st[x.k]).map(x=>`<span class="fsc" style="--sc:${x.c}">${ico(x.k,x.c,13)}+${fmt(o.st[x.k])} ${x.k}</span>`).join("");return st+`<span class="fsc xp">+${fmt(o.xp)} XP</span><span class="fsc gd">+${fmt(o.g)}G</span>`}
+function focusSumChips(o){const st=STATS.filter(x=>o.st[x.k]).map(x=>`<span class="fsc" style="--sc:${x.c}">${ico(x.k,x.c,13)}+${fmtK(o.st[x.k])} ${x.k}</span>`).join("");return st+`<span class="fsc xp" title="+${fmt(o.xp)} XP">+${fmtK(o.xp)} XP</span><span class="fsc gd" title="+${fmt(o.g)} gold">+${fmtK(o.g)}G</span>`}
 function weekStart(k){const d=parseKey(k);d.setDate(d.getDate()-((d.getDay()+6)%7));return todayKey(d)}
 function recStudy(){
   const m=fdayMap(),keys=Object.keys(m).filter(k=>m[k]>0).sort(),tk=todayKey();
@@ -6690,7 +6698,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&showing&&$("modal")
 /* ================= BACKUP & SYNC ================= */
 const IS_PWA=true;
 const FB_CONFIG={"apiKey": "AIzaSyBsNalG4Fl7crcsluhf2hqDXlWawD6DJ2I", "authDomain": "hunter-sistemi.firebaseapp.com", "projectId": "hunter-sistemi", "storageBucket": "hunter-sistemi.firebasestorage.app", "messagingSenderId": "550981824995", "appId": "1:550981824995:web:bd6d609b92a2b74b8f70d6"};
-const APP_VER="54";
+const APP_VER="55";
 const LS_SYNC="hunter-sistemi-sync";
 function b64e(t){return btoa(unescape(encodeURIComponent(t)))}
 function b64d(t){return decodeURIComponent(escape(atob(t)))}
