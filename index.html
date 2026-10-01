@@ -949,7 +949,7 @@ span.enh.big{position:absolute;right:-6px;top:-6px;font-size:15px}
 .dbg-board{--dbgi:radial-gradient(ellipse at 25% 15%,rgba(255,255,255,.07),transparent 55%),radial-gradient(ellipse at 80% 90%,color-mix(in srgb,var(--dc) 10%,transparent),transparent 60%),linear-gradient(135deg,#11301f,#0a1d15)}
 .dbg-stripe{--dbgi:repeating-linear-gradient(135deg,color-mix(in srgb,var(--dc) 10%,transparent) 0 9px,transparent 9px 18px),linear-gradient(135deg,color-mix(in srgb,var(--dc) 12%,#0a1222),#070d1a 75%)}
 .dbg-plain{--dbgi:linear-gradient(135deg,color-mix(in srgb,var(--dc) 22%,#0a1222),color-mix(in srgb,var(--dc) 5%,#070d1a) 70%)}
-.quest.dq{background:var(--dbgi);border-color:color-mix(in srgb,var(--dc) 50%,transparent);border-left:3px solid var(--dc);box-shadow:0 0 12px color-mix(in srgb,var(--dc) 12%,transparent)}
+.quest.dq{grid-template-columns:auto minmax(0,1fr);background:var(--dbgi);border-color:color-mix(in srgb,var(--dc) 50%,transparent);border-left:3px solid var(--dc);box-shadow:0 0 12px color-mix(in srgb,var(--dc) 12%,transparent)}
 .quest.dq:hover{border-color:var(--dc);box-shadow:0 0 16px color-mix(in srgb,var(--dc) 28%,transparent)}
 .quest.dq .box{border-color:var(--dc)}
 .quest.dq .qname{color:color-mix(in srgb,var(--dc) 22%,#fff)}
@@ -991,7 +991,7 @@ span.enh.big{position:absolute;right:-6px;top:-6px;font-size:15px}
 .tqrow.tqders{border-color:color-mix(in srgb,var(--dc) 45%,transparent);border-left:3px solid var(--dc)}
 .tqders .tqdi{display:grid;place-items:center}
 .tqders .tqs{font-family:var(--display);font-weight:700;font-size:11px;letter-spacing:.12em}
-@media (max-width:560px){.quest.dq{grid-template-columns:auto minmax(0,1fr)}.dqr{display:none}.qstudy{width:54px}}
+
 /* ===== açılır başlıklar ===== */
 .win.acc{--ac:#62d2ff;padding:0;border-color:color-mix(in srgb,var(--ac) 55%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--ac) 8%,transparent),0 0 22px color-mix(in srgb,var(--ac) 16%,transparent),inset 0 0 40px color-mix(in srgb,var(--ac) 5%,transparent)}
 .win.acc::before,.win.acc::after{border-color:var(--ac)}
@@ -1465,10 +1465,10 @@ body.noanim .rqfx,body.noanim .rqfx::before{animation:none!important}
         <p class="sec-label">Yeni görev</p>
         <form class="form" id="qForm" autocomplete="off">
           <label class="c6">Görev adı<input id="fName" required maxlength="60" placeholder="Örn. Mekik"></label>
-          <div class="c6 dersrow" id="fDersRow"><label class="dchk"><input type="checkbox" id="fDers"><span class="dchk-box"></span><span class="dchk-ic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5a2.5 2.5 0 012.5-2.5H20v15.5H6.5A2.5 2.5 0 004 21z"/><path d="M4 5.5V21M8.5 7.5h7M8.5 11h5"/></svg></span><b>Ders</b></label><span class="dchk-tip" id="fDersTip">İşaretlersen rütbe seçmezsin; ödülü kronometreyle çalışarak alırsın.</span><button type="button" class="dgear" data-dersset="1" aria-label="Ders görevi görünüm ayarları" title="Ders görevi görünümü"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M5.5 18.5l1.8-1.8M16.7 7.3l1.8-1.8"/></svg></button></div>
-          <label class="c3 c1m">Hedef<input id="fCount" type="number" min="1" max="100000" step="1" placeholder="30"></label>
-          <label class="c3 c2">Birim<input id="fUnit" maxlength="12" placeholder="dk, sayfa, tekrar"></label>
-          <label class="c3 c3m"><span id="fStatL">Geliştirdiği stat</span><select id="fStat"></select></label>
+          <div class="c6 dersrow" id="fDersRow"><label class="dchk"><input type="checkbox" id="fDers"><span class="dchk-box"></span><span class="dchk-ic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5a2.5 2.5 0 012.5-2.5H20v15.5H6.5A2.5 2.5 0 004 21z"/><path d="M4 5.5V21M8.5 7.5h7M8.5 11h5"/></svg></span><b>Ders</b></label><span class="dchk-tip" id="fDersTip">İşaretlersen rütbe seçmezsin; ödülü Görev Bilgisi'nin sağ üstündeki kronometreyle çalışarak alırsın.</span><button type="button" class="dgear" data-dersset="1" aria-label="Ders görevi görünüm ayarları" title="Ders görevi görünümü"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M5.5 18.5l1.8-1.8M16.7 7.3l1.8-1.8"/></svg></button></div>
+          <label class="c3 c1m" id="fCountW">Hedef<input id="fCount" type="number" min="1" max="100000" step="1" placeholder="30"></label>
+          <label class="c3 c2" id="fUnitW">Birim<input id="fUnit" maxlength="12" placeholder="dk, sayfa, tekrar"></label>
+          <label class="c3 c3m" id="fStatW">Geliştirdiği stat<select id="fStat"></select></label>
           <label class="c3 c3m" id="fRankW">Zorluk<select id="fRank"></select></label>
           <label class="c3 c3m">Tekrar<select id="fRep"><option value="daily">Her gün</option><option value="days">Haftanın belirli günleri</option><option value="once">Tek seferlik</option></select></label>
           <label class="c3 c3m">Günde kaç kez<input id="fTimes" type="number" min="1" max="10" step="1" value="1"></label>
@@ -1481,7 +1481,7 @@ body.noanim .rqfx,body.noanim .rqfx::before{animation:none!important}
         <p class="help" id="rankNote" style="margin-top:10px"></p>
         <p class="help" style="margin-top:6px">Görev yalnızca seçtiğin statı artırır. <b>Seviye atlayınca tüm statlara</b> yeni seviyen kadar puan eklenir: 1. seviyeye çıkınca +1, 16. seviyeye çıkınca +16. Seviye için gereken XP her seviyede 1,25 katına çıkar. Sınıfının statındaki görevler ekstra XP ve gold verir.</p>
         <p class="help" style="margin-top:6px"><b>Odak oturumu (isteğe bağlı):</b> Görev Bilgisi'nin sağ üstündeki kutudan <b>kronometre</b> ya da <b>zamanlayıcı</b> başlat. Oturum görevlerden bağımsızdır; ödül odaklandığın süreye göre verilir (40 dk ≈ B rütbe bir görev ödülünün 3/5'i, üst sınır yok; 1 dk altı ödül vermez).</p>
-        <p class="help" style="margin-top:6px"><b>Ders görevleri:</b> görev eklerken <b>Ders</b> kutucuğunu işaretle. Ders görevine rütbe verilmez ve tamamlamak ödül vermez; görevin yanındaki <b>Çalış</b> ile kronometreyi başlat, XP, gold ve stat çalıştığın süreye göre gelir. Ders görevleri de günlük görevin parçasıdır. Rengi ve arka planı kutucuğun yanındaki çark simgesinden değiştirebilirsin.</p>
+        <p class="help" style="margin-top:6px"><b>Ders görevleri:</b> görev eklerken <b>Ders</b> kutucuğunu işaretle. Ders görevine rütbe, hedef ve stat verilmez; tamamlamak ödül vermez. Ders çalışırken Görev Bilgisi'nin sağ üstündeki <b>kronometreyi</b> kullan; XP, gold ve stat çalıştığın süreye göre gelir. Ders görevleri de günlük görevin parçasıdır. Rengi ve arka planı kutucuğun yanındaki çark simgesinden değiştirebilirsin.</p>
         <p class="help" style="margin-top:6px"><b>Sıkıldım düğmesi:</b> odak ekranında sıkıldığında ya da başın ağrımaya başladığında bas. O andan sonra devam ettiğin süre <b>Boring Time</b> sayılır ve oturum ödülüne %50'ye kadar ek ödül verir. Mevcut odak süren ne kadar kısaysa her dakika o kadar değerlidir (Ayarlar → Odak ve Sıkılma).</p>
         <p class="help" style="margin-top:6px"><b>Tek seferlik görevler</b> yalnızca tamamlandıktan 24 saat sonra listeden kalkar; tamamlanmayanlar yerinde kalır. Tamamladığın her görev Karakter → Kayıtlar → Görevler'de saklanır.</p>
         <p class="help" style="margin-top:6px"><b>Rütbe savaş gücüne göre belirlenir:</b> F 0 · E 75 · D 300 · C 750 · B 2.000 · A 5.000 · S 20.000 · SS 50.000 · X 200.000. Her stat puanı 5, her seviye 25 güç verir.</p>
@@ -4122,7 +4122,7 @@ function dersSetBody(){
   const sample={id:"__ds",name:"Örnek: Biyoloji 3. ünite",stat:"INT",rank:"F",ders:true,times:1,count:null,unit:""};
   return `<p class="sec-label" style="margin:0 0 8px">Renk</p><div class="dsws">${sw}<label class="dsw dcust${DERS_COLS.includes(ds.c.toLowerCase())?"":" on"}" style="--dc:${ds.c}" title="Özel renk"><input type="color" id="dCol" value="${ds.c}" aria-label="Özel renk">+</label></div>
 <p class="sec-label" style="margin:14px 0 8px">Arka plan</p><div class="dbgs">${DERS_BGS.map(([k,n])=>`<button type="button" class="dbgb dq dbg-${k}${ds.bg===k?" on":""}" style="--dc:${ds.c}" data-dbg="${k}"><span>${n}</span></button>`).join("")}</div>
-<p class="sec-label" style="margin:14px 0 8px">Önizleme</p><div class="qlist dsprev">${dqHtml(sample,"").replace(/ data-q="__ds"/,"").replace(/<button type="button" class="qstudy[^]*?<\/button>/,"")}</div>
+<p class="sec-label" style="margin:14px 0 8px">Önizleme</p><div class="qlist dsprev">${dqHtml(sample,"").replace(/ data-q="__ds"/,"")}</div>
 <div class="row" style="justify-content:center;margin-top:10px"><button type="button" class="btn sm" data-dreset="1">Varsayılana dön</button></div>`;
 }
 function dersSet(){overlay(head("Ders Görünümü")+`<p class="help" style="margin:-4px 0 12px">Ders görevlerinin rengi ve arka planı. Rütbe renklerinden farklı bir şey seç ki görev listesinde hemen ayırt edilsin.</p><div id="dsBody" style="text-align:left">${dersSetBody()}</div>`)}
@@ -4750,7 +4750,7 @@ function renderHome(){
   const act=S.quests.filter(activeToday),open=act.filter(q=>qCount(q)<qTimes(q)),done=act.length-open.length;
   let tq="";
   if(S.penalty.active&&!S.penalty.done) tq+=`<button type="button" class="tqrow pen" data-penalty="1"><span class="tqbox"></span><span class="tqn">CEZA: ${esc(S.penaltyText)}</span><span class="tqx" style="color:var(--red)">zorunlu</span></button>`;
-  tq+=open.slice(0,5).map(q=>{const rw=questReward(q),k=qCount(q),tt=qTimes(q);if(isDers(q)){const ds=dersSt();return `<button type="button" class="tqrow tqders" style="--dc:${ds.c}" data-q="${q.id}"><span class="tqbox">${k?`<b>${k}</b>`:""}</span><span class="tqdi">${accSvg("book",ds.c,16)}</span><span class="tqn">${esc(q.name)}${tt>1?` <span class="muted">${k}/${tt}</span>`:""}</span><span class="tqs" style="color:${ds.c}">DERS</span><span class="tqx">${ico("clock",ds.c,13)}</span></button>`}return `<button type="button" class="tqrow" data-q="${q.id}"><span class="tqbox">${k?`<b>${k}</b>`:""}</span>${remb(q.rank,20)}<span class="tqn">${esc(q.name)}${tt>1?` <span class="muted">${k}/${tt}</span>`:""}</span><span class="tqs" style="color:${SC[q.stat].c}">+${rw.st} ${q.stat}</span><span class="tqx">+${fmt(rw.xp)} XP</span></button>`}).join("");
+  tq+=open.slice(0,5).map(q=>{const rw=questReward(q),k=qCount(q),tt=qTimes(q);if(isDers(q)){const ds=dersSt();return `<button type="button" class="tqrow tqders" style="--dc:${ds.c}" data-q="${q.id}"><span class="tqbox">${k?`<b>${k}</b>`:""}</span><span class="tqdi">${accSvg("book",ds.c,16)}</span><span class="tqn">${esc(q.name)}${tt>1?` <span class="muted">${k}/${tt}</span>`:""}</span><span class="tqs" style="color:${ds.c}">DERS</span><span class="tqx"></span></button>`}return `<button type="button" class="tqrow" data-q="${q.id}"><span class="tqbox">${k?`<b>${k}</b>`:""}</span>${remb(q.rank,20)}<span class="tqn">${esc(q.name)}${tt>1?` <span class="muted">${k}/${tt}</span>`:""}</span><span class="tqs" style="color:${SC[q.stat].c}">+${rw.st} ${q.stat}</span><span class="tqx">+${fmt(rw.xp)} XP</span></button>`}).join("");
   if(!act.length) tq+=`<div class="small muted" style="padding:6px 0">Bugün için görev yok.</div>`;
   else if(!open.length) tq+=`<div class="tqdone">${ico("title","#6dffb3",16)} Bugünün tüm görevleri tamamlandı!</div>`;
   tq+=`<div class="tqfoot"><span class="small muted">${done?`${done} görev tamamlandı`:""}${open.length>5?` · +${open.length-5} görev daha`:""}</span><button class="btn sm primary" type="button" data-go="quests">Tüm görevler →</button></div>`;
@@ -4837,14 +4837,12 @@ function rqFx(q){return !isDers(q)&&TIERS.indexOf(q.rank)>=4?`<i class="rqfx" ar
 function dqHtml(q,repInfo){
   const ds=dersSt(),s=SC[q.stat],unit=q.unit?" "+esc(q.unit):"",gone=onceShown(q);
   const k=gone?qTimes(q):qCount(q),t=qTimes(q),full=k>=t;
-  const desc=q.count?(t>1?`${q.count}${unit} · günde ${t} kez`:`${full?q.count:0}/${q.count}${unit}`):(t>1?`Günde ${t} kez`:"");
+  const desc=t>1?`Günde ${t} kez`:"";
   const boxIn=full?CHECK:(k>0?`<b class="pn">${k}</b>`:CHECK);
   const note=gone||(q.once&&full&&q.doneAt)?`<span class="qleft">${hLeft(DAY_MS-(Date.now()-q.doneAt))} sonra listeden kalkar</span>`:(q.once?`<span>Tamamlayınca 24 saat sonra kalkar</span>`:`<span>Gece yarısına kadar</span>`);
-  const run=S.timer&&S.timer.qid===q.id;
-  const main=`<button type="button" class="quest dq dbg-${ds.bg}${full?" done":""}${k>0&&!full?" partial":""}${gone?" gone":""}" style="--dc:${ds.c}"${gone?' aria-disabled="true"':` data-q="${q.id}"`} aria-pressed="${full}"><span class="box">${boxIn}</span><span><div class="qname">${esc(q.name)}</div>${desc?`<div class="qdesc">${desc}</div>`:""}${t>1&&!gone?`<div class="reps">${Array.from({length:t},(_,i)=>`<i class="${i<k?"on":""}"></i>`).join("")}<span>${k}/${t}</span></div>`:""}<div class="qmeta">${dersBadge()}<span class="stgain" style="--sc:${s.c}">${ico(q.stat,s.c,13)}${q.stat}</span>${repInfo}${note}</div></span><span class="qright dqr"><span class="dqr-k">${ico("clock",ds.c,15)}Kronometre</span><span class="dqr-s">ödül süreye göre</span></span></button>`;
+  const main=`<button type="button" class="quest dq dbg-${ds.bg}${full?" done":""}${k>0&&!full?" partial":""}${gone?" gone":""}" style="--dc:${ds.c}"${gone?' aria-disabled="true"':` data-q="${q.id}"`} aria-pressed="${full}"><span class="box">${boxIn}</span><span><div class="qname">${esc(q.name)}</div>${desc?`<div class="qdesc">${desc}</div>`:""}${t>1&&!gone?`<div class="reps">${Array.from({length:t},(_,i)=>`<i class="${i<k?"on":""}"></i>`).join("")}<span>${k}/${t}</span></div>`:""}<div class="qmeta">${dersBadge()}${repInfo}${note}</div></span></button>`;
   const ex=t>1&&k>0&&!full&&!gone?`<button type="button" class="qminus" data-qundo="${q.id}" aria-label="Bir tekrarı geri al">−1</button>`:"";
-  const st=gone?"":`<button type="button" class="qstudy${run?" run":""}" style="--dc:${ds.c}" data-dstudy="${q.id}" aria-label="${esc(q.name)} için kronometre başlat">${ico("clock",run?"#08101c":ds.c,18)}<span>${run?"Sürüyor":"Çalış"}</span></button>`;
-  return ex||st?`<div class="qwrap">${main}${ex}${st}</div>`:main;
+  return ex?`<div class="qwrap">${main}${ex}</div>`:main;
 }
 function qItemHtml(q){
   const s=SC[q.stat],unit=q.unit?" "+esc(q.unit):"";
@@ -4898,7 +4896,7 @@ function renderQuests(){
   const dq=dailyQuests();
   $("qDone").textContent=dq.filter(q=>qCount(q)>=qTimes(q)).length+"/"+dq.length;
   $("qCleared").hidden=!S.cleared;$("qExample").hidden=!S.example;
-  const edit=q=>{const t=qTimes(q);return `<div class="edit-row"><div><div class="qname" style="font-size:14.5px">${esc(q.name)}${q.count?` <span class="muted">· ${q.count}${q.unit?" "+esc(q.unit):""}</span>`:""}${q.once&&q.doneAt?` <span class="own">· TAMAMLANDI</span> <span class="qleft">· ${hLeft(DAY_MS-(Date.now()-q.doneAt))} sonra kalkar</span>`:""}</div><div class="qmeta">${qBadge(q)}<span style="color:${SC[q.stat].c};display:flex;align-items:center;gap:4px">${ico(q.stat,SC[q.stat].c,13)}${q.stat} · ${SC[q.stat].n}</span><span class="qtag">${q.once?"Tek seferlik":(Array.isArray(q.days)&&q.days.length&&q.days.length<7?q.days.slice().sort().map(d=>DAYS[d]).join(" · "):"Her gün")}${t>1?` · günde ${t} kez`:""}</span></div></div><button class="btn sm danger" type="button" data-delq="${q.id}">Sil</button></div>`};
+  const edit=q=>{const t=qTimes(q);return `<div class="edit-row"><div><div class="qname" style="font-size:14.5px">${esc(q.name)}${q.count&&!isDers(q)?` <span class="muted">· ${q.count}${q.unit?" "+esc(q.unit):""}</span>`:""}${q.once&&q.doneAt?` <span class="own">· TAMAMLANDI</span> <span class="qleft">· ${hLeft(DAY_MS-(Date.now()-q.doneAt))} sonra kalkar</span>`:""}</div><div class="qmeta">${qBadge(q)}${isDers(q)?"":`<span style="color:${SC[q.stat].c};display:flex;align-items:center;gap:4px">${ico(q.stat,SC[q.stat].c,13)}${q.stat} · ${SC[q.stat].n}</span>`}<span class="qtag">${q.once?"Tek seferlik":(Array.isArray(q.days)&&q.days.length&&q.days.length<7?q.days.slice().sort().map(d=>DAYS[d]).join(" · "):"Her gün")}${t>1?` · günde ${t} kez`:""}</span></div></div><button class="btn sm danger" type="button" data-delq="${q.id}">Sil</button></div>`};
   const EL=qfApply(S.quests,false);
   $("qEdit").innerHTML=qGroup(EL,edit)||`<div class="empty-note">${S.quests.length?"Bu filtreye uyan görev yok.":"Görev yok."}</div>`;
 }
@@ -6591,7 +6589,7 @@ $("qForm").addEventListener("submit",e=>{
   const rp=$("fRep").value,tm=clamp(Math.round(Number($("fTimes").value))||1,1,10);
   if(rp==="days"&&!formDays.length){toast("En az bir gün seç.");return}
   const ders=$("fDers").checked;
-  const nq={id:uid(),name,count:c>0?c:null,unit:$("fUnit").value.trim(),stat:$("fStat").value,rank:ders?"F":$("fRank").value,times:tm};
+  const nq=ders?{id:uid(),name,count:null,unit:"",stat:"INT",rank:"F",times:tm}:{id:uid(),name,count:c>0?c:null,unit:$("fUnit").value.trim(),stat:$("fStat").value,rank:$("fRank").value,times:tm};
   if(ders) nq.ders=true;
   if(rp==="days") nq.days=formDays.slice().sort();
   if(rp==="once") nq.once=true;
@@ -6600,7 +6598,7 @@ $("qForm").addEventListener("submit",e=>{
   $("fName").value="";$("fCount").value="";$("fUnit").value="";
   toast((ders?"Ders eklendi: ":"Görev eklendi: ")+esc(name));commit();
 });
-function dersForm(e){const on=$("fDers").checked;if(e&&on&&$("fStat").value==="STR") $("fStat").value="INT";$("fRankW").hidden=on;$("fFx").hidden=on;$("fStatL").textContent=on?"Kronometre statı":"Geliştirdiği stat";$("fDersRow").classList.toggle("on",on);$("fDersRow").style.setProperty("--dc",dersSt().c)}
+function dersForm(){const on=$("fDers").checked;["fRankW","fFx","fCountW","fUnitW","fStatW"].forEach(k=>$(k).hidden=on);$("fDersRow").classList.toggle("on",on);$("fDersRow").style.setProperty("--dc",dersSt().c)}
 $("fDers").addEventListener("change",dersForm);dersForm();
 document.addEventListener("submit",e=>{
   if(e.target.id!=="rForm") return;
@@ -6625,7 +6623,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&showing&&$("modal")
 /* ================= BACKUP & SYNC ================= */
 const IS_PWA=true;
 const FB_CONFIG={"apiKey": "AIzaSyBsNalG4Fl7crcsluhf2hqDXlWawD6DJ2I", "authDomain": "hunter-sistemi.firebaseapp.com", "projectId": "hunter-sistemi", "storageBucket": "hunter-sistemi.firebasestorage.app", "messagingSenderId": "550981824995", "appId": "1:550981824995:web:bd6d609b92a2b74b8f70d6"};
-const APP_VER="48";
+const APP_VER="49";
 const LS_SYNC="hunter-sistemi-sync";
 function b64e(t){return btoa(unescape(encodeURIComponent(t)))}
 function b64d(t){return decodeURIComponent(escape(atob(t)))}
@@ -6783,7 +6781,7 @@ function showRefund(){
     if(!seen) overlay(head("Sistem Güncellemesi")+`<div class="big gold">DÜNÜN GÖREVLERİ</div><div class="updl"><p>${ico("clock","#62d2ff",16)}<span>Gün bittiğinde eksik görevin varsa ceza hemen gelmiyor. Önce <b>Dünün Görevleri</b> ekranı açılıyor: yapıp işaretlemeyi unuttuklarını işaretle, ödülleri düne sayılarak verilsin. Hepsi tamamsa seri korunur.</span></p></div>`,{sfx:sfx.rank});
     cacheLocal();}
   if(S.sysNote15){delete S.sysNote15;let seen=false;try{seen=localStorage.getItem("hunter-sistemi-note15")==="1";localStorage.setItem("hunter-sistemi-note15","1")}catch(e){}
-    if(!seen) overlay(head("Sistem Güncellemesi")+`<div class="big gold">YENİLİKLER</div><div class="updl"><p>${accSvg("book","#d9ff3d",16)}<span><b>Ders görevleri:</b> görev eklerken Ders kutucuğunu işaretle. Rütbe yok; ödülü görevin yanındaki <b>Çalış</b> ile kronometreden alırsın. Renk ve arka planı çark simgesinden seç.</span></p><p>${ico("mp","#7d8cff",16)}<span><b>Yetenek rütbeleri:</b> yetenekler artık mananın yüzdesini değil <b>sabit mana</b> harcıyor. Temel sınıf yetenekleri F rütbe; mana arttıkça daha çok yetenek kullanırsın.</span></p><p>${accSvg("stats","#4de3ff",16)}<span><b>Düzen:</b> Karakter ve Ayarlar'daki bölümler başlığa dokununca açılıyor. Stat dönüştürme Ayarlar'a taşındı. Ana sayfadaki <b>ƒx</b> kutusu statların ne işe yaradığını anlatıyor.</span></p><p>${accSvg("cloud","#7d8cff",16)}<span><b>Senkron düzeltmesi:</b> uygulama açılınca önce buluttaki son kayıt çekiliyor; eski kayıtla ceza ya da üzerine yazma artık olmuyor.</span></p></div>`,{sfx:sfx.rank});
+    if(!seen) overlay(head("Sistem Güncellemesi")+`<div class="big gold">YENİLİKLER</div><div class="updl"><p>${accSvg("book","#d9ff3d",16)}<span><b>Ders görevleri:</b> görev eklerken Ders kutucuğunu işaretle. Rütbe yok; ödülü kronometreyle çalışarak alırsın. Renk ve arka planı çark simgesinden seç.</span></p><p>${ico("mp","#7d8cff",16)}<span><b>Yetenek rütbeleri:</b> yetenekler artık mananın yüzdesini değil <b>sabit mana</b> harcıyor. Temel sınıf yetenekleri F rütbe; mana arttıkça daha çok yetenek kullanırsın.</span></p><p>${accSvg("stats","#4de3ff",16)}<span><b>Düzen:</b> Karakter ve Ayarlar'daki bölümler başlığa dokununca açılıyor. Stat dönüştürme Ayarlar'a taşındı. Ana sayfadaki <b>ƒx</b> kutusu statların ne işe yaradığını anlatıyor.</span></p><p>${accSvg("cloud","#7d8cff",16)}<span><b>Senkron düzeltmesi:</b> uygulama açılınca önce buluttaki son kayıt çekiliyor; eski kayıtla ceza ya da üzerine yazma artık olmuyor.</span></p></div>`,{sfx:sfx.rank});
     cacheLocal();}
   if(S.sysNote12){delete S.sysNote12;let seen=false;try{seen=localStorage.getItem("hunter-sistemi-note12")==="1";localStorage.setItem("hunter-sistemi-note12","1")}catch(e){}
     if(!seen) overlay(head("Sistem Güncellemesi")+`<div class="big gold">YENİLİKLER</div><div class="updl"><p>${ico("clock","#ffb35c",16)}<span><b>Kronometre, zamanlayıcı ve SIKILDIM:</b> her görevde isteğe bağlı odak modu. Sıkılınca bas; dayandığın Boring Time en fazla %50 ek ödül verir. Katsayıyı Ayarlar → Odak ve Sıkılma'dan ayarla.</span></p><p>${ico("xp","#6fb8ff",16)}<span><b>Görev kayıtları:</b> tamamladığın her görev adıyla birlikte Karakter → Kayıtlar → Görevler'de. Tamamlanan tek seferlikler 24 saat sonra listeden kalkar; tamamlanmayanlar yerinde kalır.</span></p><p>${ico("level","#62d2ff",16)}<span><b>Filtrele ve sırala:</b> görev listesinde tür, durum, stat ve zorluk filtresi; alışkanlıklar ile tek seferlikler arasında ayırıcı çizgi.</span></p><p>${ico("sword","#ffc53d",16)}<span><b>Arena:</b> herkes en alt ligden (Bronz III) başlıyor.</span></p><p>${ico("power","#ff5470",16)}<span><b>Görünüm:</b> 18 saç stili, 6 vücut yapısı, yeni logo ve bildirim simgesi. Harita sisi açık başlıyor.</span></p></div>`,{sfx:sfx.rank});
