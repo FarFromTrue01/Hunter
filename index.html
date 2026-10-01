@@ -1483,7 +1483,7 @@ body.noanim .rqfx,body.noanim .rqfx::before{animation:none!important}
         <div class="tscroll"><table class="table" id="rankTable"></table></div>
         <p class="help" id="rankNote" style="margin-top:10px"></p>
         <p class="help" style="margin-top:6px">Görev yalnızca seçtiğin statı artırır. <b>Seviye atlayınca tüm statlara</b> yeni seviyen kadar puan eklenir: 1. seviyeye çıkınca +1, 16. seviyeye çıkınca +16. Seviye için gereken XP her seviyede 1,25 katına çıkar. Sınıfının statındaki görevler ekstra XP ve gold verir.</p>
-        <p class="help" style="margin-top:6px"><b>Odak oturumu (isteğe bağlı):</b> Görev Bilgisi'nin sağ üstündeki kutudan <b>kronometre</b> ya da <b>zamanlayıcı</b> başlat. Oturum görevlerden bağımsızdır; ödül odaklandığın süreye göre verilir (40 dk ≈ B rütbe bir görev ödülünün 3/5'i, üst sınır yok; 1 dk altı ödül vermez).</p>
+        <p class="help" style="margin-top:6px"><b>Odak oturumu (isteğe bağlı):</b> Görev Bilgisi'nin sağ üstündeki kutudan <b>kronometre</b> ya da <b>zamanlayıcı</b> başlat. Oturum görevlerden bağımsızdır; ödül odaklandığın süreye göre verilir (40 dk ≈ B rütbe bir görev ödülünün 3/5'i, yani XP, gold, stat ve 1,2 enerji; üst sınır yok; 1 dk altı ödül vermez).</p>
         <p class="help" style="margin-top:6px"><b>Ders görevleri:</b> görev eklerken <b>Ders</b> kutucuğunu işaretle. Ders görevine rütbe, hedef ve stat verilmez; tamamlamak ödül vermez. Ders çalışırken Görev Bilgisi'nin sağ üstündeki <b>kronometreyi</b> kullan; XP, gold ve stat çalıştığın süreye göre gelir. Ders görevleri de günlük görevin parçasıdır. Rengi ve arka planı kutucuğun yanındaki çark simgesinden değiştirebilirsin.</p>
         <p class="help" style="margin-top:6px"><b>Sıkıldım düğmesi:</b> odak ekranında sıkıldığında ya da başın ağrımaya başladığında bas. O andan sonra devam ettiğin süre <b>Boring Time</b> sayılır ve oturum ödülüne %50'ye kadar ek ödül verir. Mevcut odak süren ne kadar kısaysa her dakika o kadar değerlidir (Ayarlar → Odak ve Sıkılma).</p>
         <p class="help" style="margin-top:6px"><b>Tek seferlik görevler</b> yalnızca tamamlandıktan 24 saat sonra listeden kalkar; tamamlanmayanlar yerinde kalır. Tamamladığın her görev Karakter → Kayıtlar → Görevler'de saklanır.</p>
@@ -4627,7 +4627,7 @@ function renderDungeon(){
   let h=isArenaB()?`<div class="note-box"><span>Arenada süren bir maçın var.</span><button class="btn sm primary" type="button" data-go="arena">Maça dön</button></div>`:"";
   h+=`<section class="win"><div class="win-head"><div class="win-title">Zindanlar</div></div>
 <div class="energy"><div class="etop"><span>${BOLT("#ffd84a",18)} ENERJİ</span><b class="${E<0?"neg":""}">${E} / ${M}</b></div><div class="bar en"><i style="width:${Math.max(0,Math.min(100,E/M*100)).toFixed(1)}%"></i></div>
-<p class="help" style="margin:8px 0 0">Görev tamamlayınca enerji kazanırsın: F·E·D <b>+1</b>, C·B <b>+2</b>, A·S <b>+3</b>, SS <b>+4</b>, X <b>+5</b>. Enerji günden güne birikir, en fazla 5 + 2×seviye.</p></div>
+<p class="help" style="margin:8px 0 0">Görev tamamlayınca enerji kazanırsın: F·E·D <b>+1</b>, C·B <b>+2</b>, A·S <b>+3</b>, SS <b>+4</b>, X <b>+5</b>. Kronometre ve zamanlayıcı da enerji verir: 40 dk odak = <b>1,2</b> enerji (küsurat birikir). Enerji günden güne birikir, en fazla 5 + 2×seviye.</p></div>
 <div class="dlist">`;
   const dcPct=(dropChance()*100).toFixed(1).replace(".",",");
   const ri=TIERS.indexOf(curRank());
@@ -5489,6 +5489,8 @@ function sessStatOf(T){return T&&SC[T.stat]?T.stat:(S.job&&SC[S.job]?S.job:"INT"
 const SESS_MUL=3/5;
 function sessReward(ms,stat){const r=sessReward0(ms,stat);return rwCut({xp:r.xp*SESS_MUL,gold:r.gold*SESS_MUL,st:r.st*SESS_MUL})}
 function sessReward0(ms,stat){const m=ms/60000,b=bonuses(),jb=jobBonus(stat),L=S.level;return {xp:Math.round(Q_XP[SESS_RK]/SESS_MIN*m*lvMul(1.1,L)*(1+(b.xp+jb)/100)),gold:Math.round(Q_GOLD[SESS_RK]/SESS_MIN*m*lvMul(1.2,L)*(1+(b.gold+jb)/100)),st:Math.round(Q_STAT[SESS_RK]/SESS_MIN*m*lvMul(1.2,L))}}
+/* Odak enerjisi: 40 dk = B rütbe görevin enerjisinin 3/5'i (2 × 0,6 = 1,2). Küsurat sonraki oturuma devreder. */
+function sessEnergyRaw(ms){return (ENERGY_Q[SESS_RK]||2)*SESS_MUL*(ms/60000)/SESS_MIN}
 function fmtMin(m){m=Math.round(m);const h=Math.floor(m/60),r=m%60;return h?`${h} sa${r?" "+r+" dk":""}`:`${r} dk`}
 function hhmm(t){const d=new Date(t);return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")}
 function mmss(ms){const t=Math.ceil(ms/1000),h=Math.floor(t/3600),m=Math.floor(t%3600/60),s=t%60,p=x=>String(x).padStart(2,"0");return h?`${h}:${p(m)}:${p(s)}`:`${p(m)}:${p(s)}`}
@@ -5556,7 +5558,7 @@ function sessPick(mode,keepQ){
   overlay(head("Odak Oturumu")+`<div class="big" style="font-size:26px;letter-spacing:.1em;color:${sw?"#6dffb3":"#62d2ff"};text-shadow:0 0 18px ${sw?"rgba(109,255,179,.6)":"rgba(98,210,255,.7)"}">${sw?"KRONOMETRE":"ZAMANLAYICI"}</div><p class="small muted">${sw?"İleri sayar; işin bitince <b>Bitir</b>'e bas.":"Süre dolunca oturum kendiliğinden biter."} Ödül odaklandığın süreye göre verilir.</p>${dq?`<div class="dsess" style="--dc:${dersSt().c}">${dersBadge()}<b>${esc(dq.name)}</b></div>`:""}
 <p class="sec-label" style="margin-top:14px">Geliştireceği stat</p><div class="chips" style="justify-content:center;margin:0">${STATS.map(x=>`<button type="button" class="chipbtn" data-sstat="${x.k}" aria-pressed="${sessStat===x.k}"><span style="color:${x.c}">${x.k}</span></button>`).join("")}</div>
 ${sw?"":`<p class="sec-label" style="margin-top:14px">Süre</p><div class="tmdur" style="justify-content:center"><input type="number" id="tmH" min="0" max="10" value="${Math.floor(tmLast/60)}" aria-label="Saat"> sa <input type="number" id="tmM" min="0" max="59" value="${tmLast%60}" aria-label="Dakika"> dk</div>`}
-<p class="help" style="margin-top:12px">${SESS_MIN} dk odak ≈ ${SESS_RK} rütbe bir görev ödülünün 3/5'i; süre uzadıkça ödül de aynı oranda artar, üst sınır yok. Sıkıldığında <b>SIKILDIM</b>'a bas: dayandığın Boring Time %50'ye kadar ek ödül verir. Çalışırken <b>Ek nokta</b> ile bölümleri (örn. bir ünite) işaretleyebilirsin.</p>
+<p class="help" style="margin-top:12px">${SESS_MIN} dk odak ≈ ${SESS_RK} rütbe bir görev ödülünün 3/5'i (XP, gold, stat ve enerji); süre uzadıkça ödül de aynı oranda artar, üst sınır yok. Sıkıldığında <b>SIKILDIM</b>'a bas: dayandığın Boring Time %50'ye kadar ek ödül verir. Çalışırken <b>Ek nokta</b> ile bölümleri (örn. bir ünite) işaretleyebilirsin.</p>
 <div class="mbtns"><button class="btn primary" type="button" data-tmgo="${sw?"sw":"tm"}">Başlat</button><button class="btn" type="button" data-act="modalOk">Vazgeç</button></div>`,{noOk:true});
 }
 function startSess(mode,mins){
@@ -5618,22 +5620,24 @@ function finishTimer(silent){
     tot={xp:base.xp+(bonus?bonus.xp:0),gold:base.gold+(bonus?bonus.gold:0),st:base.st+(bonus?bonus.st:0)};
     S.cnt.timers=(S.cnt.timers|0)+1;S.cnt.focusMin=(S.cnt.focusMin|0)+Math.round(work/60000);if(bt) S.cnt.boredMin=(S.cnt.boredMin|0)+Math.round(bt/60000);
     S.base[stat]+=tot.st;S.todaySt=S.todaySt||{};S.todaySt[stat]=(S.todaySt[stat]|0)+tot.st;
+    const ef=sessEnergyRaw(work)+(+S.enAcc||0),ei=Math.floor(ef+1e-9);S.enAcc=Math.round((ef-ei)*1000)/1000;
+    tot.en=addEnergy(ei);tot.enRaw=ei;
   }
   if(work>=60000||laps.length){
     if(!Array.isArray(S.qlog)) S.qlog=[];
     const lq=T.qid&&S.quests.find(x=>x.id===T.qid);
-    const e={t:Date.now(),id:"focus",n:lq?"Odak · "+lq.name:"Odak oturumu",c:null,u:"",s:stat,r:"C",rp:"focus",k:1,tt:1,md:T.mode,fs:Math.round(work/1000),xp:tot?tot.xp:0,g:tot?tot.gold:0,st:tot?tot.st:0,s0:T.st0||null};
+    const e={t:Date.now(),id:"focus",n:lq?"Odak · "+lq.name:"Odak oturumu",c:null,u:"",s:stat,r:"C",rp:"focus",k:1,tt:1,md:T.mode,fs:Math.round(work/1000),xp:tot?tot.xp:0,g:tot?tot.gold:0,st:tot?tot.st:0,en:tot?tot.en:0,s0:T.st0||null};
     if(bt){e.bt=Math.round(bt/1000);e.bf=Math.round(bf*1000)/10}
     if(laps.length) e.lp=laps;
     S.qlog.push(e);if(S.qlog.length>QLOG_MAX) S.qlog=S.qlog.slice(-QLOG_MAX);
   }
   if(tot){addGold(tot.gold);addXp(tot.xp)}
   sessNfLoop();
-  if(!sw) notify("Odak süresi tamamlandı",tot?`${fmtMin(Math.round(work/60000))} odak · +${tot.xp} XP · +${tot.gold}G`:"Oturum bitti");
+  if(!sw) notify("Odak süresi tamamlandı",tot?`${fmtMin(Math.round(work/60000))} odak · +${tot.xp} XP · +${tot.gold}G${tot.en?` · +${tot.en} enerji`:""}`:"Oturum bitti");
   if(!silent){
     const lh=laps.length?`<p class="sec-label" style="margin:14px 0 6px">Ek noktalar</p><div class="laps done">${lapRows(laps.map(l=>({n:l.n,w:l.w*1000,at:l.at})),work,false)}</div>`:"";
     const dq=T.qid&&S.quests.find(x=>x.id===T.qid&&activeToday(x)&&qCount(x)<qTimes(x));
-    overlay(head("Odak Oturumu")+`<div class="foc-done">${ico("clock","#6dffb3",64)}</div><div class="big gold">${sw?"OTURUM BİTTİ":"SÜRE TAMAMLANDI"}</div><p><b>${mmssUp(work)}</b> odaklandın.</p>`+(dq?`<div class="dsess" style="--dc:${dersSt().c}">${dersBadge()}<b>${esc(dq.name)}</b><button type="button" class="btn sm" data-dersdone="${dq.id}">Dersi tamamlandı işaretle</button></div>`:"")+(tot?`<div class="rew"><div><span>Odak ödülü</span><b>+${fmt(base.xp)} XP · +${fmt(base.gold)}G${base.st?` · +${base.st} ${stat}`:""}</b></div>${bt?`<div><span>Boring Time</span><b style="color:#ffb35c">${mmssUp(bt)}</b></div>`:""}${bonus?`<div><span>Ek ödül (+%${(bf*100).toFixed(1).replace(".",",")})</span><b>+${fmt(bonus.xp)} XP · +${fmt(bonus.gold)}G${bonus.st?` · +${bonus.st} ${stat}`:""}</b></div>`:""}</div>`:`<p class="small muted">1 dakikadan kısa oturumlar ödül vermez.</p>`)+lh,{sfx:sfx.clear});
+    overlay(head("Odak Oturumu")+`<div class="foc-done">${ico("clock","#6dffb3",64)}</div><div class="big gold">${sw?"OTURUM BİTTİ":"SÜRE TAMAMLANDI"}</div><p><b>${mmssUp(work)}</b> odaklandın.</p>`+(dq?`<div class="dsess" style="--dc:${dersSt().c}">${dersBadge()}<b>${esc(dq.name)}</b><button type="button" class="btn sm" data-dersdone="${dq.id}">Dersi tamamlandı işaretle</button></div>`:"")+(tot?`<div class="rew"><div><span>Odak ödülü</span><b>+${fmt(base.xp)} XP · +${fmt(base.gold)}G${base.st?` · +${base.st} ${stat}`:""}</b></div>${bt?`<div><span>Boring Time</span><b style="color:#ffb35c">${mmssUp(bt)}</b></div>`:""}${bonus?`<div><span>Ek ödül (+%${(bf*100).toFixed(1).replace(".",",")})</span><b>+${fmt(bonus.xp)} XP · +${fmt(bonus.gold)}G${bonus.st?` · +${bonus.st} ${stat}`:""}</b></div>`:""}<div><span>${BOLT("#ffd84a",15)} Enerji</span><b style="color:#ffd84a">${tot.en?`+${tot.en}`:tot.enRaw?"enerji dolu":"+0"}</b></div><div class="small muted" style="border:0;justify-content:flex-start">Biriken enerji küsuratı: ${String(Math.round((S.enAcc||0)*100)/100).replace(".",",")} · 40 dk = 1,2 enerji</div></div>`:`<p class="small muted">1 dakikadan kısa oturumlar ödül vermez.</p>`)+lh,{sfx:sfx.clear});
     commit();
   }
 }
@@ -5682,7 +5686,7 @@ function focusUpdate(){
   const sg=segMs(),sf=boredFrac(sg),mx=T.bfMax||0,fr=sessFrac();
   if(T.bs!=null&&$("focBT")&&$("focBR")){$("focBT").textContent=mmssUp(sg);const cap=boredCap(),left=mx>sf?fracMin(mx)*60000-sg:0;$("focBR").innerHTML=`Ek ödül katsayısı: <b>+%${pct(fr)}</b>${fr>=.5?" · tavan":` · %50 tavan ${cap} dk'da`}${left>0?`<br><span class="small">Bu tur +%${pct(sf)} · önceki +%${pct(mx)}'i geçmeye ${mmssUp(left)}</span>`:""}`}
   const L=T.laps||[];if(L.length&&$("focLapCur")) $("focLapCur").textContent=mmssUp(Math.max(0,w-L[L.length-1].w));
-  const r=$("focRw");if(r){if(w<60000) r.innerHTML=`<span class="muted">Ödül 1. dakikadan sonra birikmeye başlar.</span>`;else{const rw=sessReward(w,stat),k=1+fr;r.innerHTML=`Şu ana kadar: <span style="color:${SC[stat].c}">+${Math.round(rw.st*k)} ${stat}</span> · <span style="color:#6fb8ff">+${fmt(Math.round(rw.xp*k))} XP</span> · <span style="color:var(--gold)">+${fmt(Math.round(rw.gold*k))}G</span>${fr?` <span style="color:#ffb35c">(Boring dahil)</span>`:""}`}}
+  const r=$("focRw");if(r){if(w<60000) r.innerHTML=`<span class="muted">Ödül 1. dakikadan sonra birikmeye başlar.</span>`;else{const rw=sessReward(w,stat),k=1+fr;r.innerHTML=`Şu ana kadar: <span style="color:${SC[stat].c}">+${Math.round(rw.st*k)} ${stat}</span> · <span style="color:#6fb8ff">+${fmt(Math.round(rw.xp*k))} XP</span> · <span style="color:var(--gold)">+${fmt(Math.round(rw.gold*k))}G</span> · <span style="color:#ffd84a">+${Math.floor(sessEnergyRaw(w)+(+S.enAcc||0)+1e-9)} enerji</span>${fr?` <span style="color:#ffb35c">(Boring dahil)</span>`:""}`}}
 }
 function pillUpdate(){
   const el=$("tPill");if(!el) return;const T=S.timer;
@@ -6630,7 +6634,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&showing&&$("modal")
 /* ================= BACKUP & SYNC ================= */
 const IS_PWA=true;
 const FB_CONFIG={"apiKey": "AIzaSyBsNalG4Fl7crcsluhf2hqDXlWawD6DJ2I", "authDomain": "hunter-sistemi.firebaseapp.com", "projectId": "hunter-sistemi", "storageBucket": "hunter-sistemi.firebasestorage.app", "messagingSenderId": "550981824995", "appId": "1:550981824995:web:bd6d609b92a2b74b8f70d6"};
-const APP_VER="50";
+const APP_VER="51";
 const LS_SYNC="hunter-sistemi-sync";
 function b64e(t){return btoa(unescape(encodeURIComponent(t)))}
 function b64d(t){return decodeURIComponent(escape(atob(t)))}
