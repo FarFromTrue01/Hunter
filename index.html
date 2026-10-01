@@ -1301,11 +1301,22 @@ button.tmopt{cursor:pointer}
 .qlg-lp{display:flex;flex-wrap:wrap;gap:3px 12px;margin-top:6px;font-size:12px;color:var(--muted)}
 .qlg-lp b{color:var(--gold);font-family:var(--display)}
 .qfo-run b{font-size:26px}
-.hero-main{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px;align-content:start}
+.hero-main{display:grid;grid-template-columns:fit-content(48%) minmax(0,1fr);column-gap:18px;align-content:start}
+.hero-main>.h-kicker{white-space:nowrap}
 .hero-main>*{grid-column:1/-1}
 .hero-main>.h-kicker,.hero-main>.h-name,.hero-main>.hchips{grid-column:1}
-.hfoc{grid-column:2;grid-row:1/4;align-self:start;display:grid;gap:4px;justify-items:start;text-align:left;min-width:200px;max-width:250px;padding:10px 14px;margin-bottom:12px;border:1px solid rgba(109,255,179,.45);background:linear-gradient(135deg,rgba(20,90,60,.35),rgba(4,12,30,.6) 70%);border-radius:3px;cursor:pointer;color:inherit;font:inherit;box-shadow:0 0 16px rgba(109,255,179,.12)}
+.hfoc{grid-column:2;grid-row:1/4;align-self:start;display:flex;align-items:stretch;min-width:0;padding:0;overflow:hidden;margin-bottom:12px;border:1px solid rgba(109,255,179,.45);background:linear-gradient(135deg,rgba(20,90,60,.35),rgba(4,12,30,.6) 70%);border-radius:3px;cursor:pointer;color:inherit;font:inherit;box-shadow:0 0 16px rgba(109,255,179,.12)}
 .hfoc:hover{border-color:#6dffb3;box-shadow:0 0 20px rgba(109,255,179,.25)}
+.hfoc-main{flex:1;min-width:0;display:grid;gap:4px;justify-items:start;align-content:start;text-align:left;padding:10px 14px;background:none;border:0;color:inherit;font:inherit;cursor:pointer}
+.hfoc-main:focus-visible,.hfoc-b:focus-visible{outline:2px solid #6dffb3;outline-offset:-2px}
+.hfoc-col{flex:none;width:118px;display:grid;grid-template-rows:1fr 1fr;border-left:2px solid rgba(109,255,179,.45)}
+.hfoc-b{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px 6px;border:0;cursor:pointer;font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.06em;color:#bfffe0;background:linear-gradient(180deg,rgba(30,120,80,.38),rgba(10,50,35,.5));transition:background .15s,box-shadow .15s}
+.hfoc-b+.hfoc-b{border-top:2px solid rgba(109,255,179,.35);color:#bfe9ff;background:linear-gradient(180deg,rgba(30,90,140,.38),rgba(8,30,60,.55))}
+.hfoc-b:hover{box-shadow:inset 0 0 18px rgba(109,255,179,.3)}
+.hfoc-b+.hfoc-b:hover{box-shadow:inset 0 0 18px rgba(98,210,255,.3)}
+.hfoc-b.on{color:#08101c;background:#6dffb3}
+.hfoc-b+.hfoc-b.on{color:#08101c;background:#62d2ff}
+.hfoc-b small{font-size:10.5px;font-weight:600;letter-spacing:.02em;opacity:.85}
 .hfoc-k{display:flex;align-items:center;gap:6px;font-family:var(--display);font-size:11px;letter-spacing:.2em;color:#9fe8c4}
 .hfoc-live{font-style:normal;color:#6dffb3;letter-spacing:.06em}
 .hfoc-t{font-family:var(--display);font-size:30px;line-height:1.1;color:#dffff0;text-shadow:0 0 14px rgba(109,255,179,.45)}
@@ -1317,7 +1328,7 @@ button.tmopt{cursor:pointer}
 .qfo-sk{font-size:12px;color:var(--muted)}
 .qfo-sk b{color:#6dffb3;font-family:var(--display)}
 .qhead{margin-bottom:22px}
-@media (max-width:760px){.hfoc{grid-column:1/-1;grid-row:auto;max-width:none;width:100%;margin:4px 0 12px}.hero-main>*{order:2}.hero-main>.h-kicker,.hero-main>.h-name,.hero-main>.hchips{order:0}.hero-main>.hfoc{order:1}}
+@media (max-width:760px){.hfoc{grid-column:1/-1;grid-row:auto;min-width:0;max-width:none;width:100%;margin:4px 0 12px}.hfoc-col{width:108px}.hero-main>*{order:2}.hero-main>.h-kicker,.hero-main>.h-name,.hero-main>.hchips{order:0}.hero-main>.hfoc{order:1}}
 .foc-t{pointer-events:none}
 .wkbtn{pointer-events:auto;justify-self:center;margin-top:12px;display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:999px;border:1px solid rgba(98,210,255,.5);background:transparent;color:#9fd8ff;font-family:var(--display);font-weight:600;font-size:13px;cursor:pointer}
 .wkbtn.on{background:#2f7bf0;border-color:#2f7bf0;color:#fff;box-shadow:0 0 14px rgba(47,123,240,.5)}
@@ -1408,7 +1419,7 @@ body.noanim .rqfx,body.noanim .rqfx::before{animation:none!important}
         <div class="hero-grid">
           <div class="hero-fig"><div class="hero-avw"><div id="hFig"></div><div class="hero-emb" id="hBadge"></div></div></div>
           <div class="hero-main">
-            <button type="button" class="hfoc" id="hFoc" data-studyrec="1" aria-label="Bugünkü odak süresi ve kazanımları"></button>
+            <div class="hfoc" id="hFoc"></div>
             <div class="h-kicker" id="hKicker"></div>
             <div class="h-name" id="hName"></div>
             <div class="hchips" id="hChips"></div>
@@ -4730,7 +4741,8 @@ function renderHome(){
   $("hBadge").innerHTML=emblem(r);
   $("hKicker").innerHTML=`<span style="color:${RCOL[r]}">${r} RÜTBE AVCI</span><span class="sep">◆</span><span>Seviye ${S.level}</span>`;
   $("hName").textContent=S.name||"Avcı";
-  {const o=focusSum();$("hFoc").innerHTML=`<span class="hfoc-k">${ico("clock","#6dffb3",14)} BUGÜNKÜ ODAK${S.timer?` <i class="hfoc-live">● sürüyor</i>`:""}</span><b class="hfoc-t">${fmtMin(Math.floor(o.sec/60))}</b><span class="hfoc-s">${o.n} oturum${o.n?"":" · kronometre ya da zamanlayıcıyla başla"}</span><span class="fsum">${focusSumChips(o)}</span>`}
+  {const o=focusSum(),T=S.timer,sw=T&&tmIsSw(T),tm=T&&!sw;
+   $("hFoc").innerHTML=`<button type="button" class="hfoc-main" data-studyrec="1" aria-label="Bugünkü odak süresi ve kayıtları"><span class="hfoc-k">${ico("clock","#6dffb3",14)} BUGÜNKÜ ODAK${T?` <i class="hfoc-live">● sürüyor</i>`:""}</span><b class="hfoc-t">${fmtMin(Math.floor(o.sec/60))}</b><span class="hfoc-s">${o.n} oturum${o.n?"":" · sağdan kronometre ya da zamanlayıcı başlat"}</span><span class="fsum">${focusSumChips(o)}</span></button><div class="hfoc-col"><button type="button" class="hfoc-b${sw?" on":""}" data-sess="sw">${ico("clock",sw?"#08101c":"#6dffb3",18)}Kronometre${sw?`<small>sürüyor · aç</small>`:""}</button><button type="button" class="hfoc-b${tm?" on":""}" data-sess="tm">${ico("clock",tm?"#08101c":"#62d2ff",18)}Zamanlayıcı${tm?`<small>sürüyor · aç</small>`:""}</button></div>`}
   $("hChips").innerHTML=(jn?`<span class="hchip" style="--cc:${SC[S.job].c}">${ico(S.job,SC[S.job].c,14)}${esc(jn)}</span>`:`<button type="button" class="hchip warn" data-act="openJob">${ico("job","#ffc53d",14)}Sınıf seç</button>`)
     +(t?`<span class="hchip" style="--cc:#ffc53d">${ico("title","#ffc53d",14)}${esc(t.n)}</span>`:"")
     +(mg?`<span class="hchip" style="--cc:${mg.gc}">${ico("crown",mg.gc,14)}${esc(mg.name)}</span>`:"");
@@ -6634,7 +6646,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&showing&&$("modal")
 /* ================= BACKUP & SYNC ================= */
 const IS_PWA=true;
 const FB_CONFIG={"apiKey": "AIzaSyBsNalG4Fl7crcsluhf2hqDXlWawD6DJ2I", "authDomain": "hunter-sistemi.firebaseapp.com", "projectId": "hunter-sistemi", "storageBucket": "hunter-sistemi.firebasestorage.app", "messagingSenderId": "550981824995", "appId": "1:550981824995:web:bd6d609b92a2b74b8f70d6"};
-const APP_VER="52";
+const APP_VER="53";
 const LS_SYNC="hunter-sistemi-sync";
 function b64e(t){return btoa(unescape(encodeURIComponent(t)))}
 function b64d(t){return decodeURIComponent(escape(atob(t)))}
