@@ -183,6 +183,18 @@ button{font:inherit;color:inherit}
 
 .form{display:grid;gap:10px;grid-template-columns:repeat(6,minmax(0,1fr))}
 .form label,.fl{display:grid;gap:4px;font-size:12px;color:var(--muted);font-family:var(--display);letter-spacing:.06em}
+.fbtm{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.fxbtn{display:inline-flex;align-items:center;gap:8px;margin-left:auto;font-family:var(--display);font-weight:600;font-size:12.5px;letter-spacing:.08em;color:#ffe7a8;background:rgba(60,40,0,.35);border:1px solid rgba(255,197,61,.5);border-radius:3px;padding:7px 12px;cursor:pointer;box-shadow:0 0 10px rgba(255,197,61,.12)}
+.fxbtn:hover{border-color:var(--gold);box-shadow:0 0 14px rgba(255,197,61,.3)}
+.fxi{display:inline-grid;place-items:center;width:20px;height:20px;border:1px solid rgba(255,197,61,.6);border-radius:2px;font-style:italic;font-size:13px;color:var(--gold)}
+.fxt{width:100%;border-collapse:collapse;font-size:13px;text-align:left}
+@media (max-width:480px){.fxt{font-size:11.5px}.fxt th,.fxt td{padding:6px 5px}.fxt td:first-child,.fxt th:first-child{width:34px}}
+.fxt th,.fxt td{padding:7px 8px;border:1px solid var(--line-dim);vertical-align:top}
+.fxt th{font-family:var(--display);font-weight:600;letter-spacing:.06em;color:var(--glow);background:rgba(20,60,120,.35)}
+.fxt td:first-child,.fxt th:first-child{text-align:center;font-family:var(--display);font-weight:700;width:44px}
+.fxmap{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:12px 0 4px}
+.fxmap>span{display:inline-flex;align-items:center;gap:5px;font-family:var(--display);font-size:12.5px;padding:3px 8px;border:1px solid var(--line-dim);background:rgba(4,12,30,.55);border-radius:2px}
+.fxmap b{color:var(--muted);font-weight:600}
 .c6{grid-column:span 6}.c3{grid-column:span 3}.c2{grid-column:span 3}
 @media (min-width:640px){.c2{grid-column:span 2}.c3m{grid-column:span 3}.c1m{grid-column:span 1}}
 input,select{width:100%;font:inherit;font-size:14px;color:var(--text);background:rgba(0,0,0,.45);border:1px solid var(--line-dim);padding:8px 10px;border-radius:2px;min-width:0}
@@ -1362,7 +1374,7 @@ body.noanim .rqfx,body.noanim .rqfx::before{animation:none!important}
           <label class="c3 c3m">Tekrar<select id="fRep"><option value="daily">Her gün</option><option value="days">Haftanın belirli günleri</option><option value="once">Tek seferlik</option></select></label>
           <label class="c3 c3m">Günde kaç kez<input id="fTimes" type="number" min="1" max="10" step="1" value="1"></label>
           <div class="c6" id="fDaysWrap" hidden><div class="fl" style="margin-bottom:6px">Hangi günler</div><div class="daychips" id="fDays"></div></div>
-          <div class="c6"><button class="btn primary" type="submit">Görev ekle</button></div>
+          <div class="c6 fbtm"><button class="btn primary" type="submit">Görev ekle</button><button class="fxbtn" type="button" data-fxhelp="1"><span class="fxi">ƒx</span>Örnek formül</button></div>
         </form>
         <div class="divider"></div>
         <p class="sec-label">Zorluk tablosu</p>
@@ -3992,6 +4004,12 @@ function nextOverlay(){
   const b=$("modal").querySelector("button");if(b) setTimeout(()=>b.focus(),60);
   if(it.o.sfx) it.o.sfx();
 }
+function fxHelp(){
+  const rows=[["0","15 dk'dan az","Rutin, kafa yormuyor","Severek yapıyorum"],["1","15–45 dk","Orta","Nötr"],["2","45–90 dk","Zorlayıcı","Ertelemek istiyorum"],["3","90 dk'dan fazla","Çok zor (yeni konu, ağır antrenman)","Gerçekten kaçıyorum"]];
+  const map=[["0–1","F"],["2","E"],["3","D"],["4","C"],["5","B"],["6","A"],["7","S"],["8","SS"],["9","X"]];
+  overlay(head("Örnek Formül")+`<p class="help" style="margin:-4px 0 12px">Görevin <b>tipik hâline</b> göre her ölçüte 0–3 puan ver.</p><div><table class="fxt"><thead><tr><th>Puan</th><th>Süre</th><th>Zorluk (zihinsel ya da fiziksel)</th><th>İsteksizlik</th></tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+<p class="sec-label" style="margin:16px 0 0">Üç puanı topla ve rütbeye çevir</p><div class="fxmap">${map.map(([p,r])=>`<span><b>${p}</b> → ${rbadge(r,20)} ${r}</span>`).join("")}</div>`);
+}
 function head(t,warn){return `<div class="win-head"><div class="win-title"${warn?' style="color:#ff8ea0;border-color:#ff4a67"':''}><span class="bang">!</span>${t}</div></div>`}
 
 /* ================= CORE ACTIONS ================= */
@@ -6144,6 +6162,7 @@ document.addEventListener("click",e=>{
   if(d.enhopt){const k=d.enhopt==="luck"?"luck":"prot";enhOpt[k]=!enhOpt[k];enhRefresh();return}
   if(d.enhgo){doEnh();return}
   if(d.sess){sessPick(d.sess);return}
+  if(d.fxhelp){fxHelp();return}
   if(d.sstat){sessStat=d.sstat;document.querySelectorAll("[data-sstat]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.sstat===sessStat)));return}
   if(d.tmgo){let m=0;if(d.tmgo==="tm"){m=clamp(Math.round(+($("tmH")||{}).value||0),0,10)*60+clamp(Math.round(+($("tmM")||{}).value||0),0,59);if(m<1){toast("Süre en az 1 dk olmalı.");return}}nextOverlay();startSess(d.tmgo,m);return}
   if(d.qord){if(d.qord==="on"){qOrd=true;qfOpen=false;renderQuests()}else{qOrd=false;S.qf=Object.assign(qfGet(),{sort:"def"});commit();toast("Sıralama kaydedildi.")}return}
