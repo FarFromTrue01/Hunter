@@ -923,6 +923,9 @@ span.enh.big{position:absolute;right:-6px;top:-6px;font-size:15px}
 .smrow.empty{opacity:.5}
 .enhtbl td,.enhtbl th{padding:5px 6px}
 /* skills */
+.cbhead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:14px 0 10px}
+.cbrank{display:flex;align-items:center;gap:8px;font-family:var(--display);font-size:11.5px;letter-spacing:.08em;color:var(--muted)}
+.cbrank select{--rc:#62d2ff;width:auto;min-width:130px;padding:6px 10px;font-family:var(--display);font-weight:700;font-size:13px;color:var(--rc);border-color:color-mix(in srgb,var(--rc) 55%,transparent);background:color-mix(in srgb,var(--rc) 10%,rgba(0,0,0,.5))}
 .rvlist{display:grid;gap:6px;max-height:min(55vh,460px);overflow-y:auto;padding-right:2px}
 .rvrow{display:flex;align-items:center;gap:8px;border:1px solid var(--line-dim);background:var(--panel-2);border-radius:2px}
 .rvrow.on{border-color:rgba(109,255,179,.5);background:rgba(16,66,70,.38)}
@@ -1540,7 +1543,7 @@ body.noanim .rqfx,body.noanim .rqfx::before{animation:none!important}
           <div>
             <div class="tscroll"><table class="table" id="cStatTable"></table></div>
             <div class="kvs" style="margin-top:12px" id="cBonus"></div>
-            <p class="sec-label" style="margin-top:14px">Savaş değerleri</p>
+            <div class="cbhead"><p class="sec-label" style="margin:0">Savaş değerleri</p><label class="cbrank"><span>Rakip rütbesi</span><select id="cbRank" aria-label="Savaş değerlerinin hesaplanacağı rakip rütbesi"></select></label></div>
             <div class="kvs" id="cCombat"></div>
           </div>
         </div>
@@ -5851,10 +5854,13 @@ function renderSkills(){
   el.innerHTML=`<div class="skgrid">${SKILLS[S.job].map((s,i)=>`<div class="skcard" style="--sc:${SC[S.job].c}"><div class="skh"><span class="skno">${i+1}</span><b>${esc(s.n)}</b><span class="skrk" title="${skRank(s)} rütbe yetenek">${remb(skRank(s),20)}${skRank(s)}</span><span class="skcost">${ico("mp","#9fb0ff",13)} ${fmt(skCost(P,s))} MP</span></div><p>${esc(s.d)}</p><div class="small muted">${s.t==="self"?(s.heal?`Yaklaşık +${fmt(P.max*s.heal*(P.tier2?1.15:1))} can`:"Kendine etki eder"):`Tahmini hasar: ~${fmt(base*(s.mul||1))}${s.t==="all"?" · her düşmana":""}`} · ${P.mpMax>=skCost(P,s)?`dolu manayla <b>${Math.floor(P.mpMax/skCost(P,s))}</b> kez`:`<span style="color:#ff8ea0">manan yetmiyor</span>`}</div></div>`).join("")}</div>
 <p class="help" style="margin:10px 0 0">Yeteneklerin bir <b>rütbesi</b> ve <b>sabit mana maliyeti</b> var; temel sınıf yetenekleri <b>F rütbedir</b>. Mana arttıkça aynı savaşta daha çok yetenek kullanırsın. Mana: <b>${fmt(P.mpMax)}</b> · her turunda %${Math.round(MP_REGEN*100)} yenilenir, zindan boyunca dalgalar arasında dolmaz (Mana İksiri %50 doldurur). ${S.jobTier>=2?"Meslek gelişimin sayesinde yeteneklerin <b>%25 daha güçlü</b>.":`Seviye ${JOB_ADV}'ta meslek gelişince yeteneklerin %25 güçlenir.`}</p>`;
 }
-function refFoe(){const rf=MREF[curRank()]||10;return {kind:"npc",per:rf,agi:rf}}
-function combatKv(){const P=playerCombatant(),R=refFoe(),pc=x=>"%"+Math.round(x*100);
+let cbRank=null;
+function cbR(){return TIERS.includes(cbRank)?cbRank:curRank()}
+function refFoe(r){const rf=MREF[r||curRank()]||10;return {kind:"npc",per:rf,agi:rf}}
+function combatKv(){const rk=cbR(),P=playerCombatant(),R=refFoe(rk),pc=x=>"%"+Math.round(x*100);
+  {const sel=$("cbRank");if(sel){const cr=curRank();sel.innerHTML=TIERS.map(t=>`<option value="${t}"${t===rk?" selected":""}>${t} rütbe${t===cr?" (senin)":""}</option>`).join("");sel.style.setProperty("--rc",RCOL[rk])}}
   return [["Saldırı",fmt(P.atk)+(P.magic?" <span class=\"small muted\">büyü</span>":"")],["Can",fmt(P.max)],["Mana",fmt(P.mpMax)],["Hasar azaltma",pc(P.red)],["İsabet",pc(hitCh(P,R,!!P.magic))],["Kritik",pc(critCh(P,R))],["Kaçınma",pc(1-hitCh(R,P,false))],["Çift vuruş",pc(dblCh(P,R))]].map(x=>`<div class="kv"><div class="k">${x[0]}</div><div class="v" style="font-size:16px">${x[1]}</div></div>`).join("")
-   +`<p class="help" style="grid-column:1/-1;margin:2px 0 0">İsabet, kritik, kaçınma ve çift vuruş sabit değil; <b>rakibine göre</b> hesaplanır. Yukarıdaki değerler <b>${curRank()} rütbe denk bir rakibe</b> karşıdır. <b>Algı (PER)</b> rakibin Çevikliğine karşı isabetini, rakibin Algısına karşı kritik şansını belirler. <b>Çeviklik (AGI)</b> rakibin Algısına karşı kaçınmanı, rakibin Çevikliğine karşı çift vuruş şansını belirler. Denk rakibe karşı isabet %90, kritik %15; statın rakibinkinin 3 katıysa isabet %99'a, kritik %27'ye çıkar. Zayıfsan düşer.</p>`}
+   +`<p class="help" style="grid-column:1/-1;margin:2px 0 0">İsabet, kritik, kaçınma ve çift vuruş sabit değil; <b>rakibine göre</b> hesaplanır. Yukarıdaki değerler <b style="color:${RCOL[rk]}">${rk} rütbe</b> bir rakibe karşıdır${rk===curRank()?" (senin rütben)":""}; sağ üstteki kutudan başka bir rütbe seçebilirsin. <b>Algı (PER)</b> rakibin Çevikliğine karşı isabetini, rakibin Algısına karşı kritik şansını belirler. <b>Çeviklik (AGI)</b> rakibin Algısına karşı kaçınmanı, rakibin Çevikliğine karşı çift vuruş şansını belirler. Denk rakibe karşı isabet %90, kritik %15; statın rakibinkinin 3 katıysa isabet %99'a, kritik %27'ye çıkar. Zayıfsan düşer.</p>`}
 function showUpdate9(){
   overlay(head("Sistem Güncellemesi")+`<div class="big gold">BÜYÜK GÜNCELLEME</div><div class="updl">
 <p>${ico("mp","#7d8cff",16)}<span><b>Sınıf yetenekleri:</b> her sınıfın artık mana harcayan 2 yeteneği var. Zindanda ve arenada kullanabilirsin. <b>Oto savaş</b> da eklendi.</span></p>
@@ -6364,6 +6370,7 @@ function doConvert(){
   cvAmt=Math.min(cvAmt,cvMax());
   commit();
 }
+document.addEventListener("change",e=>{if(e.target&&e.target.id==="cbRank"){cbRank=e.target.value;$("cCombat").innerHTML=combatKv()}});
 document.addEventListener("input",e=>{const t=e.target;if(!t||(t.id!=="cvRange"&&t.id!=="cvNum")) return;cvAmt=Math.max(0,Math.min(cvMax(),Math.floor((+t.value||0)/2)*2));cvArm=false;cvPreview()});
 
 /* ================= AÇILIR BAŞLIKLAR ================= */
@@ -6623,7 +6630,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&showing&&$("modal")
 /* ================= BACKUP & SYNC ================= */
 const IS_PWA=true;
 const FB_CONFIG={"apiKey": "AIzaSyBsNalG4Fl7crcsluhf2hqDXlWawD6DJ2I", "authDomain": "hunter-sistemi.firebaseapp.com", "projectId": "hunter-sistemi", "storageBucket": "hunter-sistemi.firebasestorage.app", "messagingSenderId": "550981824995", "appId": "1:550981824995:web:bd6d609b92a2b74b8f70d6"};
-const APP_VER="49";
+const APP_VER="50";
 const LS_SYNC="hunter-sistemi-sync";
 function b64e(t){return btoa(unescape(encodeURIComponent(t)))}
 function b64d(t){return decodeURIComponent(escape(atob(t)))}
