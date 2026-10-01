@@ -185,6 +185,17 @@ button{font:inherit;color:inherit}
 .form label,.fl{display:grid;gap:4px;font-size:12px;color:var(--muted);font-family:var(--display);letter-spacing:.06em}
 .fbtm{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .fxbtn{display:inline-flex;align-items:center;gap:8px;margin-left:auto;font-family:var(--display);font-weight:600;font-size:12.5px;letter-spacing:.08em;color:#ffe7a8;background:rgba(60,40,0,.35);border:1px solid rgba(255,197,61,.5);border-radius:3px;padding:7px 12px;cursor:pointer;box-shadow:0 0 10px rgba(255,197,61,.12)}
+.hst-foot{display:flex;justify-content:flex-end;margin-top:10px}
+.hst-foot .fxbtn{margin-left:0;padding:5px 10px;font-size:11.5px}
+.sthelp{display:grid;gap:8px;text-align:left}
+.sth{border:1px solid color-mix(in srgb,var(--sc) 45%,transparent);border-left:3px solid var(--sc);background:linear-gradient(90deg,color-mix(in srgb,var(--sc) 10%,transparent),rgba(4,12,30,.55) 70%);padding:8px 10px}
+.sth-h{display:flex;align-items:center;gap:7px;font-family:var(--display)}
+.sth-h b{color:var(--sc);letter-spacing:.1em}.sth-h span{color:var(--muted);font-size:12.5px}
+.sth-h em{margin-left:auto;font-style:normal;font-weight:700;color:var(--sc);font-size:16px;font-variant-numeric:tabular-nums}
+.sth ul{margin:5px 0 4px;padding-left:18px;font-size:12.5px;line-height:1.5}
+.sth li b{color:var(--text);font-weight:600}
+.sth-now{font-family:var(--display);font-size:11.5px;color:var(--muted);letter-spacing:.04em}
+.sth-now b{color:var(--text)}
 .fxbtn:hover{border-color:var(--gold);box-shadow:0 0 14px rgba(255,197,61,.3)}
 .fxi{display:inline-grid;place-items:center;width:20px;height:20px;border:1px solid rgba(255,197,61,.6);border-radius:2px;font-style:italic;font-size:13px;color:var(--gold)}
 .fxt{width:100%;border-collapse:collapse;font-size:13px;text-align:left}
@@ -912,12 +923,81 @@ span.enh.big{position:absolute;right:-6px;top:-6px;font-size:15px}
 .smrow.empty{opacity:.5}
 .enhtbl td,.enhtbl th{padding:5px 6px}
 /* skills */
+.cfbox{margin-top:12px;padding:10px 12px;border:1px solid rgba(255,179,92,.5);background:rgba(70,40,0,.3);border-radius:2px}
+.cfbox b{font-family:var(--display);color:#ffb35c;letter-spacing:.06em}
+/* ===== ders görevleri ===== */
+.dbg-note{--dbgi:linear-gradient(90deg,transparent 49px,color-mix(in srgb,var(--dc) 50%,transparent) 49px,color-mix(in srgb,var(--dc) 50%,transparent) 50px,transparent 50px),repeating-linear-gradient(180deg,transparent 0 21px,color-mix(in srgb,var(--dc) 15%,transparent) 21px 22px),linear-gradient(135deg,color-mix(in srgb,var(--dc) 12%,#0a1222),#070d1a 75%)}
+.dbg-grid{--dbgi:repeating-linear-gradient(0deg,color-mix(in srgb,var(--dc) 13%,transparent) 0 1px,transparent 1px 16px),repeating-linear-gradient(90deg,color-mix(in srgb,var(--dc) 13%,transparent) 0 1px,transparent 1px 16px),linear-gradient(135deg,color-mix(in srgb,var(--dc) 10%,#0a1222),#070d1a 75%)}
+.dbg-dots{--dbgi:radial-gradient(circle,color-mix(in srgb,var(--dc) 32%,transparent) 1.2px,transparent 1.8px) 0 0/14px 14px,linear-gradient(135deg,color-mix(in srgb,var(--dc) 10%,#0a1222),#070d1a 75%)}
+.dbg-board{--dbgi:radial-gradient(ellipse at 25% 15%,rgba(255,255,255,.07),transparent 55%),radial-gradient(ellipse at 80% 90%,color-mix(in srgb,var(--dc) 10%,transparent),transparent 60%),linear-gradient(135deg,#11301f,#0a1d15)}
+.dbg-stripe{--dbgi:repeating-linear-gradient(135deg,color-mix(in srgb,var(--dc) 10%,transparent) 0 9px,transparent 9px 18px),linear-gradient(135deg,color-mix(in srgb,var(--dc) 12%,#0a1222),#070d1a 75%)}
+.dbg-plain{--dbgi:linear-gradient(135deg,color-mix(in srgb,var(--dc) 22%,#0a1222),color-mix(in srgb,var(--dc) 5%,#070d1a) 70%)}
+.quest.dq{background:var(--dbgi);border-color:color-mix(in srgb,var(--dc) 50%,transparent);border-left:3px solid var(--dc);box-shadow:0 0 12px color-mix(in srgb,var(--dc) 12%,transparent)}
+.quest.dq:hover{border-color:var(--dc);box-shadow:0 0 16px color-mix(in srgb,var(--dc) 28%,transparent)}
+.quest.dq .box{border-color:var(--dc)}
+.quest.dq .qname{color:color-mix(in srgb,var(--dc) 22%,#fff)}
+.quest.dq.done{background:linear-gradient(rgba(16,66,70,.35),rgba(16,66,70,.35)),var(--dbgi);border-color:rgba(109,255,179,.5);border-left-color:var(--ok)}
+.quest.dq.done .qname{opacity:.8}
+.quest.dq.partial{border-color:var(--dc)}
+.dbadge{display:inline-flex;align-items:center;gap:4px;font-family:var(--display);font-weight:700;font-size:11px;letter-spacing:.12em;padding:0 6px;color:var(--dc);border:1px solid var(--dc);border-radius:2px;line-height:1.55;background:color-mix(in srgb,var(--dc) 12%,rgba(0,0,0,.3))}
+.dqr{min-width:92px}
+.dqr-k{display:flex;align-items:center;gap:5px;font-family:var(--display);font-weight:700;font-size:13px;color:var(--dc);white-space:nowrap}
+.dqr-s{font-size:11px;color:var(--muted);white-space:nowrap}
+.qstudy{flex:none;width:62px;display:grid;place-items:center;align-content:center;gap:3px;font-family:var(--display);font-weight:700;font-size:12px;color:var(--dc);background:color-mix(in srgb,var(--dc) 12%,rgba(4,10,24,.75));border:1px solid color-mix(in srgb,var(--dc) 55%,transparent);border-radius:2px;cursor:pointer}
+.qstudy:hover{box-shadow:0 0 14px color-mix(in srgb,var(--dc) 35%,transparent)}
+.qstudy.run{color:#08101c;background:var(--dc);box-shadow:0 0 14px color-mix(in srgb,var(--dc) 50%,transparent)}
+.dersrow{--dc:#d9ff3d;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 10px;border:1px dashed var(--line-dim);background:rgba(0,0,0,.25);border-radius:2px}
+.dersrow.on{border-style:solid;border-color:color-mix(in srgb,var(--dc) 70%,transparent);background:color-mix(in srgb,var(--dc) 8%,rgba(0,0,0,.35));box-shadow:0 0 12px color-mix(in srgb,var(--dc) 15%,transparent)}
+.form label.dchk{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;color:var(--text);position:relative;letter-spacing:.08em}
+.dchk input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.dchk-box{width:22px;height:22px;border:1.5px solid var(--dc);border-radius:3px;display:grid;place-items:center;flex:none}
+.dchk input:checked+.dchk-box{background:var(--dc);box-shadow:0 0 10px var(--dc)}
+.dchk input:checked+.dchk-box::after{content:"";width:10px;height:5px;border:2.4px solid #08101c;border-top:0;border-right:0;transform:translateY(-2px) rotate(-45deg)}
+.dchk input:focus-visible+.dchk-box{outline:2px solid var(--glow);outline-offset:2px}
+.dchk-ic{display:grid;place-items:center;color:var(--dc)}
+.dchk b{font-family:var(--display);color:var(--dc)}
+.dchk-tip{flex:1;min-width:150px;font-size:12px;color:var(--muted)}
+.dgear{margin-left:auto;flex:none;width:34px;height:34px;display:grid;place-items:center;color:var(--dc);background:rgba(0,0,0,.4);border:1px solid color-mix(in srgb,var(--dc) 50%,transparent);border-radius:50%;cursor:pointer;transition:transform .3s,box-shadow .2s}
+.dgear:hover{transform:rotate(60deg);box-shadow:0 0 12px color-mix(in srgb,var(--dc) 40%,transparent)}
+.dsws{display:flex;gap:10px;flex-wrap:wrap}
+.dsw{width:34px;height:34px;border-radius:50%;background:var(--dc);border:2px solid rgba(255,255,255,.18);cursor:pointer;position:relative;padding:0;flex:none}
+.dsw.on{box-shadow:0 0 0 3px rgba(255,255,255,.85),0 0 14px var(--dc)}
+.dcust{display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:18px;color:#08101c;overflow:hidden}
+.dcust:not(.on){background:conic-gradient(#ff4fd8,#ffe14d,#d9ff3d,#2ff0d2,#8cf2ff,#ff4fd8);color:#fff;text-shadow:0 0 4px #000}
+.dcust input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer;padding:0;border:0}
+.dbgs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.dbgb{height:54px;background:var(--dbgi);border:1px solid color-mix(in srgb,var(--dc) 45%,transparent);border-left:3px solid var(--dc);display:grid;align-items:end;justify-items:start;padding:6px 8px;font-family:var(--display);font-size:12px;font-weight:600;color:var(--text);cursor:pointer;border-radius:2px}
+.dbgb span{background:rgba(0,0,0,.55);padding:0 5px;border-radius:2px}
+.dbgb.on{outline:2px solid var(--dc);outline-offset:2px;box-shadow:0 0 12px color-mix(in srgb,var(--dc) 35%,transparent)}
+.dsprev .quest{cursor:default}
+.dsess{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0 0;padding:8px 10px;border:1px solid color-mix(in srgb,var(--dc) 45%,transparent);background:color-mix(in srgb,var(--dc) 8%,transparent);font-family:var(--display)}
+.tqrow.tqders{border-color:color-mix(in srgb,var(--dc) 45%,transparent);border-left:3px solid var(--dc)}
+.tqders .tqdi{display:grid;place-items:center}
+.tqders .tqs{font-family:var(--display);font-weight:700;font-size:11px;letter-spacing:.12em}
+@media (max-width:560px){.quest.dq{grid-template-columns:auto minmax(0,1fr)}.dqr{display:none}.qstudy{width:54px}}
+/* ===== açılır başlıklar ===== */
+.win.acc{--ac:#62d2ff;padding:0;border-color:color-mix(in srgb,var(--ac) 55%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--ac) 8%,transparent),0 0 22px color-mix(in srgb,var(--ac) 16%,transparent),inset 0 0 40px color-mix(in srgb,var(--ac) 5%,transparent)}
+.win.acc::before,.win.acc::after{border-color:var(--ac)}
+.acc-h{width:100%;display:flex;align-items:center;gap:12px;padding:12px 16px;border:0;cursor:pointer;text-align:left;font:inherit;color:var(--ac);background:linear-gradient(95deg,color-mix(in srgb,var(--ac) 24%,rgba(4,10,24,.6)),color-mix(in srgb,var(--ac) 7%,rgba(4,10,24,.6)) 55%,rgba(4,10,24,.3));transition:background .2s}
+.acc-h:hover{background:linear-gradient(95deg,color-mix(in srgb,var(--ac) 32%,rgba(4,10,24,.6)),color-mix(in srgb,var(--ac) 10%,rgba(4,10,24,.6)) 55%,rgba(4,10,24,.3))}
+.acc-h:focus-visible{outline:2px solid var(--ac);outline-offset:-2px}
+.acc-ic{flex:none;width:36px;height:36px;display:grid;place-items:center;border:1px solid color-mix(in srgb,var(--ac) 65%,transparent);background:color-mix(in srgb,var(--ac) 16%,rgba(0,0,0,.45));border-radius:3px;box-shadow:0 0 12px color-mix(in srgb,var(--ac) 35%,transparent),inset 0 0 10px color-mix(in srgb,var(--ac) 20%,transparent)}
+.acc-ic svg{filter:drop-shadow(0 0 4px color-mix(in srgb,var(--ac) 70%,transparent))}
+.acc-t{flex:1;min-width:0;font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:color-mix(in srgb,var(--ac) 80%,#fff);text-shadow:0 0 10px color-mix(in srgb,var(--ac) 55%,transparent)}
+.acc-cv{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;border:1px solid color-mix(in srgb,var(--ac) 40%,transparent);transition:transform .25s}
+.acc.open>.acc-h{border-bottom:1px solid color-mix(in srgb,var(--ac) 35%,transparent)}
+.acc.open .acc-cv{transform:rotate(180deg)}
+.acc-b{padding:18px 20px 20px}
+@media (max-width:560px){.acc-b{padding:14px 14px 16px}.acc-h{padding:11px 12px}.acc-t{font-size:13px;letter-spacing:.14em}}
+body:not(.noanim) .acc.open>.acc-b{animation:accin .25s ease-out}
+@keyframes accin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .skgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
 .skcard{border:1px solid color-mix(in srgb,var(--sc) 40%,transparent);background:linear-gradient(135deg,color-mix(in srgb,var(--sc) 10%,transparent),rgba(4,12,30,.6) 60%);padding:12px 14px}
 .skcard p{margin:6px 0;font-size:13.5px}
 .skh{display:flex;align-items:center;gap:8px;font-family:var(--display)}
 .skh b{font-size:16px;flex:1}
 .skno{width:22px;height:22px;display:grid;place-items:center;border:1px solid var(--sc);color:var(--sc);font-size:12px;border-radius:50%}
+.skrk{display:inline-flex;align-items:center;gap:3px;font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:.06em}
 .skcost{display:flex;align-items:center;gap:4px;font-size:12.5px;color:#b8c2ff}
 /* quests timer */
 .qtimer{flex:none;min-width:64px;display:grid;justify-items:center;align-content:center;gap:1px;font-family:var(--display);font-weight:700;font-size:12px;color:#9fe0ff;background:rgba(20,60,110,.45);border:1px solid rgba(98,210,255,.5);border-radius:2px;cursor:pointer;padding:4px}
@@ -1318,6 +1398,7 @@ body.noanim .rqfx,body.noanim .rqfx::before{animation:none!important}
           </div>
         </div>
         <div class="statstrip" id="hStats"></div>
+        <div class="hst-foot"><button class="fxbtn" type="button" data-stathelp="1"><span class="fxi">ƒx</span>Statlar ne işe yarar?</button></div>
       </section>
 
       <section class="win" id="jobCard" hidden>
@@ -1367,14 +1448,15 @@ body.noanim .rqfx,body.noanim .rqfx::before{animation:none!important}
         <p class="sec-label">Yeni görev</p>
         <form class="form" id="qForm" autocomplete="off">
           <label class="c6">Görev adı<input id="fName" required maxlength="60" placeholder="Örn. Mekik"></label>
+          <div class="c6 dersrow" id="fDersRow"><label class="dchk"><input type="checkbox" id="fDers"><span class="dchk-box"></span><span class="dchk-ic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5a2.5 2.5 0 012.5-2.5H20v15.5H6.5A2.5 2.5 0 004 21z"/><path d="M4 5.5V21M8.5 7.5h7M8.5 11h5"/></svg></span><b>Ders</b></label><span class="dchk-tip" id="fDersTip">İşaretlersen rütbe seçmezsin; ödülü kronometreyle çalışarak alırsın.</span><button type="button" class="dgear" data-dersset="1" aria-label="Ders görevi görünüm ayarları" title="Ders görevi görünümü"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M5.5 18.5l1.8-1.8M16.7 7.3l1.8-1.8"/></svg></button></div>
           <label class="c3 c1m">Hedef<input id="fCount" type="number" min="1" max="100000" step="1" placeholder="30"></label>
           <label class="c3 c2">Birim<input id="fUnit" maxlength="12" placeholder="dk, sayfa, tekrar"></label>
-          <label class="c3 c3m">Geliştirdiği stat<select id="fStat"></select></label>
-          <label class="c3 c3m">Zorluk<select id="fRank"></select></label>
+          <label class="c3 c3m"><span id="fStatL">Geliştirdiği stat</span><select id="fStat"></select></label>
+          <label class="c3 c3m" id="fRankW">Zorluk<select id="fRank"></select></label>
           <label class="c3 c3m">Tekrar<select id="fRep"><option value="daily">Her gün</option><option value="days">Haftanın belirli günleri</option><option value="once">Tek seferlik</option></select></label>
           <label class="c3 c3m">Günde kaç kez<input id="fTimes" type="number" min="1" max="10" step="1" value="1"></label>
           <div class="c6" id="fDaysWrap" hidden><div class="fl" style="margin-bottom:6px">Hangi günler</div><div class="daychips" id="fDays"></div></div>
-          <div class="c6 fbtm"><button class="btn primary" type="submit">Görev ekle</button><button class="fxbtn" type="button" data-fxhelp="1"><span class="fxi">ƒx</span>Örnek formül</button></div>
+          <div class="c6 fbtm"><button class="btn primary" type="submit">Görev ekle</button><button class="fxbtn" type="button" data-fxhelp="1" id="fFx"><span class="fxi">ƒx</span>Örnek formül</button></div>
         </form>
         <div class="divider"></div>
         <p class="sec-label">Zorluk tablosu</p>
@@ -1382,6 +1464,7 @@ body.noanim .rqfx,body.noanim .rqfx::before{animation:none!important}
         <p class="help" id="rankNote" style="margin-top:10px"></p>
         <p class="help" style="margin-top:6px">Görev yalnızca seçtiğin statı artırır. <b>Seviye atlayınca tüm statlara</b> yeni seviyen kadar puan eklenir: 1. seviyeye çıkınca +1, 16. seviyeye çıkınca +16. Seviye için gereken XP her seviyede 1,25 katına çıkar. Sınıfının statındaki görevler ekstra XP ve gold verir.</p>
         <p class="help" style="margin-top:6px"><b>Odak oturumu (isteğe bağlı):</b> Görev Bilgisi'nin sağ üstündeki kutudan <b>kronometre</b> ya da <b>zamanlayıcı</b> başlat. Oturum görevlerden bağımsızdır; ödül odaklandığın süreye göre verilir (40 dk ≈ B rütbe bir görev ödülünün 3/5'i, üst sınır yok; 1 dk altı ödül vermez).</p>
+        <p class="help" style="margin-top:6px"><b>Ders görevleri:</b> görev eklerken <b>Ders</b> kutucuğunu işaretle. Ders görevine rütbe verilmez ve tamamlamak ödül vermez; görevin yanındaki <b>Çalış</b> ile kronometreyi başlat, XP, gold ve stat çalıştığın süreye göre gelir. Ders görevleri de günlük görevin parçasıdır. Rengi ve arka planı kutucuğun yanındaki çark simgesinden değiştirebilirsin.</p>
         <p class="help" style="margin-top:6px"><b>Sıkıldım düğmesi:</b> odak ekranında sıkıldığında ya da başın ağrımaya başladığında bas. O andan sonra devam ettiğin süre <b>Boring Time</b> sayılır ve oturum ödülüne %50'ye kadar ek ödül verir. Mevcut odak süren ne kadar kısaysa her dakika o kadar değerlidir (Ayarlar → Odak ve Sıkılma).</p>
         <p class="help" style="margin-top:6px"><b>Tek seferlik görevler</b> yalnızca tamamlandıktan 24 saat sonra listeden kalkar; tamamlanmayanlar yerinde kalır. Tamamladığın her görev Karakter → Kayıtlar → Görevler'de saklanır.</p>
         <p class="help" style="margin-top:6px"><b>Rütbe savaş gücüne göre belirlenir:</b> F 0 · E 75 · D 300 · C 750 · B 2.000 · A 5.000 · S 20.000 · SS 50.000 · X 200.000. Her stat puanı 5, her seviye 25 güç verir.</p>
@@ -1433,7 +1516,7 @@ body.noanim .rqfx,body.noanim .rqfx::before{animation:none!important}
           <div class="slots" id="cSlots"></div>
         </div>
       </section>
-      <section class="win">
+      <section class="win acc" data-acc="c-stats" data-ac="#4de3ff" data-ai="stats">
         <div class="win-head"><div class="win-title">Statlar</div></div>
         <div class="twocol">
           <div class="radar" id="cRadar"></div>
@@ -1444,15 +1527,12 @@ body.noanim .rqfx,body.noanim .rqfx::before{animation:none!important}
             <div class="kvs" id="cCombat"></div>
           </div>
         </div>
-        <div class="divider"></div>
-        <p class="sec-label">Stat dönüştürme</p>
-        <div id="cConv"></div>
       </section>
-      <section class="win">
+      <section class="win acc" data-acc="c-skills" data-ac="#a98bff" data-ai="skills">
         <div class="win-head"><div class="win-title">Yetenekler</div></div>
         <div id="cSkills"></div>
       </section>
-      <section class="win">
+      <section class="win acc" data-acc="c-inv" data-ac="#ffb547" data-ai="bag">
         <div class="win-head"><div class="win-title">Envanter</div></div>
         <p class="sec-label">Eşyalar</p>
         <div class="qlist" id="cCons"></div>
@@ -1460,16 +1540,16 @@ body.noanim .rqfx,body.noanim .rqfx::before{animation:none!important}
         <p class="sec-label">Ekipmanlar</p>
         <div class="qlist" id="cItems"></div>
       </section>
-      <section class="win" id="smithWin">
+      <section class="win acc" id="smithWin" data-acc="c-smith" data-ac="#ff6a3d" data-ai="anvil">
         <div class="win-head"><div class="win-title">Demirci · Güçlendirme</div></div>
         <div id="cSmith"></div>
       </section>
-      <section class="win">
+      <section class="win acc" data-acc="c-titles" data-ac="#ffd84a" data-ai="crown">
         <div class="win-head"><div class="win-title">Unvanlar</div></div>
         <p class="help" style="text-align:center;margin:-6px 0 14px">Başarımları tamamlayınca unvan kazanırsın. Aynı anda bir unvan kuşanabilirsin.</p>
         <div class="tgrid" id="cTitles"></div>
       </section>
-      <section class="win">
+      <section class="win acc" data-acc="c-rec" data-ac="#5fe08f" data-ai="scroll">
         <div class="win-head"><div class="win-title">Kayıtlar</div></div>
         <div id="recBody"></div>
       </section>
@@ -1503,7 +1583,7 @@ body.noanim .rqfx,body.noanim .rqfx::before{animation:none!important}
   <!-- SETTINGS -->
   <main id="tab-set" class="tab" aria-label="Ayarlar" hidden>
     <div class="wrap">
-      <section class="win">
+      <section class="win acc" data-acc="s-prof" data-ac="#62d2ff" data-ai="user">
         <div class="win-head"><div class="win-title">Profil</div></div>
         <div class="pfset">
           <div class="pfprev" id="pfPrev"></div>
@@ -1517,7 +1597,7 @@ body.noanim .rqfx,body.noanim .rqfx::before{animation:none!important}
           </div>
         </div>
       </section>
-      <section class="win">
+      <section class="win acc" data-acc="s-cust" data-ac="#ff7ac0" data-ai="palette">
         <div class="win-head"><div class="win-title">Karakter Özelleştirme</div></div>
         <div class="charlayout">
           <div class="cviews"><div class="viewer" id="viewerSet"></div><div class="viewer face" id="viewerFace"></div></div>
@@ -1557,11 +1637,11 @@ body.noanim .rqfx,body.noanim .rqfx::before{animation:none!important}
           </div>
         </div>
       </section>
-      <section class="win">
+      <section class="win acc" data-acc="s-class" data-ac="#ff5d73" data-ai="sword">
         <div class="win-head"><div class="win-title">Sınıf</div></div>
         <div id="setClass"></div>
       </section>
-      <section class="win">
+      <section class="win acc" data-acc="s-acc" data-ac="#b3c3e6" data-ai="key">
         <div class="win-head"><div class="win-title">Hesap</div></div>
         <div class="form">
           <label class="c6 c3m">Avcı adı<input id="sName" maxlength="30"></label>
@@ -1575,15 +1655,19 @@ body.noanim .rqfx,body.noanim .rqfx::before{animation:none!important}
         </div>
         <p class="help" style="margin:10px 0 0">Animasyonları kapatmak tablette akıcılığı artırır. Bu ayar ve ses ayarı yalnızca bu cihaz için geçerlidir.</p>
       </section>
-      <section class="win" id="focSec">
+      <section class="win acc" data-acc="s-conv" data-ac="#4de3a4" data-ai="swap">
+        <div class="win-head"><div class="win-title">Stat Dönüştürme</div></div>
+        <div id="cConv"></div>
+      </section>
+      <section class="win acc" id="focSec" data-acc="s-focus" data-ac="#c8ff4d" data-ai="clock">
         <div class="win-head"><div class="win-title">Odak ve Sıkılma</div></div>
         <div id="focSet"></div>
       </section>
-      <section class="win" id="nfSec">
+      <section class="win acc" id="nfSec" data-acc="s-nf" data-ac="#ffc53d" data-ai="bell">
         <div class="win-head"><div class="win-title">Bildirimler</div></div>
         <div id="nfBox"></div>
       </section>
-      <section class="win">
+      <section class="win acc" id="syncSec" data-acc="s-sync" data-ac="#7d8cff" data-ai="cloud">
         <div class="win-head"><div class="win-title">Kayıt ve Senkron</div></div>
         <div id="syncBox"></div>
         <div class="divider"></div>
@@ -1595,8 +1679,8 @@ body.noanim .rqfx,body.noanim .rqfx::before{animation:none!important}
         <div class="row" style="margin-top:8px"><span id="bkBox" class="row"><button class="btn" type="button" data-act="bkAsk">Yedeği geri yükle</button></span></div>
         <p class="small muted" style="margin:12px 0 0" id="verTxt"></p>
       </section>
-      <section class="win" id="devWin" hidden>
-        <div class="win-head"><div class="win-title" style="color:#ffb35c;border-color:#ffa640">Geliştirici Modu</div></div>
+      <section class="win acc" id="devWin" hidden data-acc="s-dev" data-ac="#ffa640" data-ai="code">
+        <div class="win-head"><div class="win-title">Geliştirici Modu</div></div>
         <div id="devBody" style="display:grid;gap:12px"></div>
       </section>
     </div>
@@ -1877,16 +1961,16 @@ voidWalker:"Çok hızlı, iki kez vurur",starGolem:"Kristal zırh, kendini yenil
 const ENERGY_Q={F:1,E:1,D:1,C:2,B:2,A:3,S:3,SS:4,X:5};
 /* ---- class skills ---- */
 const SKILLS={
-  STR:[{id:"power",n:"Güçlü Darbe",cost:.25,t:"one",mul:2.4,d:"Hedefe %240 hasar."},
-       {id:"storm",n:"Kılıç Fırtınası",cost:.4,t:"all",mul:1.3,d:"Tüm düşmanlara %130 hasar."}],
-  VIT:[{id:"wall",n:"Kalkan Duvarı",cost:.25,t:"self",d:"2 tur boyunca aldığın hasar %60 azalır ve engellenen hasarın %30’u saldırana geri yansır."},
-       {id:"bash",n:"Kalkan Darbesi",cost:.35,t:"one",mul:1.55,stun:.6,d:"%155 hasar, %60 şansla hedefi 1 tur sersemletir."}],
-  INT:[{id:"fire",n:"Ateş Topu",cost:.3,t:"all",mul:1.4,burn:.25,d:"Tüm düşmanlara %140 büyü hasarı ve 2 tur yanık."},
-       {id:"ice",n:"Buz Mızrağı",cost:.4,t:"one",mul:2.5,sure:1,d:"Hedefe %250 büyü hasarı. Asla ıskalamaz."}],
-  AGI:[{id:"lethal",n:"Ölümcül Vuruş",cost:.3,t:"one",mul:1.5,crit:1,sure:1,d:"Kesin isabet, kesin kritik: %150 × kritik hasar."},
-       {id:"venom",n:"Zehirli Bıçak",cost:.3,t:"one",mul:1.1,poison:.45,d:"%110 hasar ve 3 tur boyunca güçlü zehir."}],
-  PER:[{id:"heal",n:"İyileştirme",cost:.35,t:"self",heal:.3,d:"Canının %30'unu yeniler ve zehri/yanığı temizler."},
-       {id:"holy",n:"Kutsal Işık",cost:.3,t:"one",mul:1.9,pierce:1,drain:.25,d:"Zırhın %30'unu delen %190 hasar; verdiğin hasarın %25'i kadar iyileşirsin."}]
+  STR:[{id:"power",n:"Güçlü Darbe",r:"F",cost:.25,t:"one",mul:2.4,d:"Hedefe %240 hasar."},
+       {id:"storm",n:"Kılıç Fırtınası",r:"F",cost:.4,t:"all",mul:1.3,d:"Tüm düşmanlara %130 hasar."}],
+  VIT:[{id:"wall",n:"Kalkan Duvarı",r:"F",cost:.25,t:"self",d:"2 tur boyunca aldığın hasar %60 azalır ve engellenen hasarın %30’u saldırana geri yansır."},
+       {id:"bash",n:"Kalkan Darbesi",r:"F",cost:.35,t:"one",mul:1.55,stun:.6,d:"%155 hasar, %60 şansla hedefi 1 tur sersemletir."}],
+  INT:[{id:"fire",n:"Ateş Topu",r:"F",cost:.3,t:"all",mul:1.4,burn:.25,d:"Tüm düşmanlara %140 büyü hasarı ve 2 tur yanık."},
+       {id:"ice",n:"Buz Mızrağı",r:"F",cost:.4,t:"one",mul:2.5,sure:1,d:"Hedefe %250 büyü hasarı. Asla ıskalamaz."}],
+  AGI:[{id:"lethal",n:"Ölümcül Vuruş",r:"F",cost:.3,t:"one",mul:1.5,crit:1,sure:1,d:"Kesin isabet, kesin kritik: %150 × kritik hasar."},
+       {id:"venom",n:"Zehirli Bıçak",r:"F",cost:.3,t:"one",mul:1.1,poison:.45,d:"%110 hasar ve 3 tur boyunca güçlü zehir."}],
+  PER:[{id:"heal",n:"İyileştirme",r:"F",cost:.35,t:"self",heal:.3,d:"Canının %30'unu yeniler ve zehri/yanığı temizler."},
+       {id:"holy",n:"Kutsal Işık",r:"F",cost:.3,t:"one",mul:1.9,pierce:1,drain:.25,d:"Zırhın %30'unu delen %190 hasar; verdiğin hasarın %25'i kadar iyileşirsin."}]
 };
 const MP_REGEN=.05;
 /* ---- relative chances: attacker vs defender ---- */
@@ -1906,7 +1990,10 @@ function pCombat(tot,L,job,mods){
     red:Math.min(.6,tot.VIT/(tot.VIT+100)),spd:5+tot.AGI,per:tot.PER||0,agi:tot.AGI||0,critB:mods.crit||0,dodgeB:mods.dodge||0,
     st:Object.assign({},tot),cls:job||null};
 }
-function skCost(C,sk){return Math.ceil((C.mpMax||20)*sk.cost)}
+/* Yetenek rütbeleri: mana maliyeti sabittir, rütbeye göre belirlenir (cost = rütbe içindeki ağırlık, 0,3 = rütbenin taban maliyeti). */
+const SK_MP={F:10,E:22,D:45,C:90,B:170,A:300,S:520,SS:900,X:1500};
+function skRank(sk){return SK_MP[sk&&sk.r]?sk.r:"F"}
+function skCost(C,sk){return Math.max(1,Math.round(SK_MP[skRank(sk)]*(sk.cost||.3)/.3))}
 function skPow(C){const t=C.st||{},m=C.atkMod||1;let b;
   if(C.cls==="VIT") b=C.atk+(t.VIT||0)*.38*m;
   else if(C.cls==="AGI") b=C.atk;
@@ -2368,6 +2455,7 @@ function postMigrate(){
   if(S.mig<13){S.mig=13;S.fday=S.fday||{};
     if(!Object.keys(S.fday).length) (S.qlog||[]).forEach(e=>{if(e.rp==="focus"&&e.t&&e.fs){const k=todayKey(new Date(e.t));S.fday[k]=(S.fday[k]||0)+e.fs}});
     if(S.timer){S.timer.st0=S.timer.st0||S.timer.st;S.timer.laps=S.timer.laps||[];S.timer.btAcc=S.timer.btAcc||0}}
+  if(S.mig<15){S.mig=15;S.sysNote15=1}
   if(S.mig<14){S.mig=14;if(S.timer&&S.timer.bfMax==null) S.timer.bfMax=S.timer.btAcc?Math.min(.5,.5*Math.pow(Math.min(1,(S.timer.btAcc/60000)/(2*Math.max(20,(S.focus&&S.focus.cur)||25))),2)):0}
 }
 
@@ -2421,7 +2509,8 @@ function hLeft(ms){ms=Math.max(0,ms);const h=Math.floor(ms/3600000),m=Math.ceil(
 const RW_MUL=1/3,RW_DIV=3;
 function rwN(v){return v>0?Math.max(1,Math.round(v*RW_MUL)):v}
 function rwCut(o){const r=Object.assign({},o);["xp","gold","st"].forEach(k=>{if(k in r) r[k]=rwN(r[k])});return r}
-function questReward(q){return rwCut(questReward0(q))}
+function isDers(q){return !!(q&&q.ders)}
+function questReward(q){return isDers(q)?{xp:0,gold:0,st:0}:rwCut(questReward0(q))}
 function questReward0(q){
   const b=bonuses(),jb=jobBonus(q.stat),L=S.level;
   return {xp:Math.round(Q_XP[q.rank]*lvMul(1.1,L)*(1+(b.xp+jb)/100)),gold:Math.round(Q_GOLD[q.rank]*lvMul(1.2,L)*(1+(b.gold+jb)/100)),st:Math.round(Q_STAT[q.rank]*lvMul(1.2,L))};
@@ -4010,6 +4099,31 @@ function fxHelp(){
   overlay(head("Örnek Formül")+`<p class="help" style="margin:-4px 0 12px">Görevin <b>tipik hâline</b> göre her ölçüte 0–3 puan ver.</p><div><table class="fxt"><thead><tr><th>Puan</th><th>Süre</th><th>Zorluk (zihinsel ya da fiziksel)</th><th>İsteksizlik</th></tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
 <p class="sec-label" style="margin:16px 0 0">Üç puanı topla ve rütbeye çevir</p><div class="fxmap">${map.map(([p,r])=>`<span><b>${p}</b> → ${rbadge(r,20)} ${r}</span>`).join("")}</div>`);
 }
+function dersSetBody(){
+  const ds=dersSt(),sw=DERS_COLS.map(c=>`<button type="button" class="dsw${ds.c.toLowerCase()===c?" on":""}" style="--dc:${c}" data-dcol="${c}" aria-label="Renk ${c}"></button>`).join("");
+  const sample={id:"__ds",name:"Örnek: Biyoloji 3. ünite",stat:"INT",rank:"F",ders:true,times:1,count:null,unit:""};
+  return `<p class="sec-label" style="margin:0 0 8px">Renk</p><div class="dsws">${sw}<label class="dsw dcust${DERS_COLS.includes(ds.c.toLowerCase())?"":" on"}" style="--dc:${ds.c}" title="Özel renk"><input type="color" id="dCol" value="${ds.c}" aria-label="Özel renk">+</label></div>
+<p class="sec-label" style="margin:14px 0 8px">Arka plan</p><div class="dbgs">${DERS_BGS.map(([k,n])=>`<button type="button" class="dbgb dq dbg-${k}${ds.bg===k?" on":""}" style="--dc:${ds.c}" data-dbg="${k}"><span>${n}</span></button>`).join("")}</div>
+<p class="sec-label" style="margin:14px 0 8px">Önizleme</p><div class="qlist dsprev">${dqHtml(sample,"").replace(/ data-q="__ds"/,"").replace(/<button type="button" class="qstudy[^]*?<\/button>/,"")}</div>
+<div class="row" style="justify-content:center;margin-top:10px"><button type="button" class="btn sm" data-dreset="1">Varsayılana dön</button></div>`;
+}
+function dersSet(){overlay(head("Ders Görünümü")+`<p class="help" style="margin:-4px 0 12px">Ders görevlerinin rengi ve arka planı. Rütbe renklerinden farklı bir şey seç ki görev listesinde hemen ayırt edilsin.</p><div id="dsBody" style="text-align:left">${dersSetBody()}</div>`)}
+function dersUpd(o){S.dersSt=Object.assign({},dersSt(),o);commit();const b=$("dsBody");if(b) b.innerHTML=dersSetBody();dersForm()}
+document.addEventListener("input",e=>{if(e.target&&e.target.id==="dCol"){const c=e.target.value;const l=e.target.closest(".dcust");if(l) l.style.setProperty("--dc",c)}});
+document.addEventListener("change",e=>{if(e.target&&e.target.id==="dCol"&&/^#[0-9a-f]{6}$/i.test(e.target.value)) dersUpd({c:e.target.value.toLowerCase()})});
+function statHelp(){
+  const P=playerCombatant(),R=refFoe(),pc=x=>"%"+Math.round(x*100),t=k=>fmt(total(k));
+  const atkTxt={STR:"Saldırı = 3 + STR",VIT:"Saldırı = 3 + STR",PER:"Saldırı = 3 + STR",AGI:"Saldırı = 3 + STR×0,6 + AGI×0,5",INT:"Saldırı = 3 + INT×0,85 + STR×0,2 (büyü)"}[S.job||"STR"];
+  const rows=[
+    ["STR",[`<b>Saldırı gücü.</b> ${atkTxt}.`,"Büyücü dışındaki tüm sınıflarda vuruşlarının ana kaynağı; yetenek hasarları da saldırı gücünden hesaplanır."],`Saldırı: <b>${fmt(P.atk)}</b>`],
+    ["VIT",["<b>Can:</b> 5 + VIT×5 + Seviye×8.","<b>Hasar azaltma:</b> VIT ÷ (VIT + 100), en fazla %60.","Tank yeteneklerinin gücüne VIT×0,38 eklenir."],`Can: <b>${fmt(P.max)}</b> · Azaltma: <b>${pc(P.red)}</b>`],
+    ["AGI",["<b>Hız:</b> 5 + AGI. Turda kimin önce vuracağını belirler.","<b>Kaçınma:</b> rakibin Algısına karşı.","<b>Çift vuruş:</b> rakibin Çevikliğine karşı (en fazla %35).","Assassin saldırısına AGI×0,5 eklenir."],`Kaçınma: <b>${pc(1-hitCh(R,P,false))}</b> · Çift vuruş: <b>${pc(dblCh(P,R))}</b>`],
+    ["INT",["<b>Mana:</b> INT×3 + Seviye×4 (en az 20). Daha çok mana, savaşta daha çok yetenek kullanmak demek; mana her tur %5 yenilenir.","Büyücü saldırısının ana kaynağı (INT×0,85), Şifacı yeteneklerine INT×0,3 eklenir."],`Mana: <b>${fmt(P.mpMax)}</b>`],
+    ["PER",["<b>İsabet:</b> rakibin Çevikliğine karşı (denk rakibe %90).","<b>Kritik şansı:</b> rakibin Algısına karşı (denk rakibe %15, en fazla %50). Kritik vuruş ×1,6 hasar.","Şifacı yeteneklerinin ana kaynağı (PER×0,8)."],`İsabet: <b>${pc(hitCh(P,R,!!P.magic))}</b> · Kritik: <b>${pc(critCh(P,R))}</b>`]
+  ];
+  overlay(head("Statlar")+`<p class="help" style="margin:-4px 0 12px">Her stat puanı <b>5 savaş gücü</b>, her seviye <b>25 savaş gücü</b> verir. Sınıfının statındaki görevler ekstra XP ve gold kazandırır. Değerler ekipmanla birlikte toplamdır; şans oranları <b>${curRank()} rütbe denk bir rakibe</b> karşıdır.</p>
+<div class="sthelp">${rows.map(([k,ls,now])=>{const s=SC[k];return `<div class="sth" style="--sc:${s.c}"><div class="sth-h">${ico(k,s.c,18)}<b>${k}</b><span>${s.n}</span><em>${t(k)}</em></div><ul>${ls.map(l=>`<li>${l}</li>`).join("")}</ul><div class="sth-now">Şu an · ${now}</div></div>`}).join("")}</div>`);
+}
 function head(t,warn){return `<div class="win-head"><div class="win-title"${warn?' style="color:#ff8ea0;border-color:#ff4a67"':''}><span class="bang">!</span>${t}</div></div>`}
 
 /* ================= CORE ACTIONS ================= */
@@ -4080,18 +4194,30 @@ function undoQuest(q){
   const d=arr.pop();if(!arr.length) delete S.done[q.id];
   if(q.once){delete q.doneAt;delete q.doneRw}
   if(Array.isArray(S.qlog)){const t0=parseKey(S.day).getTime();for(let i=S.qlog.length-1;i>=0;i--){const e=S.qlog[i];if(e.id===q.id&&e.t>=t0){S.qlog.splice(i,1);break}}}
+  if(d.ders) S.cnt.ders=Math.max(0,(S.cnt.ders|0)-1);
   subXp(d.xp);subGold(d.gold);S.energy-=(d.en||0);
   S.base[q.stat]=Math.max(0,S.base[q.stat]-d.st);S.cnt.quests=Math.max(0,S.cnt.quests-1);if(S.todaySt&&S.todaySt[q.stat]) S.todaySt[q.stat]=Math.max(0,S.todaySt[q.stat]-d.st);
   toast("Geri alındı: "+esc(q.name));
 }
 function qlogAdd(q,rw,o){
   if(!Array.isArray(S.qlog)) S.qlog=[];
-  const e={t:Date.now(),id:q.id,n:q.name,c:q.count||null,u:q.unit||"",s:q.stat,r:q.rank,rp:qRep(q),k:qCount(q),tt:qTimes(q),xp:rw.xp,g:rw.gold,st:rw.st};
+  const e={t:Date.now(),id:q.id,n:q.name,c:q.count||null,u:q.unit||"",s:q.stat,r:isDers(q)?"DERS":q.rank,rp:qRep(q),k:qCount(q),tt:qTimes(q),xp:rw.xp,g:rw.gold,st:rw.st};
   if(o&&o.fs) e.fs=Math.round(o.fs/1000);if(o&&o.md) e.md=o.md;if(rw.bt){e.bt=rw.bt;e.bf=rw.bf}
   S.qlog.push(e);if(S.qlog.length>QLOG_MAX) S.qlog=S.qlog.slice(-QLOG_MAX);
 }
 function doQuest(q,o){
   o=o||{};
+  if(isDers(q)){
+    const rw={xp:0,gold:0,st:0,en:0,ders:1};
+    (S.done[q.id]=Array.isArray(S.done[q.id])?S.done[q.id]:[]).push(rw);
+    S.cnt.quests++;S.cnt.ders=(S.cnt.ders|0)+1;sfx.quest();
+    const k=qCount(q),t=qTimes(q);
+    if(q.once&&k>=t){q.doneAt=Date.now();q.doneRw={xp:0,gold:0,st:0}}
+    qlogAdd(q,rw,o);
+    toast(`[Ders tamamlandı${t>1?` ${k}/${t}`:""}] ${esc(q.name)} · <span class="muted">ödülü kronometreden alırsın</span>`);
+    checkClear();
+    return {rw,bonus:null};
+  }
   const rw=questReward(q);let bonus=null;
   if(o.bf>0){bonus={xp:Math.round(rw.xp*o.bf),gold:Math.round(rw.gold*o.bf),st:Math.round(rw.st*o.bf)};rw.xp+=bonus.xp;rw.gold+=bonus.gold;rw.st+=bonus.st;rw.bf=Math.round(o.bf*1000)/10;rw.bt=Math.round((o.bt||0)/1000)}
   (S.done[q.id]=Array.isArray(S.done[q.id])?S.done[q.id]:[]).push(rw);
@@ -4107,6 +4233,7 @@ function doQuest(q,o){
   return {rw,bonus};
 }
 function toggleQuest(id){
+  if(pulling&&S.day!==todayKey()){toast("Eşitleniyor, bir saniye…");return}
   const q=S.quests.find(x=>x.id===id);if(!q||!activeToday(q)) return;
   if(qCount(q)>=qTimes(q)) undoQuest(q);else doQuest(q);
   commit();
@@ -4299,7 +4426,7 @@ function bResume(){
   if(!alive(B.enemies).length){if(B.type==="arena"||B.wave>=B.total){bEnd("win");return}spawnWave(B);B.queue=[];B.await=false}
   if(B.await){if(S.autoB) bTimer=setTimeout(bAuto,600)}else bTimer=setTimeout(bStep,400);
 }
-function bSave(){S.updatedAt=Date.now();cacheLocal();if(ref){clearTimeout(saveT);saveT=setTimeout(flush,900)}}
+function bSave(){S.updatedAt=Math.max(Date.now(),(S.updatedAt||0)+1);markDirty(2);cacheLocal();if(ref){clearTimeout(saveT);saveT=setTimeout(flush,900)}}
 function bStartRound(){const B=S.battle;if(!B) return;
   if(B.type==="arena"&&B.round>=ARENA_ROUNDS){const P=B.party[0],E=B.enemies[0];B.timeout=1;B.log.push({t:"Süre doldu!",c:"wave"});bRender();bTimer=setTimeout(()=>bEnd(P.hp/P.max>=E.hp/E.max?"win":"lose"),ANIM?700:250);return}
   B.round++;B.queue=roundOrder(B);bStep()}
@@ -4522,7 +4649,7 @@ function renderHome(){
   const act=S.quests.filter(activeToday),open=act.filter(q=>qCount(q)<qTimes(q)),done=act.length-open.length;
   let tq="";
   if(S.penalty.active&&!S.penalty.done) tq+=`<button type="button" class="tqrow pen" data-penalty="1"><span class="tqbox"></span><span class="tqn">CEZA: ${esc(S.penaltyText)}</span><span class="tqx" style="color:var(--red)">zorunlu</span></button>`;
-  tq+=open.slice(0,5).map(q=>{const rw=questReward(q),k=qCount(q),tt=qTimes(q);return `<button type="button" class="tqrow" data-q="${q.id}"><span class="tqbox">${k?`<b>${k}</b>`:""}</span>${remb(q.rank,20)}<span class="tqn">${esc(q.name)}${tt>1?` <span class="muted">${k}/${tt}</span>`:""}</span><span class="tqs" style="color:${SC[q.stat].c}">+${rw.st} ${q.stat}</span><span class="tqx">+${fmt(rw.xp)} XP</span></button>`}).join("");
+  tq+=open.slice(0,5).map(q=>{const rw=questReward(q),k=qCount(q),tt=qTimes(q);if(isDers(q)){const ds=dersSt();return `<button type="button" class="tqrow tqders" style="--dc:${ds.c}" data-q="${q.id}"><span class="tqbox">${k?`<b>${k}</b>`:""}</span><span class="tqdi">${accSvg("book",ds.c,16)}</span><span class="tqn">${esc(q.name)}${tt>1?` <span class="muted">${k}/${tt}</span>`:""}</span><span class="tqs" style="color:${ds.c}">DERS</span><span class="tqx">${ico("clock",ds.c,13)}</span></button>`}return `<button type="button" class="tqrow" data-q="${q.id}"><span class="tqbox">${k?`<b>${k}</b>`:""}</span>${remb(q.rank,20)}<span class="tqn">${esc(q.name)}${tt>1?` <span class="muted">${k}/${tt}</span>`:""}</span><span class="tqs" style="color:${SC[q.stat].c}">+${rw.st} ${q.stat}</span><span class="tqx">+${fmt(rw.xp)} XP</span></button>`}).join("");
   if(!act.length) tq+=`<div class="small muted" style="padding:6px 0">Bugün için görev yok.</div>`;
   else if(!open.length) tq+=`<div class="tqdone">${ico("title","#6dffb3",16)} Bugünün tüm görevleri tamamlandı!</div>`;
   tq+=`<div class="tqfoot"><span class="small muted">${done?`${done} görev tamamlandı`:""}${open.length>5?` · +${open.length-5} görev daha`:""}</span><button class="btn sm primary" type="button" data-go="quests">Tüm görevler →</button></div>`;
@@ -4573,8 +4700,8 @@ function qfCount(){const f=qfGet();return ["type","st","stat","rank"].filter(k=>
 const QF_SORT=[["def","Özel sıra"],["todo","Bekleyenler önce"],["name","Ada göre (A–Z)"],["rankd","Zorluk: yüksekten"],["ranka","Zorluk: düşükten"],["xp","XP ödülü"],["stat","Stata göre"]];
 function qfApply(list,useSt){
   const f=qfGet(),idx=new Map(S.quests.map((q,i)=>[q.id,i])),ix=q=>idx.get(q.id)||0;
-  const L=list.filter(q=>(f.type==="all"||(f.type==="habit"?!q.once:!!q.once))&&(f.stat==="all"||q.stat===f.stat)&&(f.rank==="all"||q.rank===f.rank)&&(!useSt||f.st==="all"||(f.st==="done"?qFull(q):!qFull(q))));
-  const si=q=>STATS.findIndex(x=>x.k===q.stat),ri=q=>QR.indexOf(q.rank);
+  const L=list.filter(q=>(f.type==="all"||(f.type==="ders"?isDers(q):f.type==="habit"?!q.once:!!q.once))&&(f.stat==="all"||q.stat===f.stat)&&(f.rank==="all"||(!isDers(q)&&q.rank===f.rank))&&(!useSt||f.st==="all"||(f.st==="done"?qFull(q):!qFull(q))));
+  const si=q=>STATS.findIndex(x=>x.k===q.stat),ri=q=>isDers(q)?-1:QR.indexOf(q.rank);
   const C={def:(a,b)=>ix(a)-ix(b),todo:(a,b)=>(qFull(a)-qFull(b))||ix(a)-ix(b),name:(a,b)=>a.name.localeCompare(b.name,"tr"),rankd:(a,b)=>ri(b)-ri(a)||ix(a)-ix(b),ranka:(a,b)=>ri(a)-ri(b)||ix(a)-ix(b),xp:(a,b)=>questReward(b).xp-questReward(a).xp||ix(a)-ix(b),stat:(a,b)=>si(a)-si(b)||ix(a)-ix(b)}[f.sort]||((a,b)=>ix(a)-ix(b));
   return L.slice().sort(C);
 }
@@ -4589,7 +4716,7 @@ function renderQF(){
   $("qfBar").innerHTML=`<button type="button" class="btn sm" data-qfopen="1" aria-expanded="${qfOpen}">${ico("level","#62d2ff",14)} Filtrele${n?` <b>(${n})</b>`:""} ${qfOpen?"▴":"▾"}</button><button type="button" class="btn sm" data-qord="on">⇅ Sırala</button><span class="qf-sum">${(QF_SORT.find(x=>x[0]===f.sort)||QF_SORT[0])[1]} · ${shown===all?`${all} görev`:`${shown} / ${all} görev gösteriliyor`}</span>${n?`<button type="button" class="btn sm" data-qfreset="1">Temizle</button>`:""}`;
   const P=$("qfPanel");P.hidden=!qfOpen;if(!qfOpen){P.innerHTML="";return}
   const ch=(k,list)=>`<div class="chips">${list.map(x=>`<button type="button" class="chipbtn" data-qf="${k}:${x[0]}" aria-pressed="${String(f[k])===String(x[0])}">${x[1]}</button>`).join("")}</div>`;
-  P.innerHTML=`<div class="qf-row"><span>Tür</span>${ch("type",[["all","Tümü"],["habit","Alışkanlıklar"],["once","Tek seferlik"]])}</div>
+  P.innerHTML=`<div class="qf-row"><span>Tür</span>${ch("type",[["all","Tümü"],["habit","Alışkanlıklar"],["once","Tek seferlik"],["ders","Ders"]])}</div>
 <div class="qf-row"><span>Durum (bugün)</span>${ch("st",[["all","Tümü"],["todo","Bekleyen"],["done","Tamamlanan"]])}</div>
 <div class="qf-row"><span>Stat</span>${ch("stat",[["all","Tümü"]].concat(STATS.map(x=>[x.k,`<span style="color:${x.c}">${x.k}</span>`])))}</div>
 <div class="qf-row"><span>Zorluk</span>${ch("rank",[["all","Tümü"]].concat(QR.map(r=>[r,remb(r,18)+r])))}</div>
@@ -4598,11 +4725,30 @@ function renderQF(){
 <div class="qf-row"><span>Önce gösterilen${f.sep?"":" (ayırıcı açıkken geçerli)"}</span>${ch("first",[["habit","Alışkanlıklar"],["once","Tek seferlikler"]])}</div>
 <p class="help" style="margin:0">Görevleri istediğin sıraya koymak için <b>Sırala</b>'ya bas. Özel sıra, Sırala modunda belirlediğin sıradır.</p>`;
 }
-function rqCls(q){return "rq rq"+Math.max(0,TIERS.indexOf(q.rank))}
-function rqFx(q){return TIERS.indexOf(q.rank)>=4?`<i class="rqfx" aria-hidden="true"></i>`:""}
+const DERS_DEF={c:"#d9ff3d",bg:"note"};
+const DERS_COLS=["#d9ff3d","#ff4fd8","#2ff0d2","#ffe14d","#ff7d5c","#8cf2ff"];
+const DERS_BGS=[["note","Defter"],["grid","Kareli"],["dots","Noktalı"],["board","Kara tahta"],["stripe","Çizgili"],["plain","Düz"]];
+function dersSt(){const o=Object.assign({},DERS_DEF,S.dersSt||{});if(!/^#[0-9a-f]{6}$/i.test(o.c)) o.c=DERS_DEF.c;if(!DERS_BGS.some(b=>b[0]===o.bg)) o.bg=DERS_DEF.bg;return o}
+function dersBadge(sz){const c=dersSt().c;return `<span class="dbadge" style="--dc:${c}">${accSvg("book",c,sz||12)}DERS</span>`}
+function qBadge(q,sz){return isDers(q)?dersBadge():rbadge(q.rank,sz)}
+function rqCls(q){return isDers(q)?"":"rq rq"+Math.max(0,TIERS.indexOf(q.rank))}
+function rqFx(q){return !isDers(q)&&TIERS.indexOf(q.rank)>=4?`<i class="rqfx" aria-hidden="true"></i>`:""}
+function dqHtml(q,repInfo){
+  const ds=dersSt(),s=SC[q.stat],unit=q.unit?" "+esc(q.unit):"",gone=onceShown(q);
+  const k=gone?qTimes(q):qCount(q),t=qTimes(q),full=k>=t;
+  const desc=q.count?(t>1?`${q.count}${unit} · günde ${t} kez`:`${full?q.count:0}/${q.count}${unit}`):(t>1?`Günde ${t} kez`:"");
+  const boxIn=full?CHECK:(k>0?`<b class="pn">${k}</b>`:CHECK);
+  const note=gone||(q.once&&full&&q.doneAt)?`<span class="qleft">${hLeft(DAY_MS-(Date.now()-q.doneAt))} sonra listeden kalkar</span>`:(q.once?`<span>Tamamlayınca 24 saat sonra kalkar</span>`:`<span>Gece yarısına kadar</span>`);
+  const run=S.timer&&S.timer.qid===q.id;
+  const main=`<button type="button" class="quest dq dbg-${ds.bg}${full?" done":""}${k>0&&!full?" partial":""}${gone?" gone":""}" style="--dc:${ds.c}"${gone?' aria-disabled="true"':` data-q="${q.id}"`} aria-pressed="${full}"><span class="box">${boxIn}</span><span><div class="qname">${esc(q.name)}</div>${desc?`<div class="qdesc">${desc}</div>`:""}${t>1&&!gone?`<div class="reps">${Array.from({length:t},(_,i)=>`<i class="${i<k?"on":""}"></i>`).join("")}<span>${k}/${t}</span></div>`:""}<div class="qmeta">${dersBadge()}<span class="stgain" style="--sc:${s.c}">${ico(q.stat,s.c,13)}${q.stat}</span>${repInfo}${note}</div></span><span class="qright dqr"><span class="dqr-k">${ico("clock",ds.c,15)}Kronometre</span><span class="dqr-s">ödül süreye göre</span></span></button>`;
+  const ex=t>1&&k>0&&!full&&!gone?`<button type="button" class="qminus" data-qundo="${q.id}" aria-label="Bir tekrarı geri al">−1</button>`:"";
+  const st=gone?"":`<button type="button" class="qstudy${run?" run":""}" style="--dc:${ds.c}" data-dstudy="${q.id}" aria-label="${esc(q.name)} için kronometre başlat">${ico("clock",run?"#08101c":ds.c,18)}<span>${run?"Sürüyor":"Çalış"}</span></button>`;
+  return ex||st?`<div class="qwrap">${main}${ex}${st}</div>`:main;
+}
 function qItemHtml(q){
   const s=SC[q.stat],unit=q.unit?" "+esc(q.unit):"";
   const repInfo=q.once?`<span class="qtag">Tek seferlik</span>`:(Array.isArray(q.days)&&q.days.length&&q.days.length<7?`<span class="qtag">${q.days.slice().sort().map(d=>DAYS[d]).join(" · ")}</span>`:"");
+  if(isDers(q)) return dqHtml(q,repInfo);
   if(onceShown(q)){const rw=q.doneRw||questReward(q);
     return `<button type="button" class="quest done gone ${rqCls(q)}" style="--rc:${RCOL[q.rank]}" aria-pressed="true" aria-disabled="true">${rqFx(q)}<span class="box">${CHECK}</span><span><div class="qname">${esc(q.name)}</div>${q.count?`<div class="qdesc">${q.count}/${q.count}${unit}</div>`:""}<div class="qmeta">${rbadge(q.rank)}<span class="stgain" style="--sc:${s.c}">${ico(q.stat,s.c,13)}+${rw.st} ${q.stat}</span>${repInfo}<span class="qleft">${hLeft(DAY_MS-(Date.now()-q.doneAt))} sonra listeden kalkar</span></div></span><span class="qright"><span class="qxp">+${rw.xp} XP</span><span class="qgold">+${rw.gold}G</span></span></button>`}
   const k=qCount(q),t=qTimes(q),full=k>=t,arr=S.done[q.id],rw=full&&arr?arr[arr.length-1]:questReward(q);
@@ -4624,7 +4770,7 @@ function ordHtml(){
   let h=`<p class="help" style="margin:0 0 4px">${f.sep?"Ayırıcı açık: alışkanlıklar ve tek seferlikler yalnızca kendi bölümlerinde sıralanır.":"Ayırıcı kapalı: tüm görevleri serbestçe sıralayabilirsin."}</p>`;
   D.forEach((q,i)=>{const p=D[i-1],n=D[i+1],up=p&&(!f.sep||!!p.once===!!q.once),dn=n&&(!f.sep||!!n.once===!!q.once);
     if(f.sep&&p&&!!p.once!==!!q.once) h+=`<div class="qsep">${q.once?"Tek seferlik":"Alışkanlıklar"}</div>`;
-    h+=`<div class="rord${qVisible(q)?"":" off"}"><div style="min-width:0"><div class="qname" style="font-size:14.5px">${esc(q.name)}</div><div class="qmeta">${rbadge(q.rank)}<span class="qtag">${q.once?"Tek seferlik":(Array.isArray(q.days)&&q.days.length&&q.days.length<7?q.days.slice().sort().map(d=>DAYS[d]).join(" · "):"Her gün")}</span></div></div><button type="button" class="btn sm" data-qmv="${q.id}:-1" aria-label="Yukarı taşı"${up?"":" disabled"}>▲</button><button type="button" class="btn sm" data-qmv="${q.id}:1" aria-label="Aşağı taşı"${dn?"":" disabled"}>▼</button></div>`});
+    h+=`<div class="rord${qVisible(q)?"":" off"}"><div style="min-width:0"><div class="qname" style="font-size:14.5px">${esc(q.name)}</div><div class="qmeta">${qBadge(q)}<span class="qtag">${q.once?"Tek seferlik":(Array.isArray(q.days)&&q.days.length&&q.days.length<7?q.days.slice().sort().map(d=>DAYS[d]).join(" · "):"Her gün")}</span></div></div><button type="button" class="btn sm" data-qmv="${q.id}:-1" aria-label="Yukarı taşı"${up?"":" disabled"}>▲</button><button type="button" class="btn sm" data-qmv="${q.id}:1" aria-label="Aşağı taşı"${dn?"":" disabled"}>▼</button></div>`});
   return h+`<div style="text-align:center;margin-top:12px"><button type="button" class="btn primary" data-qord="done">Tamam</button></div>`;
 }
 function renderQFocus(){
@@ -4645,13 +4791,13 @@ function renderQuests(){
   if(!vis.length) html+=`<div class="empty-note">Bugün için görev yok. Aşağıdan görev ekle.</div>`;
   else if(!L.length) html+=`<div class="empty-note">Bu filtreye uyan görev yok. <button type="button" class="btn sm" data-qfreset="1">Filtreyi temizle</button></div>`;
   const off=qfApply(S.quests.filter(q=>!qVisible(q)&&!q.finished),false);
-  if(off.length) html+=`<p class="sec-label" style="margin:10px 0 0">Bugün olmayan görevler</p>`+off.map(q=>`<div class="edit-row off"><div><div class="qname" style="font-size:14.5px">${esc(q.name)}</div><div class="qmeta">${rbadge(q.rank)}${Array.isArray(q.days)&&q.days.length?`<span class="qtag">${q.days.slice().sort().map(d=>DAYS[d]).join(" · ")}</span>`:""}</div></div></div>`).join("");
+  if(off.length) html+=`<p class="sec-label" style="margin:10px 0 0">Bugün olmayan görevler</p>`+off.map(q=>`<div class="edit-row off"><div><div class="qname" style="font-size:14.5px">${esc(q.name)}</div><div class="qmeta">${qBadge(q)}${Array.isArray(q.days)&&q.days.length?`<span class="qtag">${q.days.slice().sort().map(d=>DAYS[d]).join(" · ")}</span>`:""}</div></div></div>`).join("");
   }
   $("qlist").innerHTML=html;
   const dq=dailyQuests();
   $("qDone").textContent=dq.filter(q=>qCount(q)>=qTimes(q)).length+"/"+dq.length;
   $("qCleared").hidden=!S.cleared;$("qExample").hidden=!S.example;
-  const edit=q=>{const t=qTimes(q);return `<div class="edit-row"><div><div class="qname" style="font-size:14.5px">${esc(q.name)}${q.count?` <span class="muted">· ${q.count}${q.unit?" "+esc(q.unit):""}</span>`:""}${q.once&&q.doneAt?` <span class="own">· TAMAMLANDI</span> <span class="qleft">· ${hLeft(DAY_MS-(Date.now()-q.doneAt))} sonra kalkar</span>`:""}</div><div class="qmeta">${rbadge(q.rank)}<span style="color:${SC[q.stat].c};display:flex;align-items:center;gap:4px">${ico(q.stat,SC[q.stat].c,13)}${q.stat} · ${SC[q.stat].n}</span><span class="qtag">${q.once?"Tek seferlik":(Array.isArray(q.days)&&q.days.length&&q.days.length<7?q.days.slice().sort().map(d=>DAYS[d]).join(" · "):"Her gün")}${t>1?` · günde ${t} kez`:""}</span></div></div><button class="btn sm danger" type="button" data-delq="${q.id}">Sil</button></div>`};
+  const edit=q=>{const t=qTimes(q);return `<div class="edit-row"><div><div class="qname" style="font-size:14.5px">${esc(q.name)}${q.count?` <span class="muted">· ${q.count}${q.unit?" "+esc(q.unit):""}</span>`:""}${q.once&&q.doneAt?` <span class="own">· TAMAMLANDI</span> <span class="qleft">· ${hLeft(DAY_MS-(Date.now()-q.doneAt))} sonra kalkar</span>`:""}</div><div class="qmeta">${qBadge(q)}<span style="color:${SC[q.stat].c};display:flex;align-items:center;gap:4px">${ico(q.stat,SC[q.stat].c,13)}${q.stat} · ${SC[q.stat].n}</span><span class="qtag">${q.once?"Tek seferlik":(Array.isArray(q.days)&&q.days.length&&q.days.length<7?q.days.slice().sort().map(d=>DAYS[d]).join(" · "):"Her gün")}${t>1?` · günde ${t} kez`:""}</span></div></div><button class="btn sm danger" type="button" data-delq="${q.id}">Sil</button></div>`};
   const EL=qfApply(S.quests,false);
   $("qEdit").innerHTML=qGroup(EL,edit)||`<div class="empty-note">${S.quests.length?"Bu filtreye uyan görev yok.":"Görev yok."}</div>`;
 }
@@ -4738,7 +4884,7 @@ document.addEventListener("change",e=>{const id=e.target&&e.target.id;if(!/^fs[C
   const g=k=>Math.max(0,Math.round(+$(k).value||0));const cur=Math.max(1,Math.min(23,g("fsCH"))*60+Math.min(59,g("fsCM"))),want=clamp(Math.min(24,g("fsWH"))*60+Math.min(59,g("fsWM")),20,1440);
   S.focus={cur,want};commit();renderFocusSet()});
 function renderSettings(){
-  const a=S.app;renderFocusSet();
+  const a=S.app;renderFocusSet();renderConv();
   $("swGender").innerHTML=[["m","Erkek"],["f","Kadın"]].map(g=>`<button type="button" data-gender="${g[0]}" aria-selected="${(a.gender||"m")===g[0]}">${g[1]}</button>`).join("");
   $("swBuild").innerHTML=BUILDS.map(g=>`<button type="button" data-build="${g[0]}" aria-selected="${(a.build||"bal")===g[0]}">${g[1]}</button>`).join("");
   $("swStyle").innerHTML=stylesFor(a.gender).map((s,i)=>`<button type="button" data-style="${i}" aria-selected="${a.style===i}">${s}</button>`).join("");
@@ -5245,7 +5391,7 @@ function fmtMin(m){m=Math.round(m);const h=Math.floor(m/60),r=m%60;return h?`${h
 function hhmm(t){const d=new Date(t);return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")}
 function mmss(ms){const t=Math.ceil(ms/1000),h=Math.floor(t/3600),m=Math.floor(t%3600/60),s=t%60,p=x=>String(x).padStart(2,"0");return h?`${h}:${p(m)}:${p(s)}`:`${p(m)}:${p(s)}`}
 function mmssUp(ms){return mmss(Math.floor(ms/1000)*1000)}
-let focOpen=false,wakeL=null,tmT=null,focConf=false,sessStat=null,tmLast=25,sessNfT=null;
+let sessQid=null,focOpen=false,wakeL=null,tmT=null,focConf=false,sessStat=null,tmLast=25,sessNfT=null;
 function askNotif(){try{if("Notification" in window&&Notification.permission==="default") Notification.requestPermission().catch(()=>{})}catch(e){}}
 function notify(t,b){
   try{navigator.vibrate&&navigator.vibrate([220,120,220])}catch(e){}
@@ -5299,11 +5445,13 @@ async function wakeOn(){
 function wakeCheck(){if(!wakeWant()){wakeOff();return}if(document.hidden) return;if(!wakeHeld()||!wakeVid||wakeVid.paused) wakeOn()}
 function wakeOff(){clearInterval(wakeT);wakeT=null;try{if(wakeL){const l=wakeL;wakeL=null;l.release().catch(()=>{})}}catch(e){wakeL=null}wakeVidOff()}
 function schedTimer(){clearTimeout(tmT);if(S.timer&&!S.timer.paused&&!tmIsSw(S.timer)){const l=tmLeft();tmT=setTimeout(timerTick,Math.min(l+80,2147000000))}}
-function sessPick(mode){
+function sessPick(mode,keepQ){
   if(S.timer){openFocus();return}
+  if(!keepQ) sessQid=null;
+  const dq=sessQid&&S.quests.find(x=>x.id===sessQid);
   if(!sessStat) sessStat=S.job&&SC[S.job]?S.job:"INT";
   const sw=mode==="sw";
-  overlay(head("Odak Oturumu")+`<div class="big" style="font-size:26px;letter-spacing:.1em;color:${sw?"#6dffb3":"#62d2ff"};text-shadow:0 0 18px ${sw?"rgba(109,255,179,.6)":"rgba(98,210,255,.7)"}">${sw?"KRONOMETRE":"ZAMANLAYICI"}</div><p class="small muted">${sw?"İleri sayar; işin bitince <b>Bitir</b>'e bas.":"Süre dolunca oturum kendiliğinden biter."} Ödül odaklandığın süreye göre verilir.</p>
+  overlay(head("Odak Oturumu")+`<div class="big" style="font-size:26px;letter-spacing:.1em;color:${sw?"#6dffb3":"#62d2ff"};text-shadow:0 0 18px ${sw?"rgba(109,255,179,.6)":"rgba(98,210,255,.7)"}">${sw?"KRONOMETRE":"ZAMANLAYICI"}</div><p class="small muted">${sw?"İleri sayar; işin bitince <b>Bitir</b>'e bas.":"Süre dolunca oturum kendiliğinden biter."} Ödül odaklandığın süreye göre verilir.</p>${dq?`<div class="dsess" style="--dc:${dersSt().c}">${dersBadge()}<b>${esc(dq.name)}</b></div>`:""}
 <p class="sec-label" style="margin-top:14px">Geliştireceği stat</p><div class="chips" style="justify-content:center;margin:0">${STATS.map(x=>`<button type="button" class="chipbtn" data-sstat="${x.k}" aria-pressed="${sessStat===x.k}"><span style="color:${x.c}">${x.k}</span></button>`).join("")}</div>
 ${sw?"":`<p class="sec-label" style="margin-top:14px">Süre</p><div class="tmdur" style="justify-content:center"><input type="number" id="tmH" min="0" max="10" value="${Math.floor(tmLast/60)}" aria-label="Saat"> sa <input type="number" id="tmM" min="0" max="59" value="${tmLast%60}" aria-label="Dakika"> dk</div>`}
 <p class="help" style="margin-top:12px">${SESS_MIN} dk odak ≈ ${SESS_RK} rütbe bir görev ödülünün 3/5'i; süre uzadıkça ödül de aynı oranda artar, üst sınır yok. Sıkıldığında <b>SIKILDIM</b>'a bas: dayandığın Boring Time %50'ye kadar ek ödül verir. Çalışırken <b>Ek nokta</b> ile bölümleri (örn. bir ünite) işaretleyebilirsin.</p>
@@ -5314,7 +5462,7 @@ function startSess(mode,mins){
   mode=mode==="sw"?"sw":"tm";
   if(mode==="tm"){mins=Math.min(600,Math.round(mins)||0);if(!(mins>0)){toast("Süre en az 1 dk olmalı.");return}tmLast=mins}
   const now=Date.now();
-  S.timer={mode,st:now,st0:now,dur:mode==="tm"?mins*60000:0,acc:0,paused:false,day:todayKey(),bs:null,btAcc:0,bfMax:0,laps:[],stat:sessStat||"INT"};focConf=false;
+  S.timer={mode,st:now,st0:now,dur:mode==="tm"?mins*60000:0,acc:0,paused:false,day:todayKey(),bs:null,btAcc:0,bfMax:0,laps:[],stat:sessStat||"INT",qid:sessQid||null};sessQid=null;focConf=false;
   askNotif();tone([392,523,659],0.5,"sine");
   toast(mode==="sw"?"[Kronometre] Odak oturumu başladı":`[Zamanlayıcı] ${fmtMin(mins)} odak oturumu başladı`);
   commit();schedTimer();openFocus();sessNfLoop();
@@ -5371,7 +5519,8 @@ function finishTimer(silent){
   }
   if(work>=60000||laps.length){
     if(!Array.isArray(S.qlog)) S.qlog=[];
-    const e={t:Date.now(),id:"focus",n:"Odak oturumu",c:null,u:"",s:stat,r:"C",rp:"focus",k:1,tt:1,md:T.mode,fs:Math.round(work/1000),xp:tot?tot.xp:0,g:tot?tot.gold:0,st:tot?tot.st:0,s0:T.st0||null};
+    const lq=T.qid&&S.quests.find(x=>x.id===T.qid);
+    const e={t:Date.now(),id:"focus",n:lq?"Odak · "+lq.name:"Odak oturumu",c:null,u:"",s:stat,r:"C",rp:"focus",k:1,tt:1,md:T.mode,fs:Math.round(work/1000),xp:tot?tot.xp:0,g:tot?tot.gold:0,st:tot?tot.st:0,s0:T.st0||null};
     if(bt){e.bt=Math.round(bt/1000);e.bf=Math.round(bf*1000)/10}
     if(laps.length) e.lp=laps;
     S.qlog.push(e);if(S.qlog.length>QLOG_MAX) S.qlog=S.qlog.slice(-QLOG_MAX);
@@ -5381,7 +5530,8 @@ function finishTimer(silent){
   if(!sw) notify("Odak süresi tamamlandı",tot?`${fmtMin(Math.round(work/60000))} odak · +${tot.xp} XP · +${tot.gold}G`:"Oturum bitti");
   if(!silent){
     const lh=laps.length?`<p class="sec-label" style="margin:14px 0 6px">Ek noktalar</p><div class="laps done">${lapRows(laps.map(l=>({n:l.n,w:l.w*1000,at:l.at})),work,false)}</div>`:"";
-    overlay(head("Odak Oturumu")+`<div class="foc-done">${ico("clock","#6dffb3",64)}</div><div class="big gold">${sw?"OTURUM BİTTİ":"SÜRE TAMAMLANDI"}</div><p><b>${mmssUp(work)}</b> odaklandın.</p>`+(tot?`<div class="rew"><div><span>Odak ödülü</span><b>+${fmt(base.xp)} XP · +${fmt(base.gold)}G${base.st?` · +${base.st} ${stat}`:""}</b></div>${bt?`<div><span>Boring Time</span><b style="color:#ffb35c">${mmssUp(bt)}</b></div>`:""}${bonus?`<div><span>Ek ödül (+%${(bf*100).toFixed(1).replace(".",",")})</span><b>+${fmt(bonus.xp)} XP · +${fmt(bonus.gold)}G${bonus.st?` · +${bonus.st} ${stat}`:""}</b></div>`:""}</div>`:`<p class="small muted">1 dakikadan kısa oturumlar ödül vermez.</p>`)+lh,{sfx:sfx.clear});
+    const dq=T.qid&&S.quests.find(x=>x.id===T.qid&&activeToday(x)&&qCount(x)<qTimes(x));
+    overlay(head("Odak Oturumu")+`<div class="foc-done">${ico("clock","#6dffb3",64)}</div><div class="big gold">${sw?"OTURUM BİTTİ":"SÜRE TAMAMLANDI"}</div><p><b>${mmssUp(work)}</b> odaklandın.</p>`+(dq?`<div class="dsess" style="--dc:${dersSt().c}">${dersBadge()}<b>${esc(dq.name)}</b><button type="button" class="btn sm" data-dersdone="${dq.id}">Dersi tamamlandı işaretle</button></div>`:"")+(tot?`<div class="rew"><div><span>Odak ödülü</span><b>+${fmt(base.xp)} XP · +${fmt(base.gold)}G${base.st?` · +${base.st} ${stat}`:""}</b></div>${bt?`<div><span>Boring Time</span><b style="color:#ffb35c">${mmssUp(bt)}</b></div>`:""}${bonus?`<div><span>Ek ödül (+%${(bf*100).toFixed(1).replace(".",",")})</span><b>+${fmt(bonus.xp)} XP · +${fmt(bonus.gold)}G${bonus.st?` · +${bonus.st} ${stat}`:""}</b></div>`:""}</div>`:`<p class="small muted">1 dakikadan kısa oturumlar ödül vermez.</p>`)+lh,{sfx:sfx.clear});
     commit();
   }
 }
@@ -5407,7 +5557,7 @@ function focusRender(){
   const sw=tmIsSw(T),stat=sessStatOf(T),sc=SC[stat],R=120,C=2*Math.PI*R,col=sw?"#6dffb3":"#62d2ff",f=focusCfg(),on=T.bs!=null||(T.bfMax||0)>0;
   el.innerHTML=`<div class="foc-in"><div class="foc-top"><span class="foc-k">${ico("clock",col,15)} ${sw?"KRONOMETRE":"ZAMANLAYICI"}</span><span class="row" style="gap:6px"><button type="button" class="btn sm" data-tmfs="1">${document.fullscreenElement?"Tam ekrandan çık":"⛶ Tam ekran"}</button><button type="button" class="btn sm" data-tmmin="1">Küçült</button></span></div>
 <div class="foc-l">
-<div class="foc-q"><span class="stgain" style="--sc:${sc.c};font-size:14px;padding:3px 10px">${ico(stat,sc.c,15)} ${stat} · ${esc(sc.n)}</span><span class="small muted">başlangıç ${hhmm(T.st0||T.st)}${sw?"":` · bitiş <b id="focEnd">${hhmm(Date.now()+tmLeft())}</b>`}</span></div>
+<div class="foc-q">${(()=>{const lq=T.qid&&S.quests.find(x=>x.id===T.qid);return lq?`<span class="dsess" style="--dc:${dersSt().c};margin:0">${dersBadge()}<b>${esc(lq.name)}</b></span>`:""})()}<span class="stgain" style="--sc:${sc.c};font-size:14px;padding:3px 10px">${ico(stat,sc.c,15)} ${stat} · ${esc(sc.n)}</span><span class="small muted">başlangıç ${hhmm(T.st0||T.st)}${sw?"":` · bitiş <b id="focEnd">${hhmm(Date.now()+tmLeft())}</b>`}</span></div>
 <div class="foc-ring"><svg viewBox="0 0 280 280"><circle cx="140" cy="140" r="${R}" fill="none" stroke="rgba(58,169,240,.15)" stroke-width="10"/><circle id="focArc" cx="140" cy="140" r="${R}" fill="none" stroke="${col}" stroke-width="10" stroke-linecap="round" stroke-dasharray="0 ${C.toFixed(1)}" transform="rotate(-90 140 140)" style="filter:drop-shadow(0 0 10px ${col})"/></svg><div class="foc-t"><b id="focT">--:--</b><span id="focS">${sw?"geçti":"kaldı"}</span><button type="button" class="wkbtn${wakeKeep?" on":""}" data-wake="1" aria-pressed="${wakeKeep}">☀ Ekranı açık tut</button></div></div>
 <div class="foc-goal"><div class="lvrow2"><span>HEDEF · ${fmtMin(f.want)}${T.paused?" · duraklatınca sıfırlandı":""}</span><span id="focGP">%0</span></div><div class="bar thin"><i id="focGB" style="width:0%"></i></div></div>
 </div>
@@ -5457,8 +5607,8 @@ function renderRecords(){
 }
 let qlType="all",qlN=40;
 function recQuests(){
-  const all=(S.qlog||[]).slice().reverse(),L=all.filter(e=>qlType==="all"||(qlType==="once"?e.rp==="once":qlType==="focus"?e.rp==="focus":(e.rp==="daily"||e.rp==="days")));
-  let h=pchips(qlType,"qlt",[["all","Tümü"],["habit","Alışkanlıklar"],["once","Tek seferlik"],["focus","Odak"]]);
+  const all=(S.qlog||[]).slice().reverse(),L=all.filter(e=>qlType==="all"||(qlType==="ders"?e.r==="DERS":qlType==="once"?e.rp==="once":qlType==="focus"?e.rp==="focus":(e.rp==="daily"||e.rp==="days")));
+  let h=pchips(qlType,"qlt",[["all","Tümü"],["habit","Alışkanlıklar"],["once","Tek seferlik"],["ders","Ders"],["focus","Odak"]]);
   const wk=Date.now()-7*DAY_MS,w=all.filter(e=>e.t>=wk),bt=all.reduce((a,e)=>a+(e.bt||0),0),fs=all.reduce((a,e)=>a+(e.fs||0),0);
   h+=`<div class="kvs" style="margin-bottom:6px"><div class="kv"><div class="k">Kayıtlı görev</div><div class="v">${fmt(all.length)}</div></div><div class="kv"><div class="k">Son 7 gün</div><div class="v ok">${fmt(w.length)}</div></div><div class="kv"><div class="k">Odak süresi</div><div class="v">${fmt(Math.round(fs/60))} dk</div></div><div class="kv"><div class="k">Boring Time</div><div class="v" style="color:#ffb35c">${fmt(Math.round(bt/60))} dk</div></div></div>`;
   if(!L.length) return h+`<div class="empty-note">Henüz kayıt yok. Tamamladığın her görev burada adı, hedefi, ödülü ve saatiyle birlikte saklanır.</div>`;
@@ -5468,7 +5618,7 @@ function recQuests(){
     if(k!==cur){if(cur!==null) h+=`</div>`;cur=k;h+=`<div class="qlg-day"><div class="qlg-dh">${k==="leg"?"Önceki tek seferlikler":`${fmtD(k)} ${k.slice(0,4)}${k===todayKey()?" · bugün":""}`}<span>${tot[k].n} kayıt${tot[k].xp?` · +${fmt(tot[k].xp)} XP`:""}</span></div>`}
     const sc=SC[e.s]||SC.STR,d=e.t?new Date(e.t):null,tm=d?String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"):"—";
     const rp=e.rp==="once"?"Tek seferlik":e.rp==="days"?"Belirli günler":e.rp==="focus"?"Odak oturumu":"Her gün";
-    h+=`<div class="qlg"><span class="tm">${tm}</span><div><div class="nm">${esc(e.n)}${e.c?` <small>· ${fmt(e.c)}${e.u?" "+esc(e.u):""}</small>`:""}${e.tt>1?` <small>· ${e.k}/${e.tt}</small>`:""}</div><div class="mt">${e.rp==="focus"?"":rbadge(QR.includes(e.r)?e.r:"C",18)}<span style="color:${sc.c}">+${e.st} ${esc(e.s)}</span><span class="qtag">${rp}</span>${e.md?`<span class="qtag fm">${e.md==="sw"?"Kronometre":"Zamanlayıcı"}${e.fs?" · "+mmssUp(e.fs*1000):""}</span>`:""}${e.bt?`<span class="qtag bt">Boring ${mmssUp(e.bt*1000)} · +%${e.bf}</span>`:""}</div>${lpH(e)}</div><div class="rw">${e.leg?`<span class="muted small">ödül kaydı yok</span>`:`<b>+${fmt(e.xp)} XP</b><i>+${fmt(e.g)}G</i>`}</div></div>`});
+    h+=`<div class="qlg"><span class="tm">${tm}</span><div><div class="nm">${esc(e.n)}${e.c?` <small>· ${fmt(e.c)}${e.u?" "+esc(e.u):""}</small>`:""}${e.tt>1?` <small>· ${e.k}/${e.tt}</small>`:""}</div><div class="mt">${e.rp==="focus"?"":e.r==="DERS"?dersBadge():rbadge(QR.includes(e.r)?e.r:"C",18)}${e.r==="DERS"?"":`<span style="color:${sc.c}">+${e.st} ${esc(e.s)}</span>`}<span class="qtag">${rp}</span>${e.md?`<span class="qtag fm">${e.md==="sw"?"Kronometre":"Zamanlayıcı"}${e.fs?" · "+mmssUp(e.fs*1000):""}</span>`:""}${e.bt?`<span class="qtag bt">Boring ${mmssUp(e.bt*1000)} · +%${e.bf}</span>`:""}</div>${lpH(e)}</div><div class="rw">${e.r==="DERS"?`<span class="muted small">kronometreden</span>`:e.leg?`<span class="muted small">ödül kaydı yok</span>`:`<b>+${fmt(e.xp)} XP</b><i>+${fmt(e.g)}G</i>`}</div></div>`});
   h+=`</div>`;
   if(L.length>qlN) h+=`<div style="text-align:center;margin-top:12px"><button class="btn sm" type="button" data-qlmore="1">Daha fazla göster (${Math.min(40,L.length-qlN)})</button></div>`;
   return h;
@@ -5599,8 +5749,8 @@ function renderSkills(){
   const el=$("cSkills");if(!el) return;
   if(!S.job){el.innerHTML=`<div class="note-box" style="margin:0"><span>Sınıf seçince iki savaş yeteneği kazanırsın. Yetenekler zindanda ve arenada mana harcayarak kullanılır.</span><button class="btn sm goldb" type="button" data-act="openJob">Sınıf seç</button></div>`;return}
   const P=playerCombatant(),base=skPow(P);
-  el.innerHTML=`<div class="skgrid">${SKILLS[S.job].map((s,i)=>`<div class="skcard" style="--sc:${SC[S.job].c}"><div class="skh"><span class="skno">${i+1}</span><b>${esc(s.n)}</b><span class="skcost">${ico("mp","#9fb0ff",13)} ${fmt(skCost(P,s))} MP</span></div><p>${esc(s.d)}</p><div class="small muted">${s.t==="self"?(s.heal?`Yaklaşık +${fmt(P.max*s.heal*(P.tier2?1.15:1))} can`:"Kendine etki eder"):`Tahmini hasar: ~${fmt(base*(s.mul||1))}${s.t==="all"?" · her düşmana":""}`} · maliyet: mananın %${Math.round(s.cost*100)}'i</div></div>`).join("")}</div>
-<p class="help" style="margin:10px 0 0">Mana: <b>${fmt(P.mpMax)}</b> · her turunda %${Math.round(MP_REGEN*100)} yenilenir, zindan boyunca dalgalar arasında dolmaz (Mana İksiri %50 doldurur). ${S.jobTier>=2?"Meslek gelişimin sayesinde yeteneklerin <b>%25 daha güçlü</b>.":`Seviye ${JOB_ADV}'ta meslek gelişince yeteneklerin %25 güçlenir.`}</p>`;
+  el.innerHTML=`<div class="skgrid">${SKILLS[S.job].map((s,i)=>`<div class="skcard" style="--sc:${SC[S.job].c}"><div class="skh"><span class="skno">${i+1}</span><b>${esc(s.n)}</b><span class="skrk" title="${skRank(s)} rütbe yetenek">${remb(skRank(s),20)}${skRank(s)}</span><span class="skcost">${ico("mp","#9fb0ff",13)} ${fmt(skCost(P,s))} MP</span></div><p>${esc(s.d)}</p><div class="small muted">${s.t==="self"?(s.heal?`Yaklaşık +${fmt(P.max*s.heal*(P.tier2?1.15:1))} can`:"Kendine etki eder"):`Tahmini hasar: ~${fmt(base*(s.mul||1))}${s.t==="all"?" · her düşmana":""}`} · ${P.mpMax>=skCost(P,s)?`dolu manayla <b>${Math.floor(P.mpMax/skCost(P,s))}</b> kez`:`<span style="color:#ff8ea0">manan yetmiyor</span>`}</div></div>`).join("")}</div>
+<p class="help" style="margin:10px 0 0">Yeteneklerin bir <b>rütbesi</b> ve <b>sabit mana maliyeti</b> var; temel sınıf yetenekleri <b>F rütbedir</b>. Mana arttıkça aynı savaşta daha çok yetenek kullanırsın. Mana: <b>${fmt(P.mpMax)}</b> · her turunda %${Math.round(MP_REGEN*100)} yenilenir, zindan boyunca dalgalar arasında dolmaz (Mana İksiri %50 doldurur). ${S.jobTier>=2?"Meslek gelişimin sayesinde yeteneklerin <b>%25 daha güçlü</b>.":`Seviye ${JOB_ADV}'ta meslek gelişince yeteneklerin %25 güçlenir.`}</p>`;
 }
 function refFoe(){const rf=MREF[curRank()]||10;return {kind:"npc",per:rf,agi:rf}}
 function combatKv(){const P=playerCombatant(),R=refFoe(),pc=x=>"%"+Math.round(x*100);
@@ -6117,6 +6267,50 @@ function doConvert(){
 }
 document.addEventListener("input",e=>{const t=e.target;if(!t||(t.id!=="cvRange"&&t.id!=="cvNum")) return;cvAmt=Math.max(0,Math.min(cvMax(),Math.floor((+t.value||0)/2)*2));cvArm=false;cvPreview()});
 
+/* ================= AÇILIR BAŞLIKLAR ================= */
+const ACC_IC={
+  stats:'<path d="M12 3l8.6 6.2-3.3 10.1H6.7L3.4 9.2z"/><path d="M12 8.2l4 2.9-1.5 4.6h-5L8 11.1z"/>',
+  skills:'<path d="M13 2.5L5 13.5h6l-1 8 8-11h-6z"/>',
+  bag:'<path d="M5.5 8.5h13l-1.2 12h-10.6z"/><path d="M9 8.5V6.5a3 3 0 016 0v2"/><path d="M9.5 13h5"/>',
+  anvil:'<path d="M3 7.5h13c.3 2.6 2.2 3.7 5 3.7v1.3h-6l-1.3 2.7h-3.4L9 12.5H6.2C4.2 12.5 3 10.6 3 7.5z"/><path d="M7.5 20.5h9l-1.6-5h-5.8z"/>',
+  crown:'<path d="M3 8.5l4.6 4L12 5l4.4 7.5L21 8.5l-2 11H5z"/><path d="M7 16h10"/>',
+  scroll:'<path d="M8 3.5h10a2 2 0 012 2v2h-4"/><path d="M16 5.5v13a2 2 0 01-2 2H6a2 2 0 01-2-2v-1.5h10"/><path d="M8 3.5a2 2 0 00-2 2V17"/><path d="M9.5 8.5h3.5M9.5 12h3.5"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>',
+  palette:'<path d="M12 3a9 9 0 100 18c1.3 0 2-.8 2-1.8 0-1.3-1.2-1.7-1.2-2.9 0-1 .8-1.6 1.8-1.6H17a4 4 0 004-4c0-4.3-4-7.7-9-7.7z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10" cy="7" r="1.2"/><circle cx="15" cy="7.5" r="1.2"/>',
+  sword:'<path d="M20.5 3.5l-.5 3.5-9.5 9.5-3-3L17 4z"/><path d="M6 12l6 6M4 20l3.5-3.5"/>',
+  key:'<circle cx="8" cy="15" r="4.5"/><path d="M11.2 11.8L20 3M16.5 6.5l3 3M14.3 8.7l2 2"/>',
+  swap:'<path d="M4 8h15l-4-4"/><path d="M20 16H5l4 4"/>',
+  clock:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9.5 2.5h5"/>',
+  bell:'<path d="M6 16.5V11a6 6 0 0112 0v5.5l2 2H4z"/><path d="M10 21a2 2 0 004 0"/>',
+  cloud:'<path d="M7 18.5a5 5 0 01-.6-10A6 6 0 0117.8 10 4.3 4.3 0 0117.5 18.5z"/><path d="M12 11.5v5.5M9.6 14.6l2.4 2.4 2.4-2.4"/>',
+  code:'<path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/>',
+  book:'<path d="M4 5.5a2.5 2.5 0 012.5-2.5H20v15.5H6.5A2.5 2.5 0 004 21z"/><path d="M4 5.5V21M8.5 7.5h7M8.5 11h5"/>',
+  gear:'<circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M5.5 18.5l1.8-1.8M16.7 7.3l1.8-1.8"/>',
+  chev:'<path d="M6 9l6 6 6-6"/>'
+};
+function accSvg(k,c,w){return `<svg viewBox="0 0 24 24" width="${w||20}" height="${w||20}" fill="none" stroke="${c||"currentColor"}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ACC_IC[k]||""}</svg>`}
+const LS_ACC="hunter-sistemi-acc";
+let accOpen={};try{accOpen=JSON.parse(localStorage.getItem(LS_ACC)||"{}")||{}}catch(e){accOpen={}}
+function accInit(){
+  document.querySelectorAll("section.acc").forEach(sec=>{
+    if(sec._acc) return;sec._acc=1;
+    const k=sec.dataset.acc,hd=sec.querySelector(":scope>.win-head"),title=hd?hd.textContent.trim():"";
+    sec.style.setProperty("--ac",sec.dataset.ac||"#62d2ff");
+    if(hd) hd.remove();
+    const body=document.createElement("div");body.className="acc-b";body.id="accb-"+k;
+    while(sec.firstChild) body.appendChild(sec.firstChild);
+    const btn=document.createElement("button");btn.type="button";btn.className="acc-h";btn.dataset.acct=k;btn.setAttribute("aria-controls",body.id);
+    btn.innerHTML=`<span class="acc-ic">${accSvg(sec.dataset.ai)}</span><span class="acc-t">${esc(title)}</span><span class="acc-cv">${accSvg("chev")}</span>`;
+    sec.appendChild(btn);sec.appendChild(body);accSet(sec,!!accOpen[k],true);
+  });
+}
+function accSet(sec,on,silent){
+  if(!sec) return;sec.classList.toggle("open",on);
+  const b=sec.querySelector(":scope>.acc-b"),h=sec.querySelector(":scope>.acc-h");if(b) b.hidden=!on;if(h) h.setAttribute("aria-expanded",String(on));
+  if(!silent){accOpen[sec.dataset.acc]=on;try{localStorage.setItem(LS_ACC,JSON.stringify(accOpen))}catch(e){}}
+}
+function accReveal(el){const sec=el&&el.closest?el.closest("section.acc"):null;if(sec&&!sec.classList.contains("open")) accSet(sec,true)}
+
 /* ================= TABS & EVENTS ================= */
 const TABS=["home","quests","gates","arena","store","char","map","set"];
 const TGROUP={home:"home",quests:"quests",gates:"quests",arena:"quests",char:"char",store:"char",map:"map",set:"set"};
@@ -6141,6 +6335,7 @@ function appChanged(now){
 document.addEventListener("click",e=>{
   const el=e.target.closest("button");if(!el) return;
   const d=el.dataset;
+  if(d.acct){const sec=el.closest("section.acc"),on=!sec.classList.contains("open");accSet(sec,on);if(on){renderTab(curTab);renderViewers()}return}
   if(d.nav){setTab(GLAST[d.nav]||d.nav);return}
   if(d.nfa||d.nftog){nfClick(d,el);return}
   if(d.cvf){cvFrom=d.cvf;if(cvTo===cvFrom) cvTo=null;cvArm=false;cvAmt=0;renderConv();return}
@@ -6161,8 +6356,15 @@ document.addEventListener("click",e=>{
   if(d.enh){openEnh(d.enh);return}
   if(d.enhopt){const k=d.enhopt==="luck"?"luck":"prot";enhOpt[k]=!enhOpt[k];enhRefresh();return}
   if(d.enhgo){doEnh();return}
-  if(d.sess){sessPick(d.sess);return}
+  if(d.sess){sessQid=null;sessPick(d.sess);return}
   if(d.fxhelp){fxHelp();return}
+  if(d.stathelp){statHelp();return}
+  if(d.dersset){dersSet();return}
+  if(d.dcol){dersUpd({c:d.dcol});return}
+  if(d.dbg){dersUpd({bg:d.dbg});return}
+  if(d.dreset){S.dersSt=null;commit();const b=$("dsBody");if(b) b.innerHTML=dersSetBody();dersForm();return}
+  if(d.dstudy){const q=S.quests.find(x=>x.id===d.dstudy);if(S.timer){openFocus();return}if(!q) return;sessStat=q.stat;sessQid=q.id;sessPick("sw",true);return}
+  if(d.dersdone){const q=S.quests.find(x=>x.id===d.dersdone);if(q&&activeToday(q)&&qCount(q)<qTimes(q)){doQuest(q);commit()}el.disabled=true;el.innerHTML="Tamamlandı ✓";return}
   if(d.sstat){sessStat=d.sstat;document.querySelectorAll("[data-sstat]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.sstat===sessStat)));return}
   if(d.tmgo){let m=0;if(d.tmgo==="tm"){m=clamp(Math.round(+($("tmH")||{}).value||0),0,10)*60+clamp(Math.round(+($("tmM")||{}).value||0),0,59);if(m<1){toast("Süre en az 1 dk olmalı.");return}}nextOverlay();startSess(d.tmgo,m);return}
   if(d.qord){if(d.qord==="on"){qOrd=true;qfOpen=false;renderQuests()}else{qOrd=false;S.qf=Object.assign(qfGet(),{sort:"def"});commit();toast("Sıralama kaydedildi.")}return}
@@ -6171,7 +6373,7 @@ document.addEventListener("click",e=>{
   if(d.lap){addLap();return}
   if(d.wake){wakeKeep=!wakeKeep;try{localStorage.setItem("hunter-sistemi-wake",wakeKeep?"1":"0")}catch(e){}if(wakeKeep) wakeOn();else wakeOff();el.classList.toggle("on",wakeKeep);el.setAttribute("aria-pressed",String(wakeKeep));toast(wakeKeep?"Ekran odak ekranındayken açık kalacak.":"Ekran normal şekilde kapanabilir.");return}
   if(d.tmfs){const f=$("focus");try{if(document.fullscreenElement) document.exitFullscreen().catch(()=>{});else if(f.requestFullscreen) f.requestFullscreen().catch(()=>toast("Tam ekran bu cihazda desteklenmiyor."));else toast("Tam ekran bu cihazda desteklenmiyor.")}catch(e){}setTimeout(focusRender,350);return}
-  if(d.studyrec){recSub="st";setTab("char");setTimeout(()=>{const r=$("recBody");if(r) scrollToEl?scrollToEl(r):r.scrollIntoView()},120);return}
+  if(d.studyrec){recSub="st";accReveal($("recBody"));setTab("char");setTimeout(()=>{const r=$("recBody");if(r) scrollToEl?scrollToEl(r):r.scrollIntoView()},120);return}
   if(d.bored){boredAct(d.bored);return}
   if(d.qfopen){qfOpen=!qfOpen;renderQuests();return}
   if(d.qfreset){S.qf={};commit();return}
@@ -6249,7 +6451,7 @@ document.addEventListener("click",e=>{
     if(d.delr){S.rewards=S.rewards.filter(r=>r.id!==d.delr);S.rewardsExample=false;commit()}
     return;
   }
-  if(d.act&&/^(bk|sy)/.test(d.act)){syncAct(d.act,el);return}
+  if(d.act&&/^(bk|sy|cf)/.test(d.act)){syncAct(d.act,el);return}
   switch(d.act){
     case "modalOk":nextOverlay();break;
     case "enhClose":enhId=null;enhRes=null;nextOverlay();break;
@@ -6286,14 +6488,18 @@ $("qForm").addEventListener("submit",e=>{
   const c=Math.round(Number($("fCount").value));
   const rp=$("fRep").value,tm=clamp(Math.round(Number($("fTimes").value))||1,1,10);
   if(rp==="days"&&!formDays.length){toast("En az bir gün seç.");return}
-  const nq={id:uid(),name,count:c>0?c:null,unit:$("fUnit").value.trim(),stat:$("fStat").value,rank:$("fRank").value,times:tm};
+  const ders=$("fDers").checked;
+  const nq={id:uid(),name,count:c>0?c:null,unit:$("fUnit").value.trim(),stat:$("fStat").value,rank:ders?"F":$("fRank").value,times:tm};
+  if(ders) nq.ders=true;
   if(rp==="days") nq.days=formDays.slice().sort();
   if(rp==="once") nq.once=true;
   S.quests.push(nq);$("fTimes").value=1;
   S.example=false;
   $("fName").value="";$("fCount").value="";$("fUnit").value="";
-  toast("Görev eklendi: "+esc(name));commit();
+  toast((ders?"Ders eklendi: ":"Görev eklendi: ")+esc(name));commit();
 });
+function dersForm(e){const on=$("fDers").checked;if(e&&on&&$("fStat").value==="STR") $("fStat").value="INT";$("fRankW").hidden=on;$("fFx").hidden=on;$("fStatL").textContent=on?"Kronometre statı":"Geliştirdiği stat";$("fDersRow").classList.toggle("on",on);$("fDersRow").style.setProperty("--dc",dersSt().c)}
+$("fDers").addEventListener("change",dersForm);dersForm();
 document.addEventListener("submit",e=>{
   if(e.target.id!=="rForm") return;
   e.preventDefault();
@@ -6317,13 +6523,13 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&showing&&$("modal")
 /* ================= BACKUP & SYNC ================= */
 const IS_PWA=true;
 const FB_CONFIG={"apiKey": "AIzaSyBsNalG4Fl7crcsluhf2hqDXlWawD6DJ2I", "authDomain": "hunter-sistemi.firebaseapp.com", "projectId": "hunter-sistemi", "storageBucket": "hunter-sistemi.firebasestorage.app", "messagingSenderId": "550981824995", "appId": "1:550981824995:web:bd6d609b92a2b74b8f70d6"};
-const APP_VER="44";
+const APP_VER="47";
 const LS_SYNC="hunter-sistemi-sync";
 function b64e(t){return btoa(unescape(encodeURIComponent(t)))}
 function b64d(t){return decodeURIComponent(escape(atob(t)))}
 function backupCode(){return "HUNTER1:"+b64e(JSON.stringify(S))}
 function parseBackup(t){t=String(t||"").trim();if(!t) throw new Error("boş");let j=t;if(t.startsWith("HUNTER1:")) j=b64d(t.slice(8).replace(/\s+/g,""));const o=JSON.parse(j);if(!o||typeof o!=="object"||o.v!==4||!o.base) throw new Error("geçersiz");return o}
-function applyBackup(o){S=normalize(clone(o));postMigrate();S.updatedAt=Date.now();cacheLocal();commit();toast("Yedek geri yüklendi.");}
+function applyBackup(o){S=normalize(clone(o));postMigrate();S.updatedAt=Date.now();forceNext=true;cacheLocal();commit();toast("Yedek geri yüklendi.");}
 function syncCode(){try{return localStorage.getItem(LS_SYNC)||""}catch(e){return ""}}
 function newSyncCode(){const A="ABCDEFGHJKLMNPQRSTUVWXYZ23456789",r=new Uint8Array(24);crypto.getRandomValues(r);let c="";r.forEach((v,i)=>{c+=A[v%A.length];if(i%4===3&&i<23) c+="-"});return c}
 let syncShow=false;
@@ -6340,6 +6546,9 @@ function renderBackup(){
 <p class="help" style="margin:10px 0 6px">Başka bir cihazda zaten kod oluşturduysan onu buraya gir:</p>
 <div class="row"><input id="syIn" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX-XXXX" style="flex:1;min-width:0;text-transform:uppercase;font-family:var(--display);letter-spacing:.06em"><span id="syJoinBox"><button class="btn" type="button" data-act="syJoin">Bağlan</button></span></div>`;
   }
+  const cf=getConflict();
+  if(cf) h+=`<div class="cfbox"><b>Saklanan kayıt</b><div class="small muted">${new Date(cf.at).toLocaleString("tr-TR")} · iki cihazda aynı anda değişiklik olduğu için diğer cihazdaki daha yeni kayıt yüklendi. Bu cihazdaki o anki kayıt burada saklandı (Seviye ${cf.s.level}, ${fmt(cf.s.gold)} gold).</div><div class="row" style="margin-top:8px"><span id="cfBox" class="row"><button class="btn sm" type="button" data-act="cfAsk">Bu kaydı geri yükle</button></span><button class="btn sm danger" type="button" data-act="cfDel">Sil</button></div></div>`;
+  if(syncOn()) h+=`<p class="help" style="margin:10px 0 0">Uygulamayı açtığında ya da öne getirdiğinde önce buluttaki son kayıt çekilir; gün dönümü ve ceza ancak ondan sonra hesaplanır. İki cihazda aynı anda değişiklik olursa daha yeni kayıt korunur, diğeri burada saklanır.</p>`;
   $("syncBox").innerHTML=h;
 }
 async function copyText(t,okMsg){try{await navigator.clipboard.writeText(t);toast(okMsg);return true}catch(e){return false}}
@@ -6353,6 +6562,9 @@ async function syncAct(k,el){
     case "bkYes":if(pendingBackup){applyBackup(pendingBackup);pendingBackup=null;$("bkIn").value=""}renderSettings();break;
     case "bkNo":pendingBackup=null;renderSettings();$("bkBox").innerHTML=`<button class="btn" type="button" data-act="bkAsk">Yedeği geri yükle</button>`;break;
     case "syShow":syncShow=!syncShow;renderBackup();break;
+    case "cfAsk":$("cfBox").innerHTML=`<span class="small" style="color:#ff8ea0">Şu anki kayıt bununla değiştirilecek.</span><button class="btn sm danger" type="button" data-act="cfYes">Evet, yükle</button>`;break;
+    case "cfYes":{const cf=getConflict();if(cf){try{localStorage.removeItem(LS_CF)}catch(e){}applyBackup(cf.s)}renderSettings();break}
+    case "cfDel":try{localStorage.removeItem(LS_CF)}catch(e){}renderBackup();break;
     case "syCopy":if(!(await copyText(syncCode(),"Senkron kodu kopyalandı."))){syncShow=true;renderBackup()}break;
     case "syNew":{const c=newSyncCode();try{localStorage.setItem(LS_SYNC,c)}catch(e){}syncShow=true;renderBackup();toast("Senkron kodu oluşturuldu. Diğer cihazda bu kodu gir.");S.updatedAt=Date.now();cacheLocal();await initDb(true);break}
     case "syJoin":{const c=($("syIn").value||"").trim().toUpperCase().replace(/[^A-Z0-9-]/g,"");if(c.replace(/-/g,"").length<20){toast("Kod eksik ya da hatalı.");return}
@@ -6384,8 +6596,47 @@ async function getSyncRef(){
 }
 
 /* ================= PERSISTENCE ================= */
-let ref=null,lastRemote="",writing=false,dirty=false,saveT=null,unsub=null;
+let ref=null,lastRemote="",writing=false,dirty=false,saveT=null,unsub=null,pulling=false,chg=0,forceNext=false,retryT=null;
 function setSync(t){$("sync").textContent=t}
+/* ---- Senkron durumu (cihaz başına) ----
+   w: bu cihazdaki kaydın dayandığı buluttaki sürümün kimliği
+   d: buluta gönderilmemiş değişiklik var mı (0 yok · 1 yalnızca otomatik/gün dönümü · 2 kullanıcı işlemi)
+   Saat farkına bakılmaz: hangi kaydın daha yeni olduğu sürüm kimliğiyle anlaşılır. */
+const LS_SB="hunter-sistemi-syncbase",LS_CF="hunter-sistemi-conflict";
+let sb={};try{sb=JSON.parse(localStorage.getItem(LS_SB)||"{}")||{}}catch(e){sb={}}
+function sbSave(){try{localStorage.setItem(LS_SB,JSON.stringify(sb))}catch(e){}}
+function sbFor(){const c=(IS_PWA?syncCode():"claude")||"";if(sb.c!==c){sb={c,w:"",d:0};sbSave()}return sb}
+function markDirty(lv){chg++;const s=sbFor();if((s.d|0)<lv){s.d=lv;sbSave()}}
+function remoteWid(st){return st?(st.wid||"u")+"|"+(st.updatedAt||0):""}   // eski sürümden yazan bir cihaz wid'i değiştirmese de updatedAt değişir
+function syncOn(){return IS_PWA?!!(FB_CONFIG&&syncCode()):true}
+function withTO(p,ms){return Promise.race([p,new Promise((_,rj)=>setTimeout(()=>rj(new Error("timeout")),ms))])}
+function okSync(){setSync(IS_PWA?"Bulutta kaydedildi":"Kaydedildi · tüm cihazlarda")}
+function saveConflict(st){try{localStorage.setItem(LS_CF,JSON.stringify({at:Date.now(),s:st}))}catch(e){}}
+function getConflict(){try{const o=JSON.parse(localStorage.getItem(LS_CF)||"null");return o&&o.s&&o.s.v===4?o:null}catch(e){return null}}
+/* Buluttaki kaydı bu cihaza al. lvl=2 ise bu cihazda gönderilmemiş bir kullanıcı işlemi vardı: o kayıt kaybolmasın diye ayrıca saklanır. */
+function adoptRemote(remote,lvl){
+  if(lvl>=2){saveConflict(clone(S));setTimeout(()=>toast("Diğer cihazdaki daha yeni kayıt yüklendi. Bu cihazdaki son işlemi Ayarlar → Kayıt ve Senkron'dan geri alabilirsin."),400)}
+  S=normalize(clone(remote));postMigrate();
+  const s=sbFor();s.w=remoteWid(remote);s.d=0;sbSave();
+  lastRemote=JSON.stringify(remote);cacheLocal();
+  if(rollover()) commit(1);else render();
+}
+function retryLater(ms){clearTimeout(retryT);retryT=setTimeout(()=>{if(ref&&sbFor().d>0) flush()},ms||15000)}
+/* Uygulama öne gelince ya da internet dönünce buluttaki son durumu çek. Bu sırada gün dönümü bekletilir ki eski kayıtla ceza/sıfırlama yapılmasın. */
+async function syncPull(){
+  if(!ref||writing||pulling) return;
+  pulling=true;setSync("Eşitleniyor…");
+  try{
+    const snap=await withTO(ref.get(),10000);
+    const remote=snap.exists&&snap.data()&&snap.data().state?snap.data().state:null;
+    const s=sbFor();pulling=false;
+    if(remote&&remote.v===4&&remoteWid(remote)!==s.w){
+      if((s.d|0)>=2){await flush();return}
+      adoptRemote(remote,0);
+    }else{if(rollover()) commit(1);if(s.d>0) await flush()}
+    okSync();
+  }catch(e){pulling=false;setSync("Çevrimdışı · bu cihazda bekliyor");if(rollover()) commit(1);retryLater()}
+}
 function cacheLocal(){try{localStorage.setItem(LS_KEY,JSON.stringify(S))}catch(e){}}
 function checkRank(){
   const r=curRank(),ri=TIERS.indexOf(r);
@@ -6399,9 +6650,9 @@ function checkRank(){
   }
   S.rankSeen=r;
 }
-function commit(){
+function commit(sys){
   checkRank();checkTitles();try{nfPlan()}catch(e){}
-  S.updatedAt=Date.now();cacheLocal();render();
+  S.updatedAt=Math.max(Date.now(),(S.updatedAt||0)+1);markDirty(sys===1?1:2);cacheLocal();render();
   if(ref){clearTimeout(saveT);saveT=setTimeout(flush,700)}
   nfAfterCommit();
 }
@@ -6409,13 +6660,26 @@ async function flush(){
   if(!ref) return;
   if(writing){dirty=true;return}
   writing=true;dirty=false;
-  const body=clone(S);lastRemote=JSON.stringify(body);
-  try{await ref.set({state:body});setSync(IS_PWA?"Bulutta kaydedildi":"Kaydedildi · tüm cihazlarda")}
-  catch(e){setSync(e&&e.code==="quota_exceeded"?"Kayıt alanı dolu":"Bu cihaza kaydedildi")}
-  writing=false;if(dirty) flush();
+  const s=sbFor(),force=forceNext,c0=chg;
+  try{
+    if(!force&&s.w){
+      // Son eşitlemeden beri başka bir cihaz yazdıysa üstüne yazma: önce onun kaydını al.
+      const snap=await withTO(ref.get(),10000);
+      const remote=snap.exists&&snap.data()&&snap.data().state?snap.data().state:null;
+      if(remote&&remote.v===4&&remoteWid(remote)!==s.w){writing=false;adoptRemote(remote,s.d|0);okSync();return}
+    }
+    const body=clone(S);body.wid=uid()+uid();
+    await withTO(ref.set({state:body}),15000);
+    S.wid=body.wid;s.w=remoteWid(body);if(chg===c0) s.d=0;sbSave();forceNext=false;
+    lastRemote=JSON.stringify(body);cacheLocal();okSync();
+  }catch(e){setSync(e&&e.code==="quota_exceeded"?"Kayıt alanı dolu":"Çevrimdışı · bu cihazda bekliyor");retryLater()}
+  writing=false;if(dirty||(chg!==c0&&s.d>0)){dirty=false;clearTimeout(saveT);saveT=setTimeout(flush,700)}
 }
 function showRefund(){
   if(purgeOnce()) cacheLocal();
+  if(S.sysNote15){delete S.sysNote15;let seen=false;try{seen=localStorage.getItem("hunter-sistemi-note15")==="1";localStorage.setItem("hunter-sistemi-note15","1")}catch(e){}
+    if(!seen) overlay(head("Sistem Güncellemesi")+`<div class="big gold">YENİLİKLER</div><div class="updl"><p>${accSvg("book","#d9ff3d",16)}<span><b>Ders görevleri:</b> görev eklerken Ders kutucuğunu işaretle. Rütbe yok; ödülü görevin yanındaki <b>Çalış</b> ile kronometreden alırsın. Renk ve arka planı çark simgesinden seç.</span></p><p>${ico("mp","#7d8cff",16)}<span><b>Yetenek rütbeleri:</b> yetenekler artık mananın yüzdesini değil <b>sabit mana</b> harcıyor. Temel sınıf yetenekleri F rütbe; mana arttıkça daha çok yetenek kullanırsın.</span></p><p>${accSvg("stats","#4de3ff",16)}<span><b>Düzen:</b> Karakter ve Ayarlar'daki bölümler başlığa dokununca açılıyor. Stat dönüştürme Ayarlar'a taşındı. Ana sayfadaki <b>ƒx</b> kutusu statların ne işe yaradığını anlatıyor.</span></p><p>${accSvg("cloud","#7d8cff",16)}<span><b>Senkron düzeltmesi:</b> uygulama açılınca önce buluttaki son kayıt çekiliyor; eski kayıtla ceza ya da üzerine yazma artık olmuyor.</span></p></div>`,{sfx:sfx.rank});
+    cacheLocal();}
   if(S.sysNote12){delete S.sysNote12;let seen=false;try{seen=localStorage.getItem("hunter-sistemi-note12")==="1";localStorage.setItem("hunter-sistemi-note12","1")}catch(e){}
     if(!seen) overlay(head("Sistem Güncellemesi")+`<div class="big gold">YENİLİKLER</div><div class="updl"><p>${ico("clock","#ffb35c",16)}<span><b>Kronometre, zamanlayıcı ve SIKILDIM:</b> her görevde isteğe bağlı odak modu. Sıkılınca bas; dayandığın Boring Time en fazla %50 ek ödül verir. Katsayıyı Ayarlar → Odak ve Sıkılma'dan ayarla.</span></p><p>${ico("xp","#6fb8ff",16)}<span><b>Görev kayıtları:</b> tamamladığın her görev adıyla birlikte Karakter → Kayıtlar → Görevler'de. Tamamlanan tek seferlikler 24 saat sonra listeden kalkar; tamamlanmayanlar yerinde kalır.</span></p><p>${ico("level","#62d2ff",16)}<span><b>Filtrele ve sırala:</b> görev listesinde tür, durum, stat ve zorluk filtresi; alışkanlıklar ile tek seferlikler arasında ayırıcı çizgi.</span></p><p>${ico("sword","#ffc53d",16)}<span><b>Arena:</b> herkes en alt ligden (Bronz III) başlıyor.</span></p><p>${ico("power","#ff5470",16)}<span><b>Görünüm:</b> 18 saç stili, 6 vücut yapısı, yeni logo ve bildirim simgesi. Harita sisi açık başlıyor.</span></p></div>`,{sfx:sfx.rank});
     cacheLocal();}
@@ -6441,36 +6705,52 @@ async function initDb(forcePush,preferRemote){
   if(unsub){try{unsub()}catch(e){}unsub=null}
   ref=null;
   const r=await getSyncRef();
-  if(!r){setSync("Bu cihaza kaydediliyor");return false}
+  if(!r){pulling=false;setSync("Bu cihaza kaydediliyor");if(rollover()) commit(1);return false}
   try{
-    ref=r;
-    const snap=await ref.get();
+    ref=r;pulling=true;
+    const snap=await withTO(ref.get(),12000);
     const remote=snap.exists&&snap.data()&&snap.data().state?clone(snap.data().state):null;
-    if(preferRemote&&!remote){ref=null;setSync("Bu cihaza kaydediliyor");return false}
-    if(remote&&remote.v===4&&!forcePush&&(preferRemote||(remote.updatedAt||0)>=(S.updatedAt||0))){
-      S=normalize(remote);postMigrate();lastRemote=JSON.stringify(remote);cacheLocal();
-      if(rollover()){S.updatedAt=Date.now();await flush()}
-      render();showRefund();
-    }else{
-      if(remote&&remote.v!==4&&!hadLocal){S=normalize(remote);postMigrate()}
-      rollover();showRefund();S.updatedAt=Date.now();cacheLocal();await flush();render();
+    if(preferRemote&&!remote){ref=null;pulling=false;setSync("Bu cihaza kaydediliyor");return false}
+    const s=sbFor();
+    let mode="push";
+    if(remote&&remote.v===4&&!forcePush){
+      if(preferRemote) mode="adopt";
+      else if(!s.w) mode=(remote.updatedAt||0)>=(S.updatedAt||0)?"adopt":"push";   // eski sürümden geçiş: bir kereliğine zamana bak
+      else if(remoteWid(remote)===s.w) mode=s.d>0?"push":"same";                    // bulut değişmemiş
+      else mode=(s.d|0)>=2?"conflict":"adopt";                                      // bulut değişmiş
     }
-    setSync(IS_PWA?"Bulutta kaydedildi":"Kaydedildi · tüm cihazlarda");
+    pulling=false;
+    if(mode==="adopt"||mode==="conflict"){
+      adoptRemote(remote,mode==="conflict"?2:0);showRefund();
+    }else{
+      if(mode==="push"&&remote&&remote.v!==4&&!hadLocal){S=normalize(remote);postMigrate()}
+      if(rollover()) markDirty(1);showRefund();
+      if(mode==="push"||s.d>0){if(!s.w||forcePush) forceNext=true;S.updatedAt=Math.max(Date.now(),(S.updatedAt||0)+1);cacheLocal();await flush()}
+      render();
+    }
+    okSync();
     unsub=ref.onSnapshot(sn=>{
       if(!sn.exists||(sn.metadata&&sn.metadata.hasPendingWrites)) return;
       const d=sn.data();if(!d||!d.state||d.state.v!==4) return;
-      const j=JSON.stringify(d.state);if(j===lastRemote) return;
-      if((d.state.updatedAt||0)<=(S.updatedAt||0)) return;
-      lastRemote=j;S=normalize(clone(d.state));postMigrate();cacheLocal();
-      if(rollover()) commit();else render();
+      const s=sbFor(),w=remoteWid(d.state);
+      if(w===s.w||writing||pulling) return;
+      if((s.d|0)>=2){clearTimeout(saveT);flush();return}   // bekleyen kullanıcı işlemi var: flush çakışmayı çözer
+      adoptRemote(d.state,0);
     },()=>setSync("Bu cihaza kaydediliyor"));
     return true;
-  }catch(e){ref=null;setSync(IS_PWA?"Çevrimdışı · bu cihaza kaydediliyor":"Bu cihaza kaydediliyor");return false}
+  }catch(e){
+    // Bulut okunamadı: karar verilemediği için yazma; yerelde devam et, sonra yeniden dene.
+    ref=null;pulling=false;if(rollover()) commit(1);setSync(IS_PWA?"Çevrimdışı · bu cihaza kaydediliyor":"Bu cihaza kaydediliyor");
+    clearTimeout(initRetryT);initRetryT=setTimeout(()=>{if(!ref&&syncOn()) initDb()},30000);
+    return false}
 }
+let initRetryT=null;
 
 /* ================= BOOT ================= */
+accInit();
 renderRankTable();
-if(rollover()){S.updatedAt=Date.now();cacheLocal()}
+if(syncOn()) pulling=true;   // gün dönümünü buluttaki son kayıt gelene kadar beklet
+else if(rollover()){S.updatedAt=Date.now();cacheLocal()}
 arenaDaily();if(arenaSeason()) cacheLocal();
 let startTab="home";try{startTab=localStorage.getItem(LS_TAB)||"home"}catch(e){}
 if(location.hash){const h=location.hash.slice(1);if(TABS.includes(h)) startTab=h}
@@ -6480,8 +6760,10 @@ setTab(curTab);
 showRefund();
 checkTitles();
 let purgeT=0;
-setInterval(()=>{tick();timerTick();if(S.day!==todayKey()&&rollover()) commit();else if(++purgeT%60===0&&purgeOnce()) commit()},1000);
-document.addEventListener("visibilitychange",()=>{if(S.timer) sessNotify();if(!document.hidden){timerTick();if(S.timer&&focOpen) wakeOn()}});
+setInterval(()=>{tick();timerTick();if(pulling) return;if(S.day!==todayKey()&&rollover()) commit(1);else if(++purgeT%60===0&&purgeOnce()) commit(1)},1000);
+let hidAt=0;
+document.addEventListener("visibilitychange",()=>{if(S.timer) sessNotify();if(document.hidden){hidAt=Date.now();if(ref&&sbFor().d>0){clearTimeout(saveT);flush()}}else{if(Date.now()-hidAt>3000){if(ref) syncPull();else if(syncOn()&&!pulling) initDb()}timerTick();if(S.timer&&focOpen) wakeOn()}});
+window.addEventListener("online",()=>{if(ref) syncPull();else if(syncOn()) initDb()});
 document.addEventListener("fullscreenchange",()=>{if(focOpen) setTimeout(wakeOn,400)});
 window.addEventListener("pageshow",()=>{if(focOpen) wakeOn()});
 window.addEventListener("focus",()=>{if(focOpen) wakeOn()});
