@@ -923,6 +923,23 @@ span.enh.big{position:absolute;right:-6px;top:-6px;font-size:15px}
 .smrow.empty{opacity:.5}
 .enhtbl td,.enhtbl th{padding:5px 6px}
 /* skills */
+.rvlist{display:grid;gap:6px;max-height:min(55vh,460px);overflow-y:auto;padding-right:2px}
+.rvrow{display:flex;align-items:center;gap:8px;border:1px solid var(--line-dim);background:var(--panel-2);border-radius:2px}
+.rvrow.on{border-color:rgba(109,255,179,.5);background:rgba(16,66,70,.38)}
+.rvrow.pen{border-color:rgba(255,74,103,.6);background:rgba(90,10,30,.4)}
+.rvrow.pen.on{border-color:rgba(109,255,179,.5);background:rgba(16,66,70,.38)}
+.rvchk{flex:1;min-width:0;display:flex;align-items:center;gap:12px;padding:10px 12px;background:none;border:0;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.rvchk .box{width:24px;height:24px;flex:none}
+.rvrow.on .box{border-color:var(--ok);box-shadow:0 0 10px rgba(109,255,179,.5)}
+.rvrow.on .box svg{opacity:1;transform:scale(1)}
+.rvn{display:grid;gap:3px;min-width:0}.rvn b{font-weight:500;font-size:15px;overflow-wrap:anywhere}
+.rvm{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-family:var(--display);font-size:12px;color:var(--muted)}
+.rvm b.gold{color:#ffa726;font-weight:600}
+.rvstep{display:flex;align-items:center;gap:6px;padding-right:10px;font-family:var(--display)}
+.rvstep b{min-width:34px;text-align:center;font-variant-numeric:tabular-nums}
+.rvst{margin-top:10px;padding:8px 10px;font-size:13px;border-radius:2px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;text-align:left}
+.rvst.ok{color:var(--ok);border:1px solid rgba(109,255,179,.4);background:rgba(10,60,40,.35)}
+.rvst.bad{color:#ff8ea0;border:1px solid rgba(255,74,103,.45);background:rgba(80,10,25,.35)}
 .cfbox{margin-top:12px;padding:10px 12px;border:1px solid rgba(255,179,92,.5);background:rgba(70,40,0,.3);border-radius:2px}
 .cfbox b{font-family:var(--display);color:#ffb35c;letter-spacing:.06em}
 /* ===== ders görevleri ===== */
@@ -2456,6 +2473,7 @@ function postMigrate(){
     if(!Object.keys(S.fday).length) (S.qlog||[]).forEach(e=>{if(e.rp==="focus"&&e.t&&e.fs){const k=todayKey(new Date(e.t));S.fday[k]=(S.fday[k]||0)+e.fs}});
     if(S.timer){S.timer.st0=S.timer.st0||S.timer.st;S.timer.laps=S.timer.laps||[];S.timer.btAcc=S.timer.btAcc||0}}
   if(S.mig<15){S.mig=15;S.sysNote15=1}
+  if(S.mig<16){S.mig=16;S.sysNote16=1}
   if(S.mig<14){S.mig=14;if(S.timer&&S.timer.bfMax==null) S.timer.bfMax=S.timer.btAcc?Math.min(.5,.5*Math.pow(Math.min(1,(S.timer.btAcc/60000)/(2*Math.max(20,(S.focus&&S.focus.cur)||25))),2)):0}
 }
 
@@ -4246,16 +4264,14 @@ function togglePenalty(){
   if(S.penalty.done){sfx.quest();toast("[Ceza görevi tamamlandı]");checkClear()}
   commit();
 }
-function rollover(){
-  const t=todayKey();
-  if(S.day===t) return false;
-  const gap=dayDiff(S.day,t);
-  if(gap<0){S.day=t;return true}
-  timerRollover();
-  S.history.push(Object.assign({d:S.day,ok:!!S.cleared,xp:S.todayXp||0},snapNow()));
-  for(let i=1;i<gap&&i<=30;i++) S.history.push({d:addDays(S.day,i),ok:false,xp:0});
+function dowOf(k){return (parseKey(k).getDay()+6)%7}
+function activeOn(q,dw){if(q.once) return false;if(Array.isArray(q.days)&&q.days.length) return q.days.includes(dw);return true}
+/* Günün kapanışı: geçmişe yaz, kaçırıldıysa parşömen ya da ceza. */
+function closeDay(d,gap,ok,xp,snap){
+  S.history.push(Object.assign({d,ok:!!ok,xp:xp||0},snap||snapNow()));
+  for(let i=1;i<gap&&i<=30;i++) S.history.push({d:addDays(d,i),ok:false,xp:0});
   S.history=S.history.slice(-400);
-  const missed=!S.cleared||gap>1;
+  const missed=!ok||gap>1;
   if(missed){
     if(S.inv.cons.scroll>0){
       S.inv.cons.scroll--;
@@ -4266,10 +4282,94 @@ function rollover(){
       setTimeout(()=>overlay(head("Uyarı",true)+`<div class="big red">CEZA BÖLGESİ</div><p>Günlük görev tamamlanmadı.</p><div class="rew"><div><span>Günlük seri</span><b style="color:var(--red)">Sıfırlandı</b></div><div><span>Gold kaybı (%10)</span><b style="color:var(--red)">−${fmt(loss)}</b></div><div><span>Ceza görevi</span><b style="color:var(--red)">Eklendi</b></div></div><p class="small muted">Ceza görevi bitmeden bugünkü günlük görev tamamlanmaz. Mağazadaki Kurtuluş Parşömeni bunu önler.</p>`,{sfx:sfx.warn}),300);
     }
   }
+}
+function resetDay(t){
   S.quests.forEach(q=>{if(q.once&&qCount(q)>=qTimes(q)) q.finished=true});
   S.day=t;S.done={};S.cleared=false;S.todayXp=0;S.todayGold=0;S.clearRw=null;S.dRuns={};S.todaySt={};
   arenaDaily();arenaSeason();
+}
+function rollover(){
+  const t=todayKey();
+  if(S.day===t) return false;
+  const gap=dayDiff(S.day,t);
+  if(gap<0){S.day=t;return true}
+  timerRollover();
+  if(S.review) finalizeReview({});   // önceki günün kontrolü hiç yapılmadıysa olduğu gibi kapat
+  const prev=S.day,dw=dowOf(prev),open=S.quests.filter(q=>activeOn(q,dw)&&qCount(q)<qTimes(q)),penOpen=!!(S.penalty.active&&!S.penalty.done);
+  if(!S.cleared&&(open.length||penOpen)){
+    // Gün bitti ama eksik var: cezayı hemen verme, önce "Dünün Görevleri" ekranında unutulanları işaretlet.
+    S.review={d:prev,gap,done:S.done,xp:S.todayXp||0,gold:S.todayGold||0,st:Object.assign({},S.todaySt||{}),items:open.map(q=>q.id),pen:penOpen};
+    resetDay(t);
+    return true;
+  }
+  closeDay(prev,gap,!!S.cleared,S.todayXp||0);
+  resetDay(t);
   return true;
+}
+function rvWould(marks){
+  const R=S.review;if(!R) return false;const dw=dowOf(R.d),dq=S.quests.filter(q=>activeOn(q,dw));if(!dq.length) return false;
+  if(R.pen&&!marks.__pen) return false;
+  return dq.every(q=>((R.done[q.id]||[]).length+(marks[q.id]|0))>=qTimes(q));
+}
+function finalizeReview(marks){
+  const R=S.review;if(!R) return;S.review=null;marks=marks||{};
+  const done=R.done||{},tEnd=parseKey(R.d).getTime()+DAY_MS-60000,dst=Object.assign({},R.st||{});
+  let gx=0,gg=0,n=0;const x0=S.todayXp,g0=S.todayGold;
+  (R.items||[]).forEach(id=>{const q=S.quests.find(x=>x.id===id);if(!q) return;
+    const left=qTimes(q)-(done[id]||[]).length,m=Math.max(0,Math.min(marks[id]|0,left));
+    for(let i=0;i<m;i++){
+      const rw=questReward(q);rw.late=1;(done[id]=Array.isArray(done[id])?done[id]:[]).push(rw);S.cnt.quests++;n++;
+      if(isDers(q)){S.cnt.ders=(S.cnt.ders|0)+1}
+      else{S.base[q.stat]+=rw.st;dst[q.stat]=(dst[q.stat]|0)+rw.st;rw.en=addEnergy(ENERGY_Q[q.rank]||1);addGold(rw.gold);addXp(rw.xp);gx+=rw.xp;gg+=rw.gold}
+      if(!Array.isArray(S.qlog)) S.qlog=[];
+      S.qlog.push({t:tEnd,id:q.id,n:q.name,c:q.count||null,u:q.unit||"",s:q.stat,r:isDers(q)?"DERS":q.rank,rp:qRep(q),k:(done[id]||[]).length,tt:qTimes(q),xp:rw.xp,g:rw.gold,st:rw.st,late:1});
+    }
+  });
+  if(S.qlog&&S.qlog.length>QLOG_MAX) S.qlog=S.qlog.slice(-QLOG_MAX);
+  S.todayXp=x0;S.todayGold=g0;   // geç işaretlenenler düne sayılır
+  const dw=dowOf(R.d),dq=S.quests.filter(q=>activeOn(q,dw));
+  const ok=!!dq.length&&(!R.pen||!!marks.__pen)&&dq.every(q=>(done[q.id]||[]).length>=qTimes(q));
+  let bx=0;
+  if(ok){
+    S.streak++;S.best=Math.max(S.best,S.streak);S.cnt.days++;
+    if(S.penalty.active) S.penalty={active:false,done:false};
+    let qx=0;for(const k in done){(done[k]||[]).forEach(r=>qx+=r.xp||0)}
+    bx=Math.floor(qx*0.1);if(bx){addXp(bx);S.todayXp=x0}
+  }
+  let q=0;for(const k in done) q+=(done[k]||[]).length;
+  closeDay(R.d,R.gap,ok,(R.xp||0)+gx+bx,Object.assign(snapNow(),{q,g:(R.gold||0)+gg,sg:dst}));
+  if(n) toast(`[Dün için ${n} görev işaretlendi]${gx?` +${fmt(gx)} XP · <b>+${fmt(gg)}G</b>`:""}`);
+  if(ok) setTimeout(()=>overlay(head("Bildirim")+`<div class="big gold">DÜNKÜ GÖREV TAMAMLANDI</div><div class="rew">${bx?`<div><span>${ico("xp","#6fb8ff",16)}Bonus XP (görev XP'sinin %10'u)</span><b>+${fmt(bx)}</b></div>`:""}<div><span>${ico("streak","#ff8a3a",16)}Günlük seri</span><b>${S.streak} gün</b></div></div>`,{sfx:sfx.clear}),200);
+}
+/* ---- Dünün Görevleri ekranı ---- */
+let rvMarks={},rvOpen=false;
+function rvBodyHtml(){
+  const R=S.review;if(!R) return "";
+  const rows=(R.items||[]).map(id=>{const q=S.quests.find(x=>x.id===id);if(!q) return "";
+    const k=(R.done[id]||[]).length,t=qTimes(q),m=rvMarks[id]|0,left=t-k,rw=questReward(q),on=m>0,full=k+m>=t;
+    const rwTxt=isDers(q)?`<span class="muted">ödül kronometreden</span>`:`<span style="color:${SC[q.stat].c}">+${rw.st} ${q.stat}</span> · +${rw.xp} XP · <b class="gold">+${rw.gold}G</b>`;
+    const ctl=t>1?`<span class="rvstep"><button type="button" class="btn sm" data-rvm="${id}" aria-label="Azalt"${m?"":" disabled"}>−</button><b>${k+m}/${t}</b><button type="button" class="btn sm" data-rvp="${id}" aria-label="Artır"${m<left?"":" disabled"}>+</button></span>`:"";
+    return `<div class="rvrow${on?" on":""}${full?" full":""}"><button type="button" class="rvchk" data-rvq="${id}" aria-pressed="${on}"><span class="box">${CHECK}</span><span class="rvn"><b>${esc(q.name)}</b><span class="rvm">${qBadge(q,16)}${rwTxt}${k?` <span class="muted">· dün ${k}/${t} yapılmıştı</span>`:""}</span></span></button>${ctl}</div>`}).join("");
+  const pen=R.pen?`<div class="rvrow pen${rvMarks.__pen?" on full":""}"><button type="button" class="rvchk" data-rvq="__pen" aria-pressed="${!!rvMarks.__pen}"><span class="box">${CHECK}</span><span class="rvn"><b>CEZA: ${esc(S.penaltyText)}</b><span class="rvm"><span class="muted">Zorunlu · ödül yok</span></span></span></button></div>`:"";
+  const would=rvWould(rvMarks);
+  const st=R.gap>1?`<div class="rvst bad">Arada ${R.gap-1} gün uygulama açılmadı; o günler kaçırılmış sayılır, seri sıfırlanır. İşaretlediklerinin ödülünü yine alırsın.</div>`
+    :would?`<div class="rvst ok">${ico("streak","#ff8a3a",15)} Dünkü günlük görev tamamlanmış sayılacak · seri <b>${S.streak+1} gün</b></div>`
+    :`<div class="rvst bad">Eksik görev var: ${S.inv.cons.scroll>0?"Kurtuluş Parşömeni kullanılacak.":"seri sıfırlanır, gold'un %10'u gider ve ceza görevi gelir."}</div>`;
+  return `<div class="rvlist">${pen}${rows}</div>${st}`;
+}
+function reviewHtml(){const R=S.review;return head("Dünün Görevleri")+`<p class="help" style="margin:-4px 0 12px">Gün bitti. <b>${fmtD(R.d)}</b> günü yapıp işaretlemeyi unuttuğun görevleri işaretle; ödülleri şimdi verilir ve düne sayılır.</p><div id="rvBody" style="text-align:left">${rvBodyHtml()}</div><div class="mbtns"><button class="btn primary" type="button" data-rvok="1">Onayla</button><button class="btn" type="button" data-rvnone="1">Hiçbirini yapmadım</button></div>`}
+function reviewSync(){
+  if(S.review&&!rvOpen){rvOpen=true;rvMarks={};overlay(reviewHtml(),{noOk:true,review:1});return}
+  if(!S.review&&rvOpen){rvOpen=false;const i=queue.findIndex(x=>x.o.review);if(i>=0) queue.splice(i,1);else if($("rvBody")) nextOverlay();return}
+  if(S.review&&rvOpen){const b=$("rvBody");if(b) b.innerHTML=rvBodyHtml()}
+}
+function reviewAct(d){
+  const R=S.review;if(!R) return;
+  if(d.rvq){const id=d.rvq;if(id==="__pen") rvMarks.__pen=!rvMarks.__pen;else{const q=S.quests.find(x=>x.id===id);if(!q) return;const left=qTimes(q)-(R.done[id]||[]).length;rvMarks[id]=(rvMarks[id]|0)>0?0:left}}
+  else if(d.rvp){const q=S.quests.find(x=>x.id===d.rvp);if(q) rvMarks[d.rvp]=Math.min(qTimes(q)-(R.done[d.rvp]||[]).length,(rvMarks[d.rvp]|0)+1)}
+  else if(d.rvm) rvMarks[d.rvm]=Math.max(0,(rvMarks[d.rvm]|0)-1);
+  else if(d.rvok||d.rvnone){finalizeReview(d.rvnone?{}:rvMarks);rvOpen=false;rvMarks={};nextOverlay();commit();return}
+  const b=$("rvBody");if(b) b.innerHTML=rvBodyHtml();
 }
 function effHtml(it,mul){
   let h="";const st=it.st||{};
@@ -4610,6 +4710,7 @@ function render(){
   renderViewers();
   tick();pillUpdate();
   if(S.arena&&S.arena.srw) arenaNotes();
+  reviewSync();
 }
 function renderPowTop(){
   const pw=power(),r=rankOf(pw),nr=nextRank(pw),lo=RP[r],pct=nr?Math.min(100,Math.max(0,(pw-lo)/(nr[1]-lo)*100)):100,el=$("powTop");
@@ -5618,7 +5719,7 @@ function recQuests(){
     if(k!==cur){if(cur!==null) h+=`</div>`;cur=k;h+=`<div class="qlg-day"><div class="qlg-dh">${k==="leg"?"Önceki tek seferlikler":`${fmtD(k)} ${k.slice(0,4)}${k===todayKey()?" · bugün":""}`}<span>${tot[k].n} kayıt${tot[k].xp?` · +${fmt(tot[k].xp)} XP`:""}</span></div>`}
     const sc=SC[e.s]||SC.STR,d=e.t?new Date(e.t):null,tm=d?String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"):"—";
     const rp=e.rp==="once"?"Tek seferlik":e.rp==="days"?"Belirli günler":e.rp==="focus"?"Odak oturumu":"Her gün";
-    h+=`<div class="qlg"><span class="tm">${tm}</span><div><div class="nm">${esc(e.n)}${e.c?` <small>· ${fmt(e.c)}${e.u?" "+esc(e.u):""}</small>`:""}${e.tt>1?` <small>· ${e.k}/${e.tt}</small>`:""}</div><div class="mt">${e.rp==="focus"?"":e.r==="DERS"?dersBadge():rbadge(QR.includes(e.r)?e.r:"C",18)}${e.r==="DERS"?"":`<span style="color:${sc.c}">+${e.st} ${esc(e.s)}</span>`}<span class="qtag">${rp}</span>${e.md?`<span class="qtag fm">${e.md==="sw"?"Kronometre":"Zamanlayıcı"}${e.fs?" · "+mmssUp(e.fs*1000):""}</span>`:""}${e.bt?`<span class="qtag bt">Boring ${mmssUp(e.bt*1000)} · +%${e.bf}</span>`:""}</div>${lpH(e)}</div><div class="rw">${e.r==="DERS"?`<span class="muted small">kronometreden</span>`:e.leg?`<span class="muted small">ödül kaydı yok</span>`:`<b>+${fmt(e.xp)} XP</b><i>+${fmt(e.g)}G</i>`}</div></div>`});
+    h+=`<div class="qlg"><span class="tm">${tm}</span><div><div class="nm">${esc(e.n)}${e.c?` <small>· ${fmt(e.c)}${e.u?" "+esc(e.u):""}</small>`:""}${e.tt>1?` <small>· ${e.k}/${e.tt}</small>`:""}</div><div class="mt">${e.rp==="focus"?"":e.r==="DERS"?dersBadge():rbadge(QR.includes(e.r)?e.r:"C",18)}${e.r==="DERS"?"":`<span style="color:${sc.c}">+${e.st} ${esc(e.s)}</span>`}<span class="qtag">${rp}</span>${e.late?`<span class="qtag">sonradan işaretlendi</span>`:""}${e.md?`<span class="qtag fm">${e.md==="sw"?"Kronometre":"Zamanlayıcı"}${e.fs?" · "+mmssUp(e.fs*1000):""}</span>`:""}${e.bt?`<span class="qtag bt">Boring ${mmssUp(e.bt*1000)} · +%${e.bf}</span>`:""}</div>${lpH(e)}</div><div class="rw">${e.r==="DERS"?`<span class="muted small">kronometreden</span>`:e.leg?`<span class="muted small">ödül kaydı yok</span>`:`<b>+${fmt(e.xp)} XP</b><i>+${fmt(e.g)}G</i>`}</div></div>`});
   h+=`</div>`;
   if(L.length>qlN) h+=`<div style="text-align:center;margin-top:12px"><button class="btn sm" type="button" data-qlmore="1">Daha fazla göster (${Math.min(40,L.length-qlN)})</button></div>`;
   return h;
@@ -6359,6 +6460,7 @@ document.addEventListener("click",e=>{
   if(d.sess){sessQid=null;sessPick(d.sess);return}
   if(d.fxhelp){fxHelp();return}
   if(d.stathelp){statHelp();return}
+  if(d.rvq||d.rvp||d.rvm||d.rvok||d.rvnone){reviewAct(d);return}
   if(d.dersset){dersSet();return}
   if(d.dcol){dersUpd({c:d.dcol});return}
   if(d.dbg){dersUpd({bg:d.dbg});return}
@@ -6523,7 +6625,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&showing&&$("modal")
 /* ================= BACKUP & SYNC ================= */
 const IS_PWA=true;
 const FB_CONFIG={"apiKey": "AIzaSyBsNalG4Fl7crcsluhf2hqDXlWawD6DJ2I", "authDomain": "hunter-sistemi.firebaseapp.com", "projectId": "hunter-sistemi", "storageBucket": "hunter-sistemi.firebasestorage.app", "messagingSenderId": "550981824995", "appId": "1:550981824995:web:bd6d609b92a2b74b8f70d6"};
-const APP_VER="47";
+const APP_VER="48";
 const LS_SYNC="hunter-sistemi-sync";
 function b64e(t){return btoa(unescape(encodeURIComponent(t)))}
 function b64d(t){return decodeURIComponent(escape(atob(t)))}
@@ -6677,6 +6779,9 @@ async function flush(){
 }
 function showRefund(){
   if(purgeOnce()) cacheLocal();
+  if(S.sysNote16){delete S.sysNote16;let seen=false;try{seen=localStorage.getItem("hunter-sistemi-note16")==="1";localStorage.setItem("hunter-sistemi-note16","1")}catch(e){}
+    if(!seen) overlay(head("Sistem Güncellemesi")+`<div class="big gold">DÜNÜN GÖREVLERİ</div><div class="updl"><p>${ico("clock","#62d2ff",16)}<span>Gün bittiğinde eksik görevin varsa ceza hemen gelmiyor. Önce <b>Dünün Görevleri</b> ekranı açılıyor: yapıp işaretlemeyi unuttuklarını işaretle, ödülleri düne sayılarak verilsin. Hepsi tamamsa seri korunur.</span></p></div>`,{sfx:sfx.rank});
+    cacheLocal();}
   if(S.sysNote15){delete S.sysNote15;let seen=false;try{seen=localStorage.getItem("hunter-sistemi-note15")==="1";localStorage.setItem("hunter-sistemi-note15","1")}catch(e){}
     if(!seen) overlay(head("Sistem Güncellemesi")+`<div class="big gold">YENİLİKLER</div><div class="updl"><p>${accSvg("book","#d9ff3d",16)}<span><b>Ders görevleri:</b> görev eklerken Ders kutucuğunu işaretle. Rütbe yok; ödülü görevin yanındaki <b>Çalış</b> ile kronometreden alırsın. Renk ve arka planı çark simgesinden seç.</span></p><p>${ico("mp","#7d8cff",16)}<span><b>Yetenek rütbeleri:</b> yetenekler artık mananın yüzdesini değil <b>sabit mana</b> harcıyor. Temel sınıf yetenekleri F rütbe; mana arttıkça daha çok yetenek kullanırsın.</span></p><p>${accSvg("stats","#4de3ff",16)}<span><b>Düzen:</b> Karakter ve Ayarlar'daki bölümler başlığa dokununca açılıyor. Stat dönüştürme Ayarlar'a taşındı. Ana sayfadaki <b>ƒx</b> kutusu statların ne işe yaradığını anlatıyor.</span></p><p>${accSvg("cloud","#7d8cff",16)}<span><b>Senkron düzeltmesi:</b> uygulama açılınca önce buluttaki son kayıt çekiliyor; eski kayıtla ceza ya da üzerine yazma artık olmuyor.</span></p></div>`,{sfx:sfx.rank});
     cacheLocal();}
