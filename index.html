@@ -5516,7 +5516,11 @@ function boredFrac(ms){const x=Math.min(1,(ms/60000)/boredCap());return .5*x*x}
 const SESS_MIN=40,SESS_RK="B";
 function sessStatOf(T){return T&&SC[T.stat]?T.stat:(S.job&&SC[S.job]?S.job:"INT")}
 const SESS_MUL=3/5;
-function sessReward(ms,stat){const r=sessReward0(ms,stat);return rwCut({xp:r.xp*SESS_MUL,gold:r.gold*SESS_MUL,st:r.st*SESS_MUL})}
+function sessReward(ms,stat){const r=sessReward0(ms,stat),o=rwCut({xp:r.xp*SESS_MUL,gold:r.gold*SESS_MUL});o.st=stPeek(stat,sessStRaw(ms));return o}
+/* Odak stat ödülü yuvarlanmaz: gereken süre dolmadan +0. Küsurat (stat başına) sonraki oturuma devreder. */
+function sessStRaw(ms){return Q_STAT[SESS_RK]/SESS_MIN*(ms/60000)*lvMul(1.2,S.level)*SESS_MUL*RW_MUL}
+function stPeek(stat,raw){const a=S.stAcc&&+S.stAcc[stat]||0;return Math.floor(raw+a+1e-9)}
+function stTake(stat,raw){S.stAcc=S.stAcc&&typeof S.stAcc==="object"?S.stAcc:{};const v=raw+(+S.stAcc[stat]||0),n=Math.floor(v+1e-9);S.stAcc[stat]=Math.round((v-n)*1000)/1000;return n}
 function sessReward0(ms,stat){const m=ms/60000,b=bonuses(),jb=jobBonus(stat),L=S.level;return {xp:Math.round(Q_XP[SESS_RK]/SESS_MIN*m*lvMul(1.1,L)*(1+(b.xp+jb)/100)),gold:Math.round(Q_GOLD[SESS_RK]/SESS_MIN*m*lvMul(1.2,L)*(1+(b.gold+jb)/100)),st:Math.round(Q_STAT[SESS_RK]/SESS_MIN*m*lvMul(1.2,L))}}
 /* Odak enerjisi: 40 dk = B rütbe görevin enerjisinin 3/5'i (2 × 0,6 = 1,2). Küsurat sonraki oturuma devreder. */
 function sessEnergyRaw(ms){return (ENERGY_Q[SESS_RK]||2)*SESS_MUL*(ms/60000)/SESS_MIN}
@@ -5598,7 +5602,7 @@ function mfPrevHtml(){const ms=mfMs(),st=sessStat||"INT";if(ms<60000) return `<s
   return `Alacağın ödül: <span style="color:${SC[st].c}">+${rw.st} ${st}</span> · <span style="color:#6fb8ff">+${fmt(rw.xp)} XP</span> · <span style="color:var(--gold)">+${fmt(rw.gold)}G</span> · <span style="color:#ffd84a">+${en} enerji</span>`}
 function mfOpen(){
   if(!sessStat) sessStat=S.job&&SC[S.job]?S.job:"INT";
-  overlay(head("Odak Ekle")+`<p class="small muted" style="margin:-4px 0 10px">Kronometreyi açmayı unuttuysan ya da telefonun yanında değilken çalıştıysan, bugün çalıştığın süreyi buradan ekle. Ödül kronometreyle aynı orandadır; Boring Time eklenmez.</p>
+  overlay(head("Odak Ekle")+`<p class="small muted" style="margin:-4px 0 10px">Kronometreyi açmayı unuttuysan ya da telefonun yanında değilken çalıştıysan, bugün çalıştığın süreyi buradan ekle. Ödül kronometreyle aynı orandadır; Boring Time eklenmez. Stat, gereken süre dolmadan verilmez; artan kısım sonraki oturuma devreder.</p>
 <p class="sec-label" style="margin-top:10px">Süre</p><div class="tmdur" style="justify-content:center"><input type="number" id="mfH" min="0" max="12" value="${mfH}" aria-label="Saat"> sa <input type="number" id="mfM" min="0" max="59" value="${mfM}" aria-label="Dakika"> dk</div>
 <div class="chips" style="justify-content:center;margin:10px 0 0">${[15,30,45,60,90,120].map(m=>`<button type="button" class="chipbtn" data-mfq="${m}">${fmtMin(m)}</button>`).join("")}</div>
 <p class="sec-label" style="margin-top:14px">Geliştireceği stat</p><div class="chips" style="justify-content:center;margin:0">${STATS.map(x=>`<button type="button" class="chipbtn" data-sstat="${x.k}" aria-pressed="${sessStat===x.k}"><span style="color:${x.c}">${x.k}</span></button>`).join("")}</div>
@@ -5610,7 +5614,7 @@ document.addEventListener("input",e=>{const t=e.target;if(!t||(t.id!=="mfH"&&t.i
 function mfGo(){
   const ms=mfMs(),stat=sessStat||"INT";if(ms<60000){toast("En az 1 dakika gir.");return}
   const dk=todayKey();S.fday=S.fday&&typeof S.fday==="object"?S.fday:{};S.fday[dk]=(S.fday[dk]||0)+Math.round(ms/1000);
-  const rw=sessReward(ms,stat);
+  const rw=sessReward(ms,stat);rw.st=stTake(stat,sessStRaw(ms));
   S.cnt.focusMin=(S.cnt.focusMin|0)+Math.round(ms/60000);
   S.base[stat]+=rw.st;S.todaySt=S.todaySt||{};S.todaySt[stat]=(S.todaySt[stat]|0)+rw.st;
   const ef=sessEnergyRaw(ms)+(+S.enAcc||0),ei=Math.floor(ef+1e-9);S.enAcc=Math.round((ef-ei)*1000)/1000;const en=addEnergy(ei);
@@ -5677,8 +5681,9 @@ function finishTimer(silent){
   if(work>=1000){const dk=todayKey();S.fday=S.fday&&typeof S.fday==="object"?S.fday:{};S.fday[dk]=(S.fday[dk]||0)+Math.round(work/1000)}
   if(work>=60000){
     base=sessReward(work,stat);
-    if(bf>0) bonus={xp:Math.round(base.xp*bf),gold:Math.round(base.gold*bf),st:Math.round(base.st*bf)};
-    tot={xp:base.xp+(bonus?bonus.xp:0),gold:base.gold+(bonus?bonus.gold:0),st:base.st+(bonus?bonus.st:0)};
+    const sr=sessStRaw(work),stTot=stTake(stat,sr*(1+(bf>0?bf:0)));base.st=Math.min(base.st,stTot);
+    if(bf>0) bonus={xp:Math.round(base.xp*bf),gold:Math.round(base.gold*bf),st:stTot-base.st};
+    tot={xp:base.xp+(bonus?bonus.xp:0),gold:base.gold+(bonus?bonus.gold:0),st:stTot};
     S.cnt.timers=(S.cnt.timers|0)+1;S.cnt.focusMin=(S.cnt.focusMin|0)+Math.round(work/60000);if(bt) S.cnt.boredMin=(S.cnt.boredMin|0)+Math.round(bt/60000);
     S.base[stat]+=tot.st;S.todaySt=S.todaySt||{};S.todaySt[stat]=(S.todaySt[stat]|0)+tot.st;
     const ef=sessEnergyRaw(work)+(+S.enAcc||0),ei=Math.floor(ef+1e-9);S.enAcc=Math.round((ef-ei)*1000)/1000;
@@ -5747,7 +5752,7 @@ function focusUpdate(){
   const sg=segMs(),sf=boredFrac(sg),mx=T.bfMax||0,fr=sessFrac();
   if(T.bs!=null&&$("focBT")&&$("focBR")){$("focBT").textContent=mmssUp(sg);const cap=boredCap(),left=mx>sf?fracMin(mx)*60000-sg:0;$("focBR").innerHTML=`Ek ödül katsayısı: <b>+%${pct(fr)}</b>${fr>=.5?" · tavan":` · %50 tavan ${cap} dk'da`}${left>0?`<br><span class="small">Bu tur +%${pct(sf)} · önceki +%${pct(mx)}'i geçmeye ${mmssUp(left)}</span>`:""}`}
   const L=T.laps||[];if(L.length&&$("focLapCur")) $("focLapCur").textContent=mmssUp(Math.max(0,w-L[L.length-1].w));
-  const r=$("focRw");if(r){if(w<60000) r.innerHTML=`<span class="muted">Ödül 1. dakikadan sonra birikmeye başlar.</span>`;else{const rw=sessReward(w,stat),k=1+fr;r.innerHTML=`Şu ana kadar: <span style="color:${SC[stat].c}">+${Math.round(rw.st*k)} ${stat}</span> · <span style="color:#6fb8ff">+${fmt(Math.round(rw.xp*k))} XP</span> · <span style="color:var(--gold)">+${fmt(Math.round(rw.gold*k))}G</span> · <span style="color:#ffd84a">+${Math.floor(sessEnergyRaw(w)+(+S.enAcc||0)+1e-9)} enerji</span>${fr?` <span style="color:#ffb35c">(Boring dahil)</span>`:""}`}}
+  const r=$("focRw");if(r){if(w<60000) r.innerHTML=`<span class="muted">Ödül 1. dakikadan sonra birikmeye başlar.</span>`;else{const rw=sessReward(w,stat),k=1+fr;r.innerHTML=`Şu ana kadar: <span style="color:${SC[stat].c}">+${stPeek(stat,sessStRaw(w)*k)} ${stat}</span> · <span style="color:#6fb8ff">+${fmt(Math.round(rw.xp*k))} XP</span> · <span style="color:var(--gold)">+${fmt(Math.round(rw.gold*k))}G</span> · <span style="color:#ffd84a">+${Math.floor(sessEnergyRaw(w)+(+S.enAcc||0)+1e-9)} enerji</span>${fr?` <span style="color:#ffb35c">(Boring dahil)</span>`:""}`}}
 }
 function pillUpdate(){
   const el=$("tPill");if(!el) return;const T=S.timer;
@@ -6698,7 +6703,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&showing&&$("modal")
 /* ================= BACKUP & SYNC ================= */
 const IS_PWA=true;
 const FB_CONFIG={"apiKey": "AIzaSyBsNalG4Fl7crcsluhf2hqDXlWawD6DJ2I", "authDomain": "hunter-sistemi.firebaseapp.com", "projectId": "hunter-sistemi", "storageBucket": "hunter-sistemi.firebasestorage.app", "messagingSenderId": "550981824995", "appId": "1:550981824995:web:bd6d609b92a2b74b8f70d6"};
-const APP_VER="55";
+const APP_VER="56";
 const LS_SYNC="hunter-sistemi-sync";
 function b64e(t){return btoa(unescape(encodeURIComponent(t)))}
 function b64d(t){return decodeURIComponent(escape(atob(t)))}
